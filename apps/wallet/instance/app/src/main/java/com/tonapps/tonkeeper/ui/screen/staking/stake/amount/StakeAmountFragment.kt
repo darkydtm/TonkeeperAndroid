@@ -140,10 +140,14 @@ class StakeAmountFragment :
             availableView.setTextColor(requireContext().accentRedColor)
             button.isEnabled = false
         } else if (state.remainingFormat == state.balanceFormat) {
-            availableView.text = if (state.hiddenBalance) HIDDEN_BALANCE else getString(
-                Localization.available_balance,
-                state.balanceFormat
-            ).withCustomSymbol(requireContext())
+            availableView.text = if (state.hiddenBalance) {
+                HIDDEN_BALANCE
+            } else {
+                getString(
+                    Localization.available_balance,
+                    state.balanceFormat
+                ).withCustomSymbol(requireContext())
+            }
             availableView.setTextColor(requireContext().textSecondaryColor)
             button.isEnabled = false
         } else if (state.requestMinStake) {

@@ -1,6 +1,5 @@
 package com.tonapps.ledger.ton
 
-import android.util.Log
 import com.tonapps.blockchain.ton.TONOpCode
 import com.tonapps.blockchain.ton.extensions.storeAddress
 import com.tonapps.blockchain.ton.extensions.storeCoins
@@ -8,10 +7,8 @@ import com.tonapps.blockchain.ton.extensions.storeOpCode
 import com.tonapps.ledger.transport.LedgerAppName
 import com.tonapps.ledger.transport.Transport
 import com.tonapps.ledger.transport.TransportStatusException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withContext
 import org.ton.api.pub.PublicKeyEd25519
 import org.ton.block.Coins
 import org.ton.block.MsgAddressInt
@@ -32,20 +29,9 @@ data class ParseOptions(
 )
 
 class TonTransport(private val transport: Transport) {
-    companion object {
-        const val LEDGER_SYSTEM = 0xB0
-        const val LEDGER_CLA = 0xE0
-        const val INS_VERSION = 0x03
-        const val INS_OPEN_APP = 0xd8
-        const val INS_ADDRESS = 0x05
-        const val INS_SIGN_TX = 0x06
-        const val INS_PROOF = 0x08
-        const val INS_SIGN_DATA = 0x09
-
-        const val REQUIRED_VERSION = "2.1.0"
-    }
-
     private var _currentVersion: String? = null
+
+    private val lock = Mutex()
 
     private fun chunks(buf: ByteArray, n: Int): List<ByteArray> {
         val nc = ceil(buf.size / n.toDouble()).toInt()
@@ -57,8 +43,6 @@ class TonTransport(private val transport: Transport) {
         }
         return cs
     }
-
-    private val lock = Mutex()
 
     fun close() {
         transport.close()
@@ -173,7 +157,7 @@ class TonTransport(private val transport: Transport) {
         val signature = res.sliceArray(1 until 1 + 64)
         val hash = res.sliceArray(2 + 64 until 2 + 64 + 32)
         if (!publicKey.verify(hash, signature)) {
-            throw Error("Received signature is invalid")
+            throw Exception("Received signature is invalid")
         }
 
         return signature
@@ -412,7 +396,7 @@ class TonTransport(private val transport: Transport) {
 
                     is DNSRecord.Unknown -> {
                         if (record.key.size != 32) {
-                            throw Error("DNS record key length must be 32 bytes long")
+                            throw Exception("DNS record key length must be 32 bytes long")
                         }
 
                         bytes += LedgerWriter.putUint8(if (record.value != null) 1 else 0)
@@ -486,7 +470,7 @@ class TonTransport(private val transport: Transport) {
                 }
 
                 if (transaction.payload.swapId.size != 32) {
-                    throw Error("Swap ID must be 32 bytes long")
+                    throw Exception("Swap ID must be 32 bytes long")
                 }
 
                 bytes += transaction.payload.swapId
@@ -615,7 +599,7 @@ class TonTransport(private val transport: Transport) {
         val signature = res.slice(1 until 65).toByteArray()
         val hash = res.slice(66 until 98).toByteArray()
         if (!hash.contentEquals(transfer.hash().toByteArray())) {
-            throw Error(
+            throw Exception(
                 "Hash mismatch. Expected: ${hex(transfer.hash().toByteArray())}, got: ${
                     hex(
                         hash
@@ -629,6 +613,19 @@ class TonTransport(private val transport: Transport) {
             storeBytes(signature)
             storeSlice(transfer.beginParse())
         }
+    }
+
+    companion object {
+        const val LEDGER_SYSTEM = 0xB0
+        const val LEDGER_CLA = 0xE0
+        const val INS_VERSION = 0x03
+        const val INS_OPEN_APP = 0xd8
+        const val INS_ADDRESS = 0x05
+        const val INS_SIGN_TX = 0x06
+        const val INS_PROOF = 0x08
+        const val INS_SIGN_DATA = 0x09
+
+        const val REQUIRED_VERSION = "2.1.0"
     }
 }
 

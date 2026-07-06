@@ -1,10 +1,11 @@
 package com.tonapps.tonkeeper.ui.screen.staking.unstake.amount
 
 import android.os.Bundle
-import android.util.Log
+import com.tonapps.log.L
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
+import com.tonapps.blockchain.model.legacy.TokenEntity
 import com.tonapps.tonkeeper.koin.analytics
 import com.tonapps.tonkeeper.ui.base.BaseHolderWalletScreen
 import com.tonapps.tonkeeper.ui.component.coin.CoinEditText
@@ -35,7 +36,7 @@ class UnStakeAmountFragment: BaseHolderWalletScreen.ChildFragment<UnStakeScreen,
         headerView.doOnActionClick = { finish() }
 
         amountView = view.findViewById(R.id.unstake_amount)
-        amountView.suffix = "TON"
+        amountView.suffix = TokenEntity.TON.symbol
         amountView.doOnValueChange = { value, _ -> primaryViewModel.updateAmount(value) }
 
         currencyView = view.findViewById(R.id.unstake_currency)

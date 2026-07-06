@@ -3,16 +3,23 @@ package uikit.widget
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.util.AttributeSet
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RawRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.WindowInsetsCompat
-import com.tonapps.uikit.color.backgroundTransparentColor
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.model.KeyPath
 import com.tonapps.uikit.color.tabBarActiveIconColor
 import com.tonapps.uikit.color.tabBarInactiveIconColor
 import uikit.R
@@ -66,6 +73,48 @@ class BottomTabsView @JvmOverloads constructor(
         }
     }
 
+    fun setLottieTabIcons(@RawRes rawResByItemId: Map<Int, Int>?) {
+        if (rawResByItemId.isNullOrEmpty()) {
+            return
+        }
+        for (i in 0 until childCount) {
+            val tab = getChildAt(i)
+            val itemId = tab.tag as? Int ?: continue
+            val raw = rawResByItemId[itemId] ?: continue
+            installLottieIcon(tab, raw)
+        }
+        updateSelected()
+    }
+
+    private fun installLottieIcon(tab: View, @RawRes rawRes: Int) {
+        val iconView = tab.findViewById<ImageView>(R.id.icon) ?: return
+        if (iconView is LottieAnimationView) {
+            return
+        }
+        val parent = iconView.parent as? ViewGroup ?: return
+        val index = parent.indexOfChild(iconView)
+        val lp = iconView.layoutParams
+        parent.removeViewAt(index)
+        val lottie = LottieAnimationView(context).apply {
+            id = R.id.icon
+            layoutParams = lp
+            setAnimation(rawRes)
+            repeatCount = 0
+            repeatMode = LottieDrawable.RESTART
+            progress = 0f
+            pauseAnimation()
+        }
+        parent.addView(lottie, index)
+    }
+
+    private fun applyLottieTabIconTint(lottie: LottieAnimationView, color: Int) {
+        lottie.clearValueCallback(KeyPath("**"), LottieProperty.COLOR_FILTER)
+        lottie.addValueCallback(KeyPath("**"), LottieProperty.COLOR_FILTER) {
+            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        }
+        lottie.imageTintList = null
+    }
+
     fun setDivider(value: Boolean) {
         drawable.setDivider(value)
     }
@@ -98,6 +147,14 @@ class BottomTabsView @JvmOverloads constructor(
         } else {
             hideItem(id)
         }
+    }
+
+    fun findTabView(itemId: Int): View? {
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            if (child.tag == itemId) return child
+        }
+        return null
     }
 
     override fun onApplyWindowInsets(insets: WindowInsets): WindowInsets {
@@ -142,15 +199,21 @@ class BottomTabsView @JvmOverloads constructor(
 
         for (i in 0 until childCount) {
             val view = getChildAt(i)
-            val iconView = view.findViewById<ImageView>(R.id.icon)
-            val titleView = view.findViewById<TextView>(R.id.title)
-            if (view.tag == selectedItemId) {
-                iconView.imageTintList = ColorStateList.valueOf(colorActive)
-                titleView.setTextColor(colorActive)
-            } else {
-                iconView.imageTintList = ColorStateList.valueOf(colorInactive)
-                titleView.setTextColor(colorInactive)
+            val iconView = view.findViewById<ImageView>(R.id.icon) ?: continue
+            val titleView = view.findViewById<TextView>(R.id.title) ?: continue
+            val isSelected = view.tag == selectedItemId
+            if (!isSelected && iconView is LottieAnimationView) {
+                iconView.cancelAnimation()
+                iconView.progress = 0f
             }
+            val color = if (isSelected) colorActive else colorInactive
+            if (iconView is LottieAnimationView) {
+                applyLottieTabIconTint(iconView, color)
+            } else {
+                iconView.colorFilter = null
+                iconView.imageTintList = ColorStateList.valueOf(color)
+            }
+            titleView.setTextColor(color)
         }
     }
 
@@ -170,6 +233,12 @@ class BottomTabsView @JvmOverloads constructor(
 
         if (menuItem.isCheckable) {
             view.setOnClickListener {
+                val icon = view.findViewById<ImageView>(R.id.icon)
+                if (icon is LottieAnimationView) {
+                    icon.cancelAnimation()
+                    icon.progress = 0f
+                    icon.playAnimation()
+                }
                 selectedItemId = menuItem.itemId
                 doOnClick?.invoke(menuItem.itemId)
             }

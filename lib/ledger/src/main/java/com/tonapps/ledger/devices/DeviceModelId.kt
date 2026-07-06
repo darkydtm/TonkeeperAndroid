@@ -7,5 +7,6 @@ enum class DeviceModelId {
     NANO_X,
     STAX,
     EUROPA,
+    APEX,
     USB
 }
