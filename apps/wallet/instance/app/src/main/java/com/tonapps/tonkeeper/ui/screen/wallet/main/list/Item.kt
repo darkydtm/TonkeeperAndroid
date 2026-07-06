@@ -4,8 +4,11 @@ import android.content.Context
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import com.tonapps.blockchain.contract.Blockchain
+import com.tonapps.blockchain.model.legacy.TokenEntity
+import com.tonapps.blockchain.model.legacy.WalletEntity
+import com.tonapps.blockchain.model.legacy.WalletType
 import com.tonapps.blockchain.ton.contract.WalletVersion
-import com.tonapps.icu.Coins
 import com.tonapps.extensions.readArrayCompat
 import com.tonapps.extensions.readBooleanCompat
 import com.tonapps.extensions.readCharSequenceCompat
@@ -18,16 +21,14 @@ import com.tonapps.extensions.writeBooleanCompat
 import com.tonapps.extensions.writeCharSequenceCompat
 import com.tonapps.extensions.writeEnum
 import com.tonapps.extensions.writeNullableInt
+import com.tonapps.icu.Coins
 import com.tonapps.icu.CurrencyFormatter
 import com.tonapps.tonkeeper.manager.apk.APKManager
 import com.tonapps.tonkeeper.view.BatteryView
 import com.tonapps.uikit.list.BaseListItem
 import com.tonapps.uikit.list.ListCell
-import com.tonapps.wallet.api.entity.value.Blockchain
+import com.tonapps.wallet.api.entity.BannerEntity
 import com.tonapps.wallet.api.entity.NotificationEntity
-import com.tonapps.wallet.api.entity.TokenEntity
-import com.tonapps.wallet.data.account.Wallet
-import com.tonapps.wallet.data.account.entities.WalletEntity
 import com.tonapps.wallet.data.collectibles.entities.DnsExpiringEntity
 import com.tonapps.wallet.data.dapps.entities.AppPushEntity
 import com.tonapps.wallet.data.staking.StakingPool
@@ -35,7 +36,9 @@ import com.tonapps.wallet.data.token.entities.AccountTokenEntity
 import kotlinx.parcelize.IgnoredOnParcel
 import java.math.BigDecimal
 import java.math.RoundingMode
+import com.tonapps.uikit.icon.UIKitIcon
 
+@Suppress("ClassOrdering")
 sealed class Item(type: Int): BaseListItem(type), Parcelable {
 
     companion object {
@@ -54,6 +57,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
         const val TYPE_STAKED = 12
         const val TYPE_APK_STATUS = 13
         const val TYPE_RENEW_DOMAINS = 14
+        const val TYPE_BANNERS = 15
 
         fun createFromParcel(parcel: Parcel): Item {
             return when (parcel.readInt()) {
@@ -70,6 +74,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
                 TYPE_STAKED -> Stake(parcel)
                 TYPE_APK_STATUS -> ApkStatus(parcel)
                 TYPE_RENEW_DOMAINS -> RenewDomains(parcel)
+                TYPE_BANNERS -> Banners(parcel)
                 else -> throw IllegalArgumentException("Unknown type")
             }
         }
@@ -149,7 +154,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
         val address: String
             get() = wallet.address
 
-        val walletType: Wallet.Type
+        val walletType: WalletType
             get() = wallet.type
 
         val walletVersion: WalletVersion
@@ -196,19 +201,21 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
         val swapUri: Uri,
         val tronEnabled: Boolean,
         val isSwapDisabled: Boolean,
-        val isStakingDisabled: Boolean
+        val isStakingDisabled: Boolean,
+        val isExchangeDisabled: Boolean
     ): Item(TYPE_ACTIONS) {
 
         val address: String
             get() = wallet.address
 
-        val walletType: Wallet.Type
+        val walletType: WalletType
             get() = wallet.type
 
         constructor(parcel: Parcel) : this(
             parcel.readParcelableCompat()!!,
             parcel.readParcelableCompat()!!,
             parcel.readParcelableCompat()!!,
+            parcel.readBooleanCompat(),
             parcel.readBooleanCompat(),
             parcel.readBooleanCompat(),
             parcel.readBooleanCompat()
@@ -221,12 +228,35 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
             dest.writeBooleanCompat(tronEnabled)
             dest.writeBooleanCompat(isSwapDisabled)
             dest.writeBooleanCompat(isStakingDisabled)
+            dest.writeBooleanCompat(isExchangeDisabled)
         }
 
         companion object CREATOR : Parcelable.Creator<Actions> {
             override fun createFromParcel(parcel: Parcel) = Actions(parcel)
 
             override fun newArray(size: Int): Array<Actions?> = arrayOfNulls(size)
+        }
+    }
+
+    data class Banners(
+        val walletId: String,
+        val banners: List<BannerEntity>
+    ): Item(TYPE_BANNERS) {
+
+        constructor(parcel: Parcel) : this(
+            parcel.readString()!!,
+            parcel.readArrayCompat(BannerEntity::class.java)?.toList() ?: emptyList()
+        )
+
+        override fun marshall(dest: Parcel, flags: Int) {
+            dest.writeString(walletId)
+            dest.writeArrayCompat(banners.toTypedArray())
+        }
+
+        companion object CREATOR : Parcelable.Creator<Banners> {
+            override fun createFromParcel(parcel: Parcel) = Banners(parcel)
+
+            override fun newArray(size: Int): Array<Banners?> = arrayOfNulls(size)
         }
     }
 
@@ -259,7 +289,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
 
         @IgnoredOnParcel
         val currencyIcon: Int by lazy {
-            com.tonapps.wallet.api.R.drawable.ic_ton_with_bg
+            UIKitIcon.ic_gram_with_bg
         }
 
         constructor(parcel: Parcel) : this(
@@ -332,6 +362,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
         val wallet: WalletEntity,
         val showNetwork: Boolean,
         val blockchain: Blockchain,
+        val apyFormatted: String? = null,
     ): Item(TYPE_TOKEN) {
 
         val isTON = symbol == TokenEntity.TON.symbol
@@ -350,6 +381,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
             currencyCode: String,
             wallet: WalletEntity,
             showNetwork: Boolean,
+            apyFormatted: String? = null,
         ) : this(
             position = position,
             iconUri = token.imageUri,
@@ -357,7 +389,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
             symbol = token.symbol,
             name = token.name,
             balance = token.balance.value,
-            balanceFormat = CurrencyFormatter.format(value = token.balance.value),
+            balanceFormat = CurrencyFormatter.format(value = token.balance.uiBalance),
             fiat = token.fiat,
             fiatFormat = if (testnet) "" else CurrencyFormatter.formatFiat(currencyCode, token.fiat),
             rate = if (token.isUsdt || token.isTrc20) {
@@ -377,6 +409,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
             wallet = wallet,
             showNetwork = showNetwork,
             blockchain = token.token.blockchain,
+            apyFormatted = apyFormatted,
         )
 
         constructor(parcel: Parcel) : this(
@@ -398,6 +431,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
             parcel.readParcelableCompat()!!,
             parcel.readBooleanCompat(),
             parcel.readEnum(Blockchain::class.java)!!,
+            parcel.readString(),
         )
 
         override fun marshall(dest: Parcel, flags: Int) {
@@ -419,6 +453,7 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
             dest.writeParcelable(wallet, flags)
             dest.writeBooleanCompat(showNetwork)
             dest.writeEnum(blockchain)
+            dest.writeString(apyFormatted)
         }
 
         companion object CREATOR : Parcelable.Creator<Token> {
@@ -681,7 +716,6 @@ sealed class Item(type: Int): BaseListItem(type), Parcelable {
         )
 
         override fun marshall(dest: Parcel, flags: Int) {
-
         }
 
     }

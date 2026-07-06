@@ -3,6 +3,7 @@ package com.tonapps.tonkeeper.ui.screen.swap.picker.list.holder
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import com.tonapps.blockchain.model.legacy.WalletCurrency
 import com.tonapps.tonkeeper.ui.component.CountryFlagView
 import com.tonapps.tonkeeper.ui.screen.swap.picker.list.Item
 import com.tonapps.tonkeeperx.R
@@ -35,12 +36,17 @@ class TokenHolder(
         imageView.setPlaceholder(null)
         imageView.setImageURIWithResize(item.iconUri, ResizeOptions.forSquareSize(72))
 
+        val symbol = item.code
         if (item.code.equals("USDT", true)) {
-            symbolView.text = item.code.withBlueBadge(context, Localization.ton)
+            symbolView.text = symbol.withBlueBadge(context, Localization.ton)
         } else {
-            symbolView.text = item.code
+            symbolView.text = symbol
         }
-        nameView.text = item.name
+        nameView.text = if (item.fiatFormatted == null && item.currency.code == WalletCurrency.GRAM_KEY) {
+            context.getString(Localization.toncoin)
+        } else {
+            item.name
+        }
         checkView.visibility = if (item.selected) View.VISIBLE else View.GONE
     }
 

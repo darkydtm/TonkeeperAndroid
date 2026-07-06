@@ -1,34 +1,30 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main
 
 import android.content.Context
-import android.text.SpannableStringBuilder
-import android.util.Log
 import com.tonapps.icu.Coins
-import com.tonapps.icu.Coins.Companion.sumOf
 import com.tonapps.icu.CurrencyFormatter
 import com.tonapps.tonkeeper.App
 import com.tonapps.tonkeeper.core.BalanceType
-import com.tonapps.tonkeeper.core.entities.AssetsEntity
+import com.tonapps.legacy.enteties.AssetsEntity
+import com.tonapps.tonkeeper.core.sumOfVerifiedFiat
 import com.tonapps.tonkeeper.manager.apk.APKManager
 import com.tonapps.tonkeeper.ui.screen.wallet.main.list.Item
 import com.tonapps.tonkeeper.view.BatteryView
 import com.tonapps.uikit.icon.UIKitIcon
 import com.tonapps.uikit.list.ListCell
+import com.tonapps.wallet.api.entity.BannerEntity
 import com.tonapps.wallet.api.entity.ConfigEntity
 import com.tonapps.wallet.api.entity.NotificationEntity
-import com.tonapps.wallet.api.entity.TokenEntity
-import com.tonapps.wallet.data.account.entities.WalletEntity
+import com.tonapps.blockchain.model.legacy.TokenEntity
+import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.wallet.data.collectibles.entities.DnsExpiringEntity
-import com.tonapps.wallet.data.core.currency.WalletCurrency
+import com.tonapps.blockchain.model.legacy.WalletCurrency
 import com.tonapps.wallet.data.core.isAvailableBiometric
 import com.tonapps.wallet.data.dapps.entities.AppPushEntity
 import com.tonapps.wallet.data.rates.entity.RatesEntity
 import com.tonapps.wallet.localization.Localization
 import com.tonapps.wallet.localization.Plurals
 import io.tonapi.models.WalletPlugin
-import uikit.extensions.badgeGreen
-import uikit.extensions.badgeRed
-import uikit.extensions.withGreenBadge
 
 sealed class State {
 
@@ -71,7 +67,7 @@ sealed class State {
             return if (wallet.testnet) {
                 list.first().fiat
             } else {
-                list.map { it.fiat }.sumOf { it }
+                list.sumOfVerifiedFiat()
             }
         }
 
@@ -98,7 +94,9 @@ sealed class State {
         val isOnline: Boolean,
         val apkStatus: APKManager.Status,
         val tronUsdtEnabled: Boolean,
-        val plugins: List<WalletPlugin>
+        val plugins: List<WalletPlugin>,
+        val maxStakingApyFormatted: String? = null,
+        val banners: List<BannerEntity> = emptyList(),
     ): State() {
 
         val totalBalanceFiat: Coins
@@ -150,6 +148,7 @@ sealed class State {
                         currencyCode = currencyCode,
                         wallet = wallet,
                         showNetwork = tronUsdtEnabled && (asset.token.isUsdt || asset.token.isTrc20),
+                        apyFormatted = if (asset.token.isTon) maxStakingApyFormatted else null,
                     )
                     uiItems.add(item)
                 }
@@ -190,6 +189,7 @@ sealed class State {
                 tronEnabled = tronUsdtEnabled,
                 isSwapDisabled = config.flags.disableSwap,
                 isStakingDisabled = config.flags.disableStaking,
+                isExchangeDisabled = config.flags.disableExchangeMethods
             )
         }
 
@@ -302,7 +302,7 @@ sealed class State {
             setup: Setup?,
             lastUpdatedFormat: String,
             prefixYourAddress: Boolean,
-            renewDomains: List<DnsExpiringEntity>
+            renewDomains: List<DnsExpiringEntity>,
         ): List<Item> {
             val uiItems = mutableListOf<Item>()
             if (apkStatus != APKManager.Status.Default && apkStatus !is APKManager.Status.UpdateAvailable) {
@@ -326,6 +326,9 @@ sealed class State {
             }
             uiItems.add(uiItemBalance(hiddenBalance, status, lastUpdatedFormat, prefixYourAddress))
             uiItems.add(uiItemActions(config))
+            if (banners.isNotEmpty()) {
+                uiItems.add(Item.Banners(walletId = wallet.id, banners = banners))
+            }
             if (!dAppNotifications.isEmpty) {
                 uiItems.add(Item.Push(dAppNotifications.pushes))
             }

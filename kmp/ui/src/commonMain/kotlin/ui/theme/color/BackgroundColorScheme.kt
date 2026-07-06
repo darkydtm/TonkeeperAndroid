@@ -6,8 +6,10 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 data class BackgroundColorScheme(
     val page: Color,
+    val pageAlternate: Color,
     val transparent: Color,
     val content: Color,
+    val contentAlternate: Color,
     val contentTint: Color,
     val contentAttention: Color,
     val highlighted: Color,

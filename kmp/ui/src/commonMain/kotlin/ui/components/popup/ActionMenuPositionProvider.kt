@@ -3,14 +3,17 @@ package ui.components.popup
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.window.PopupPositionProvider
 import kotlin.math.max
 import kotlin.math.min
+import ui.theme.Dimens
 
 @Immutable
 internal data class ActionMenuPositionProvider(
@@ -35,14 +38,9 @@ internal data class ActionMenuPositionProvider(
 
         val initialY = anchorBounds.bottom + offsetY
 
-        val adjustedX = when {
-            initialX + popupContentSize.width > windowSize.width -> {
-                val rightAligned = windowSize.width - popupContentSize.width
-                max(0, rightAligned)
-            }
-            initialX < 0 -> 0
-            else -> initialX
-        }
+        val endMarginPx = with(density) { Dimens.offsetMedium.roundToPx() }
+        val maxLeftX = max(0, windowSize.width - popupContentSize.width - endMarginPx)
+        val adjustedX = initialX.coerceIn(0, maxLeftX)
 
         val adjustedY = when {
             initialY + popupContentSize.height > windowSize.height -> {
@@ -92,4 +90,77 @@ internal fun calculateTransformOrigin(anchorBounds: IntRect, menuBounds: IntRect
     }
 
     return TransformOrigin(pivotX, pivotY)
+}
+
+internal object AnchorTooltipTailSpec {
+    val insetFromStart: Dp = 18.dp
+    val width: Dp = 14.dp
+    val height: Dp = 6.dp
+    val horizontalScreenMargin: Dp = 16.dp
+    val minBubbleWidth: Dp = 120.dp
+    val absoluteMaxBubbleWidth: Dp = 288.dp
+}
+
+internal fun computeAnchorTooltipMaxBubbleWidthPx(
+    anchorBounds: IntRect,
+    windowWidthPx: Int,
+    density: Density,
+): Int = with(density) {
+    val anchorCenterX = anchorBounds.left + anchorBounds.width / 2
+    val tailCenterPx = (AnchorTooltipTailSpec.insetFromStart + AnchorTooltipTailSpec.width / 2).roundToPx()
+    val idealLeft = anchorCenterX - tailCenterPx
+    val marginPx = AnchorTooltipTailSpec.horizontalScreenMargin.roundToPx()
+    val minPx = AnchorTooltipTailSpec.minBubbleWidth.roundToPx()
+    val capPx = AnchorTooltipTailSpec.absoluteMaxBubbleWidth.roundToPx()
+    (windowWidthPx - marginPx - idealLeft.coerceAtLeast(0))
+        .coerceIn(minPx, capPx)
+}
+
+/**
+ * @param onTailOnTopOfBubble true = хвост сверху бабла (остриё вверх, подсказка под якорём);
+ * false = хвост снизу (остриё вниз, подсказка над якорём).
+ */
+internal class AnchorTooltipPositionProvider(
+    private val gapBelowAnchor: Dp,
+    private val density: Density,
+    private val onTailOnTopOfBubble: (Boolean) -> Unit,
+) : PopupPositionProvider {
+
+    override fun calculatePosition(
+        anchorBounds: IntRect,
+        windowSize: IntSize,
+        layoutDirection: LayoutDirection,
+        popupContentSize: IntSize
+    ): IntOffset {
+        val gapPx = with(density) { gapBelowAnchor.roundToPx() }
+        val anchorCenterX = anchorBounds.left + anchorBounds.width / 2
+        val tailCenterFromStartPx = with(density) {
+            (AnchorTooltipTailSpec.insetFromStart + AnchorTooltipTailSpec.width / 2).roundToPx()
+        }
+        val maxBubblePx = computeAnchorTooltipMaxBubbleWidthPx(
+            anchorBounds = anchorBounds,
+            windowWidthPx = windowSize.width,
+            density = density,
+        )
+        val idealLeft = anchorCenterX - tailCenterFromStartPx
+        var x = idealLeft.coerceIn(0, max(0, windowSize.width - maxBubblePx))
+
+        var y = anchorBounds.bottom + gapPx
+        var tailOnTopOfBubble = true
+
+        if (y + popupContentSize.height > windowSize.height) {
+            val aboveY = anchorBounds.top - popupContentSize.height - gapPx
+            if (aboveY >= 0) {
+                y = aboveY
+                tailOnTopOfBubble = false
+            } else {
+                y = y.coerceIn(0, max(0, windowSize.height - popupContentSize.height))
+            }
+        } else {
+            y = y.coerceIn(0, max(0, windowSize.height - popupContentSize.height))
+        }
+
+        onTailOnTopOfBubble(tailOnTopOfBubble)
+        return IntOffset(x, y)
+    }
 }

@@ -7,11 +7,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
+import com.tonapps.log.L
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.tonapps.ledger.ble.BleManager
 import com.tonapps.ledger.ble.BleManagerFactory
+import com.tonapps.blockchain.ton.TonNetwork
 import com.tonapps.blockchain.ton.contract.WalletVersion
 import com.tonapps.blockchain.ton.extensions.toAccountId
 import com.tonapps.blockchain.ton.extensions.toWalletAddress
@@ -21,8 +22,6 @@ import com.tonapps.icu.CurrencyFormatter
 import com.tonapps.ledger.LedgerException
 import com.tonapps.ledger.ble.BleTransport
 import com.tonapps.ledger.ble.ConnectedDevice
-import com.tonapps.ledger.ble.LedgerBle
-import com.tonapps.ledger.devices.DeviceModel
 import com.tonapps.ledger.devices.Devices
 import com.tonapps.ledger.ton.AccountPath
 import com.tonapps.ledger.ton.LedgerAccount
@@ -38,7 +37,7 @@ import com.tonapps.tonkeeper.ui.screen.ledger.steps.list.Item
 import com.tonapps.uikit.list.ListCell
 import com.tonapps.wallet.api.API
 import com.tonapps.wallet.data.account.AccountRepository
-import com.tonapps.wallet.data.account.entities.WalletEntity
+import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.wallet.data.collectibles.CollectiblesRepository
 import com.tonapps.wallet.data.collectibles.entities.NftEntity
 import com.tonapps.wallet.data.settings.SettingsRepository
@@ -205,7 +204,6 @@ class LedgerConnectionViewModel(
     }
 
     private fun startWaitBleDevice() {
-
         val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
         context.registerReceiver(bluetoothReceiver, filter)
 
@@ -285,12 +283,14 @@ class LedgerConnectionViewModel(
             return
         }
 
+        L.d("LEDGER", "Connecting to device $deviceId")
+
         bleManager.connect(address = deviceId, onConnectError = {
             pollTonAppJob?.cancel()
 
             viewModelScope.launch {
                 delay(1000)
-                Log.d("LEDGER", "Reconnecting to device $deviceId")
+                L.d("LEDGER", "Reconnecting to device $deviceId")
                 connectBle(deviceId)
             }
 
@@ -394,7 +394,7 @@ class LedgerConnectionViewModel(
         viewModelScope.launch {
             try {
                 if (_tonTransport == null || !hasConnectedDevice() || _walletId == null || _proofData == null) {
-                    throw IllegalStateException()
+                    throw IllegalStateException("Cannot sign domain proof: Ledger transport, connected device, wallet id or proof data is missing")
                 }
 
                 val version = _tonTransport!!.getVersion()
@@ -417,7 +417,7 @@ class LedgerConnectionViewModel(
                 _connectionState.tryEmit(ConnectionState.Signed)
                 _eventFlow.tryEmit(LedgerEvent.SignedProof(proof))
             } catch (e: Exception) {
-                Log.d("LEDGER", "Error signing transaction", e)
+                L.d("LEDGER", "Error signing transaction", e)
                 if (e.instanceOf(TransportStatusException.DeniedByUser::class)) {
                     _eventFlow.tryEmit(LedgerEvent.Rejected)
                 } else {
@@ -436,7 +436,7 @@ class LedgerConnectionViewModel(
         viewModelScope.launch {
             try {
                 if (_tonTransport == null || !hasConnectedDevice() || _walletId == null || _transaction == null) {
-                    throw IllegalStateException()
+                    throw IllegalStateException("Cannot sign transaction: Ledger transport, connected device, wallet id or transaction is missing")
                 }
 
                 val version = _tonTransport!!.getVersion()
@@ -457,7 +457,7 @@ class LedgerConnectionViewModel(
                 _connectionState.tryEmit(ConnectionState.Signed)
                 _eventFlow.tryEmit(LedgerEvent.SignedTransaction(signedBody))
             } catch (e: Exception) {
-                Log.d("LEDGER", "Error signing transaction", e)
+                L.d("LEDGER", "Error signing transaction", e)
                 if (e.instanceOf(TransportStatusException.DeniedByUser::class)) {
                     _eventFlow.tryEmit(LedgerEvent.Rejected)
                 } else if (e.instanceOf(TransportStatusException.BlindSigningDisabled::class)) {
@@ -517,7 +517,7 @@ class LedgerConnectionViewModel(
             val deferredAccounts = mutableListOf<Deferred<Account?>>()
             for (account in ledgerData.accounts) {
                 deferredAccounts.add(async {
-                    api.resolveAccount(account.address.toAccountId(), false)
+                    api.resolveAccount(account.address.toAccountId(), TonNetwork.MAINNET)
                 })
             }
 
@@ -527,7 +527,7 @@ class LedgerConnectionViewModel(
                     tokenRepository.get(
                         settingsRepository.currency,
                         account.address.toAccountId(),
-                        false
+                        TonNetwork.MAINNET
                     ) ?: emptyList()
                 })
             }
@@ -537,7 +537,7 @@ class LedgerConnectionViewModel(
                 deferredCollectibles.add(async {
                     collectiblesRepository.get(
                         account.address.toAccountId(),
-                        false
+                        TonNetwork.MAINNET
                     ) ?: emptyList()
                 })
             }
@@ -582,13 +582,13 @@ class LedgerConnectionViewModel(
                 }
 
                 while (!isAppOpen()) {
-                    Log.d("LEDGER", "Waiting for app to open")
+                    L.d("LEDGER", "Waiting for app to open")
                     delay(1000)
                 }
 
                 setTonTransport(tonTransport, type)
             } catch (e: Throwable) {
-                Log.d("LEDGER", "Error waiting for TON app", e)
+                L.d("LEDGER", "Error waiting for TON app", e)
                 _connectionState.tryEmit(ConnectionState.Disconnected())
             }
         }
@@ -641,9 +641,11 @@ class LedgerConnectionViewModel(
         } else {
             uiItems.add(
                 Item.Step(
-                    if (_proofData !== null) context.getString(Localization.ledger_confirm_proof) else context.getString(
-                        Localization.ledger_confirm_tx
-                    ),
+                    if (_proofData !== null) {
+                        context.getString(Localization.ledger_confirm_proof)
+                    } else {
+                        context.getString(Localization.ledger_confirm_tx)
+                    },
                     currentStep == LedgerStep.DONE,
                     currentStep == LedgerStep.CONFIRM_TX
                 )

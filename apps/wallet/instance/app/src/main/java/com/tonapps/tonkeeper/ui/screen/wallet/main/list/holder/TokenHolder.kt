@@ -1,30 +1,39 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
 import android.net.Uri
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
+import com.tonapps.blockchain.contract.Blockchain
+import com.tonapps.blockchain.model.legacy.TokenEntity
+import com.tonapps.bus.generated.Events.AssetScreen.AssetScreenFrom
+import com.tonapps.core.flags.WalletFeature
 import com.tonapps.extensions.isLocal
 import com.tonapps.icu.CurrencyFormatter.withCustomSymbol
 import com.tonapps.tonkeeper.extensions.buildRateString
 import com.tonapps.tonkeeper.ui.screen.token.viewer.TokenScreen
 import com.tonapps.tonkeeper.ui.screen.wallet.main.list.Item
 import com.tonapps.tonkeeperx.R
+import com.tonapps.trading.AssetsFragment
 import com.tonapps.uikit.color.accentOrangeColor
 import com.tonapps.uikit.color.textSecondaryColor
-import com.tonapps.wallet.api.entity.value.Blockchain
+import com.tonapps.uikit.icon.UIKitIcon
 import com.tonapps.wallet.data.core.HIDDEN_BALANCE
 import com.tonapps.wallet.localization.Localization
+import uikit.extensions.badgeDefault
+import uikit.extensions.badgeGreen
 import uikit.extensions.drawable
-import uikit.extensions.withDefaultBadge
 import uikit.widget.AsyncImageView
+import uikit.widget.BadgeTextView
 import uikit.widget.ResizeOptions
 
 class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_cell_jetton) {
 
     private val iconView = findViewById<AsyncImageView>(R.id.icon)
     private val networkIconView = findViewById<AsyncImageView>(R.id.network_icon)
-    private val titleView = findViewById<AppCompatTextView>(R.id.title)
+    private val titleView = findViewById<BadgeTextView>(R.id.title)
     private val rateView = findViewById<AppCompatTextView>(R.id.rate)
     private val balanceContainerView = findViewById<View>(R.id.balance_container)
     private val balanceView = findViewById<AppCompatTextView>(R.id.balance)
@@ -37,17 +46,21 @@ class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_c
             openToken(item)
         }
         if (item.blacklist) {
-            titleView.text = getString(Localization.fake)
+            titleView.setTextWithBadge(getString(Localization.fake), null)
             iconView.clear(null)
         } else {
-            val text = if (item.showNetwork && item.isUSDT) {
-                item.symbol.withDefaultBadge(context, Localization.ton)
-            } else if (item.showNetwork && item.isTRC20) {
-                item.symbol.withDefaultBadge(context, Localization.trc20)
+            val symbol = if (item.isTON) {
+                getString(Localization.gram_symbol_home)
             } else {
                 item.symbol
             }
-            titleView.text = text
+            val badge = when {
+                item.showNetwork && item.isUSDT -> defaultBadge(Localization.ton)
+                item.showNetwork && item.isTRC20 -> defaultBadge(Localization.trc20)
+                item.isTON && item.apyFormatted != null -> apyBadge(item.apyFormatted)
+                else -> null
+            }
+            titleView.setTextWithBadge(symbol, badge)
             setTokenIcon(item.iconUri)
 
             networkIconView.visibility = if (item.showNetwork) View.VISIBLE else View.GONE
@@ -87,7 +100,7 @@ class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_c
 
     private fun setNetworkIcon(blockchain: Blockchain) {
         val icon = when (blockchain) {
-            Blockchain.TON -> R.drawable.ic_ton
+            Blockchain.TON -> UIKitIcon.ic_ton
             Blockchain.TRON -> R.drawable.ic_tron
         }
 
@@ -113,8 +126,40 @@ class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_c
         }
     }
 
+    private fun defaultBadge(@StringRes resId: Int): CharSequence {
+        return SpannableStringBuilder(" ").badgeDefault(context) {
+            append(context.getString(resId))
+        }
+    }
+
+    private fun apyBadge(apy: String): CharSequence {
+        return SpannableStringBuilder(" ").badgeGreen(context) {
+            append(apy)
+            append(" ")
+            append(context.getString(Localization.staking_apy))
+        }
+    }
+
     private fun openToken(item: Item.Token) {
-        navigation?.add(TokenScreen.newInstance(item.wallet, item.address, item.name, item.symbol))
+        if (shouldOpenAssetDetails(item)) {
+            val assetId = TokenEntity.assetId(item.blockchain, item.address, item.wallet.network)
+            navigation?.add(
+                AssetsFragment.newInstance(
+                    assetId = assetId,
+                    from = AssetScreenFrom.WalletScreen,
+                    name = item.name,
+                    imageUrl = item.iconUri.toString(),
+                )
+            )
+        } else {
+            navigation?.add(TokenScreen.newInstance(item.wallet, item.address, item.name, item.symbol))
+        }
+    }
+
+    private fun shouldOpenAssetDetails(item: Item.Token): Boolean {
+        return WalletFeature.TradingTab.isEnabled &&
+            item.wallet.network.isMainnet &&
+            !item.isUSDe
     }
 
 }

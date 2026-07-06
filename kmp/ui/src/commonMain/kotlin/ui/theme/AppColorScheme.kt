@@ -19,6 +19,7 @@ import ui.theme.color.TextColorScheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Immutable
 data class AppColorScheme(
+    val appearance: AppThemeAppearance,
     val text: TextColorScheme,
     val background: BackgroundColorScheme,
     val icon: IconColorScheme,
@@ -32,6 +33,9 @@ data class AppColorScheme(
     val tabBar: TabBarColorScheme,
     val separator: SeparatorColorScheme
 ) {
+
+    val isLightTheme: Boolean
+        get() = appearance == AppThemeAppearance.Light
 
     val rippleConfiguration = RippleConfiguration(
         color = background.highlighted

@@ -1,5 +1,6 @@
 package ui.theme
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import ui.theme.color.AccentColorScheme
 import ui.theme.color.BackgroundColorScheme
@@ -10,7 +11,9 @@ import ui.theme.color.SeparatorColorScheme
 import ui.theme.color.TabBarColorScheme
 import ui.theme.color.TextColorScheme
 
+@Composable
 fun appColorSchemeDark() = AppColorScheme(
+    appearance = AppThemeAppearance.Dark,
     text = TextColorScheme(
         primary = Color(0xFFD9D9D9),
         secondary = Color(0xFF8D8D93),
@@ -20,8 +23,10 @@ fun appColorSchemeDark() = AppColorScheme(
     ),
     background = BackgroundColorScheme(
         page = Color(0xFF000000),
+        pageAlternate = Color(0xFF000000),
         transparent = Color(0xF5000000),
         content = Color(0xFF17171A),
+        contentAlternate = Color(0xFF17171A),
         contentTint = Color(0xFF222224),
         contentAttention = Color(0xFF2F2F33),
         highlighted = Color(0x0AFFFFFF),

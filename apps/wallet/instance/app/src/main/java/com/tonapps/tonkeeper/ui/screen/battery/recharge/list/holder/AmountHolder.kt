@@ -23,9 +23,9 @@ class AmountHolder(
         get() = amountView
 
     override fun onBind(item: Item.Amount) {
-        amountView.doOnValueChange = { it, _ ->
-            if (it != item.value) {
-                onValueChange(it)
+        amountView.doOnValueChange = { value, _ ->
+            if (value != item.value) {
+                onValueChange(value)
             }
         }
         amountView.suffix = item.symbol
