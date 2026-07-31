@@ -4,7 +4,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.tonapps.kmp.async"
         compileSdk = libs.versions.android.sdk.compile.get().toInt()
     }

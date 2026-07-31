@@ -77,7 +77,7 @@ jobs:
       - name: Download built APK artifact
         uses: actions/download-artifact@v7
         with:
-          name: ${{ needs.build-apk.outputs.artifact-name }}
+          name: tonkeeper-nightly-debug-${{ needs.build-apk.outputs.version-code }}
           path: dist/apk
 
       - name: Resolve debug APK path

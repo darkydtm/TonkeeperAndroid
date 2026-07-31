@@ -15,6 +15,11 @@ import com.tonapps.extensions.putBoolean
 import com.tonapps.extensions.putInt
 import com.tonapps.extensions.putString
 import com.tonapps.wallet.api.API
+import com.tonapps.wallet.data.core.MaterialYouColorSource
+import com.tonapps.wallet.data.core.MaterialYouGenerator
+import com.tonapps.wallet.data.core.MaterialYouHexColor
+import com.tonapps.wallet.data.core.MaterialYouPreset
+import com.tonapps.wallet.data.core.MaterialYouSettings
 import com.tonapps.wallet.data.core.SearchEngine
 import com.tonapps.wallet.data.core.Theme
 import com.tonapps.wallet.data.core.isAvailableBiometric
@@ -56,7 +61,13 @@ class SettingsRepository(
         private const val BIOMETRIC_KEY = "biometric"
         private const val COUNTRY_KEY = "country"
         private const val LANGUAGE_CODE_KEY = "language_code"
-        private const val THEME_KEY = "theme"
+		private const val THEME_KEY = "theme"
+		private const val MATERIAL_YOU_WALLPAPER_KEY = "material_you_wallpaper"
+		private const val MATERIAL_YOU_GENERATOR_KEY = "material_you_generator"
+		private const val MATERIAL_YOU_COLOR_SOURCE_KEY = "material_you_color_source"
+		private const val MATERIAL_YOU_PRESET_KEY = "material_you_preset"
+		private const val MATERIAL_YOU_CUSTOM_COLOR_KEY = "material_you_custom_color"
+		private const val MATERIAL_YOU_AMOLED_KEY = "material_you_amoled"
         private const val HIDDEN_BALANCES_KEY = "hidden_balances"
         private const val FIREBASE_TOKEN_KEY = "firebase_token"
         private const val INSTALL_ID_KEY = "install_id"
@@ -148,14 +159,47 @@ class SettingsRepository(
             }
         }
 
-    var theme: Theme = Theme.getByKey(prefs.getString(THEME_KEY, "blue")!!)
-        set(value) {
-            if (value != field) {
-                prefs.putString(THEME_KEY, value.key)
-                field = value
-                migrationHelper.setLegacyTheme(value)
-            }
-        }
+	var theme: Theme = Theme.getByKey(prefs.getString(THEME_KEY, Theme.BLUE_KEY)!!)
+		set(value) {
+			if (value != field) {
+				prefs.putString(THEME_KEY, value.key)
+				field = value
+				migrationHelper.setLegacyTheme(value)
+			}
+		}
+
+	var materialYouSettings: MaterialYouSettings = MaterialYouSettings(
+		useWallpaperColors = prefs.getBoolean(MATERIAL_YOU_WALLPAPER_KEY, true),
+		generator = MaterialYouGenerator.fromStorageKey(
+			prefs.getString(MATERIAL_YOU_GENERATOR_KEY, null),
+		),
+		colorSource = MaterialYouColorSource.fromStorageKey(
+			prefs.getString(MATERIAL_YOU_COLOR_SOURCE_KEY, null),
+		),
+		preset = MaterialYouPreset.fromStorageKey(
+			prefs.getString(MATERIAL_YOU_PRESET_KEY, null),
+		),
+		customColor = MaterialYouHexColor.parse(
+			prefs.getString(MATERIAL_YOU_CUSTOM_COLOR_KEY, null),
+		) ?: MaterialYouPreset.BLUE.color,
+		amoled = prefs.getBoolean(MATERIAL_YOU_AMOLED_KEY, false),
+	)
+		private set
+
+	fun updateMaterialYouSettings(value: MaterialYouSettings) {
+		if (value == materialYouSettings) {
+			return
+		}
+		prefs.edit {
+			putBoolean(MATERIAL_YOU_WALLPAPER_KEY, value.useWallpaperColors)
+			putString(MATERIAL_YOU_GENERATOR_KEY, value.generator.storageKey)
+			putString(MATERIAL_YOU_COLOR_SOURCE_KEY, value.colorSource.storageKey)
+			putString(MATERIAL_YOU_PRESET_KEY, value.preset.storageKey)
+			putString(MATERIAL_YOU_CUSTOM_COLOR_KEY, MaterialYouHexColor.format(value.customColor))
+			putBoolean(MATERIAL_YOU_AMOLED_KEY, value.amoled)
+		}
+		materialYouSettings = value
+	}
 
     var chartPeriod: ChartPeriod = ChartPeriod.of(prefs.getString(CHART_PERIOD_KEY, ""))
         set(value) {
@@ -285,7 +329,7 @@ class SettingsRepository(
 
     val isLightTheme: Boolean
         get() {
-            if (theme.isSystem) {
+			if (theme.usesSystemAppearance) {
                 val uiMode = context.resources.configuration.uiMode
                 val isDarkMode =
                     uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES

@@ -1,11 +1,13 @@
 package com.tonapps.tonkeeper.ui.screen.root
 
 import android.annotation.SuppressLint
+import android.app.WallpaperManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.os.Build
 import android.os.Handler
 import android.provider.Browser
 import android.view.View
@@ -27,6 +29,7 @@ import com.tonapps.blockchain.ton.extensions.equalsAddress
 import com.tonapps.bus.generated.Events
 import com.tonapps.core.RNLegacyDelegate
 import com.tonapps.core.deeplink.DeepLink
+import com.tonapps.core.theme.MaterialYouTheme
 import com.tonapps.dapp.warning.DAppConfirmFragment
 import com.tonapps.deposit.DepositFragment
 import com.tonapps.deposit.DepositRoutes
@@ -57,6 +60,7 @@ import com.tonapps.tonkeeper.koin.analytics
 import com.tonapps.tonkeeper.koin.remoteConfig
 import com.tonapps.tonkeeper.koin.serverConfig
 import com.tonapps.tonkeeper.manager.tonconnect.TonConnect
+import com.tonapps.tonkeeper.manager.theme.MaterialYouResources
 import com.tonapps.tonkeeper.ui.base.BaseWalletActivity
 import com.tonapps.tonkeeper.ui.base.QRCameraScreen
 import com.tonapps.tonkeeper.ui.base.WalletFragmentFactory
@@ -151,15 +155,30 @@ class RootActivity : BaseWalletActivity(),
     private lateinit var lockPasscodeView: PasscodeView
     private lateinit var lockSignOut: View
     private lateinit var migrationLoaderContainer: View
-    private lateinit var migrationLoaderIcon: View
+	private lateinit var migrationLoaderIcon: View
+	private var wallpaperSeedColor: Int? = null
+	private var wallpaperListenerRegistered = false
+	private val wallpaperColorsListener = WallpaperManager.OnColorsChangedListener { _, which ->
+		if (which and WallpaperManager.FLAG_SYSTEM == 0 ||
+			!settingsRepository.theme.isMaterialYou ||
+			!settingsRepository.materialYouSettings.useWallpaperColors
+		) {
+			return@OnColorsChangedListener
+		}
+		val updatedSeedColor = getColor(android.R.color.system_accent1_500)
+		if (updatedSeedColor != wallpaperSeedColor) {
+			wallpaperSeedColor = updatedSeedColor
+			ActivityCompat.recreate(this)
+		}
+	}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val theme = settingsRepository.theme
-        setTheme(theme)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		val theme = prepareTheme(settingsRepository.theme)
+		setTheme(theme)
         supportFragmentManager.fragmentFactory = WalletFragmentFactory()
         super.onCreate(savedInstanceState)
 
-        if (theme.isSystem) {
+		if (theme.usesSystemAppearance) {
             setAppearanceLight(!isDarkMode)
         } else {
             setAppearanceLight(theme.light)
@@ -348,13 +367,15 @@ class RootActivity : BaseWalletActivity(),
         viewModel.disconnectTonConnectBridge()
     }
 
-    override fun onStart() {
-        super.onStart()
-        googlePlayUpdateHelper.onStart()
-    }
+	override fun onStart() {
+		super.onStart()
+		registerWallpaperColorsListener()
+		googlePlayUpdateHelper.onStart()
+	}
 
-    override fun onStop() {
-        googlePlayUpdateHelper.onStop()
+	override fun onStop() {
+		unregisterWallpaperColorsListener()
+		googlePlayUpdateHelper.onStop()
         super.onStop()
     }
 
@@ -419,20 +440,64 @@ class RootActivity : BaseWalletActivity(),
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         App.applyConfiguration(newConfig)
-        if (settingsRepository.theme.isSystem) {
-            ActivityCompat.recreate(this)
-        }
-    }
+		if (settingsRepository.theme.usesSystemAppearance) {
+			ActivityCompat.recreate(this)
+		}
+	}
 
-    private fun setTheme(theme: Theme) {
-        if (!theme.isSystem) {
-            setTheme(theme.resId)
+	private fun prepareTheme(theme: Theme): Theme {
+		if (!theme.isMaterialYou || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+			return theme
+		}
+		val applied = runCatching {
+			val palette = MaterialYouTheme.palette(
+				context = this,
+				settings = settingsRepository.materialYouSettings,
+				dark = isDarkMode,
+			)
+			wallpaperSeedColor = palette.seedColor
+			MaterialYouResources.apply(this, palette)
+		}.getOrDefault(false)
+		if (applied) {
+			return theme
+		}
+		return Theme.getByKey(Theme.BLUE_KEY).also {
+			settingsRepository.theme = it
+		}
+	}
+
+	private fun setTheme(theme: Theme) {
+		if (!theme.usesSystemAppearance) {
+			setTheme(theme.resId)
         } else if (isDarkMode) {
             setTheme(uikit.R.style.Theme_App_Dark)
         } else {
             setTheme(uikit.R.style.Theme_App_Light)
-        }
-    }
+		}
+	}
+
+	private fun registerWallpaperColorsListener() {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
+			wallpaperListenerRegistered ||
+			!settingsRepository.theme.isMaterialYou ||
+			!settingsRepository.materialYouSettings.useWallpaperColors
+		) {
+			return
+		}
+		WallpaperManager.getInstance(this).addOnColorsChangedListener(
+			wallpaperColorsListener,
+			uiHandler,
+		)
+		wallpaperListenerRegistered = true
+	}
+
+	private fun unregisterWallpaperColorsListener() {
+		if (!wallpaperListenerRegistered || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+			return
+		}
+		WallpaperManager.getInstance(this).removeOnColorsChangedListener(wallpaperColorsListener)
+		wallpaperListenerRegistered = false
+	}
 
     fun setAppearanceLight(light: Boolean) {
         val isLightTheme = settingsRepository.isLightTheme

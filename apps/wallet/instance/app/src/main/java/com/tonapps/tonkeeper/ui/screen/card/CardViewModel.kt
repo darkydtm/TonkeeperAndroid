@@ -29,7 +29,7 @@ class CardViewModel(
         builder.appendQueryParameter("lang", context.locale.language)
         builder.appendQueryParameter("currency", settingsRepository.currency.code)
         builder.appendQueryParameter("theme", "holders")
-        builder.appendQueryParameter("theme-style", if (settingsRepository.theme.light) "light" else "dark")
+		builder.appendQueryParameter("theme-style", if (settingsRepository.isLightTheme) "light" else "dark")
         builder.appendQueryParameter("utm_source", "tonkeeper")
         builder.build()
     }

@@ -3,7 +3,6 @@ package uikit.widget
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
@@ -12,12 +11,12 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.graphics.withSave
 import androidx.core.view.isVisible
 import com.tonapps.uikit.color.buttonPrimaryBackgroundColor
+import com.tonapps.uikit.color.buttonPrimaryForegroundColor
 import com.tonapps.uikit.color.buttonTertiaryBackgroundColor
-import com.tonapps.uikit.color.constantWhiteColor
+import com.tonapps.uikit.color.buttonTertiaryForegroundColor
 import uikit.ArgbEvaluator
 import uikit.extensions.dp
 import uikit.extensions.range
-import androidx.core.graphics.toColorInt
 
 class SwitchView @JvmOverloads constructor(
     context: Context,
@@ -34,17 +33,18 @@ class SwitchView @JvmOverloads constructor(
         private val thumbOffset = 2.5f.dp
     }
 
-    private val defaultTrackColor = context.buttonTertiaryBackgroundColor
-    private val activeTrackColor = context.buttonPrimaryBackgroundColor
+	private val defaultTrackColor = context.buttonTertiaryBackgroundColor
+	private val activeTrackColor = context.buttonPrimaryBackgroundColor
+	private val defaultThumbColor = context.buttonTertiaryForegroundColor
+	private val activeThumbColor = context.buttonPrimaryForegroundColor
 
     private val trackPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = defaultTrackColor
     }
 
-    private val thumbPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.constantWhiteColor
-        // setShadowLayer(8f.dp, 0f, 3f.dp, "#26000000".toColorInt())
-    }
+	private val thumbPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+		color = defaultThumbColor
+	}
 
     private var checked: Boolean = false
 
@@ -151,10 +151,12 @@ class SwitchView @JvmOverloads constructor(
         } else {
             if (checked) {
                 progress = 0f
-                trackPaint.color = activeTrackColor
+				trackPaint.color = activeTrackColor
+				thumbPaint.color = activeThumbColor
             } else {
-                progress = 0f
-                trackPaint.color = defaultTrackColor
+				progress = 0f
+				trackPaint.color = defaultTrackColor
+				thumbPaint.color = defaultThumbColor
             }
             invalidate()
         }
@@ -177,6 +179,11 @@ class SwitchView @JvmOverloads constructor(
             evaluator.evaluate(progress, activeTrackColor, defaultTrackColor)
         }
 
+		thumbPaint.color = if (checked) {
+			evaluator.evaluate(progress, defaultThumbColor, activeThumbColor)
+		} else {
+			evaluator.evaluate(progress, activeThumbColor, defaultThumbColor)
+		}
 
         invalidate()
     }

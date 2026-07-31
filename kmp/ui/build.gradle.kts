@@ -6,7 +6,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.tonapps.compose.ui"
         compileSdk = libs.versions.android.sdk.compile.get().toInt()
         androidResources.enable = true

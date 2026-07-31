@@ -7,7 +7,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.tonapps.kmp.mvi"
         compileSdk = libs.versions.android.sdk.compile.get().toInt()
 

@@ -12,7 +12,8 @@ dependencies {
 
     implementation(libs.bundles.nav3)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.koin.core)
+	implementation(libs.koin.core)
+	implementation(libs.material)
 
     implementation(projects.apps.wallet.api)
     implementation(projects.apps.wallet.data.account)

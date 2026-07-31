@@ -165,6 +165,7 @@ public final class ShimmerDrawable extends Drawable {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public int getOpacity() {
         return mShimmer != null && (mShimmer.clipToChildren || mShimmer.alphaShimmer)
                 ? PixelFormat.TRANSLUCENT
