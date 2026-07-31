@@ -1,7 +1,6 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
 import com.tonapps.extensions.recreate
 import com.tonapps.tonkeeper.core.LauncherIcon
 import com.tonapps.tonkeeper.ui.base.BaseWalletVM
@@ -10,14 +9,14 @@ import com.tonapps.uikit.list.ListCell
 import com.tonapps.wallet.data.core.Theme
 import com.tonapps.wallet.data.core.MaterialYouColorSource
 import com.tonapps.wallet.data.core.MaterialYouGenerator
+import com.tonapps.wallet.data.core.MaterialYouHexColor
 import com.tonapps.wallet.data.core.MaterialYouPreset
+import com.tonapps.wallet.data.core.MaterialYouSettings
 import com.tonapps.wallet.data.settings.SettingsRepository
 import com.tonapps.wallet.localization.Localization
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import uikit.extensions.collectFlow
 
 class ThemeViewModel(
     app: Application,
@@ -63,6 +62,15 @@ class ThemeViewModel(
 		}
 	}
 
+	fun setCustomColor(color: Int) {
+		updateMaterialYouSettings {
+			copy(
+				colorSource = MaterialYouColorSource.CUSTOM,
+				customColor = color,
+			)
+		}
+	}
+
 	fun generatorTitle(generator: MaterialYouGenerator): String {
 		return getString(
 			when (generator) {
@@ -95,7 +103,7 @@ class ThemeViewModel(
 	}
 
 	private fun updateMaterialYouSettings(
-		block: com.tonapps.wallet.data.core.MaterialYouSettings.() -> com.tonapps.wallet.data.core.MaterialYouSettings,
+		block: MaterialYouSettings.() -> MaterialYouSettings,
 	) {
 		settingsRepository.updateMaterialYouSettings(settingsRepository.materialYouSettings.block())
 		updateValues(currentThemeKey)
@@ -141,6 +149,16 @@ class ThemeViewModel(
 							null
 						},
 						titles = MaterialYouPreset.entries.associateWith(::presetTitle),
+					),
+				)
+				items.add(
+					Item.MaterialYouAction(
+						position = ListCell.Position.SINGLE,
+						title = getString(Localization.custom_color),
+						description = MaterialYouHexColor.format(
+							materialYouSettings.customColor,
+						),
+						action = Item.MaterialYouAction.Action.CUSTOM_COLOR,
 					),
 				)
 			}

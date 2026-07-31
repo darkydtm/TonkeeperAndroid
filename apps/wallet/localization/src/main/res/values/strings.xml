@@ -66,6 +66,14 @@
 	<string name="color_blue">Blue</string>
 	<string name="color_purple">Purple</string>
 	<string name="color_pink">Pink</string>
+	<string name="custom_color">Custom color</string>
+	<string name="select_custom_color">Select custom color</string>
+	<string name="hex_color">HEX color</string>
+	<string name="invalid_hex_color">Enter a color in #RRGGBB format</string>
+	<string name="hue">Hue</string>
+	<string name="saturation_value">Saturation and brightness</string>
+	<string name="color_preview">Selected color preview</string>
+	<string name="apply">Apply</string>
     <string name="payment_method">Payment Method</string>
     <string name="downloading">Downloading…</string>
     <string name="required">Required</string>

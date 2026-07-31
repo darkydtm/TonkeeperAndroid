@@ -20,7 +20,6 @@ import com.google.android.material.color.utilities.SchemeTonalSpot
 import com.google.android.material.color.utilities.SchemeVibrant
 import com.tonapps.wallet.data.core.MaterialYouColorSource
 import com.tonapps.wallet.data.core.MaterialYouGenerator
-import com.tonapps.wallet.data.core.MaterialYouPreset
 import com.tonapps.wallet.data.core.MaterialYouSettings
 import ui.theme.AppColorScheme
 

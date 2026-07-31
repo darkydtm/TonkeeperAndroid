@@ -3,7 +3,6 @@ package com.tonapps.tonkeeper.ui.screen.settings.theme.list
 import com.tonapps.tonkeeper.core.LauncherIcon
 import com.tonapps.uikit.list.BaseListItem
 import com.tonapps.uikit.list.ListCell
-import com.tonapps.wallet.data.core.Theme
 import com.tonapps.wallet.data.core.MaterialYouPreset
 
 sealed class Item(type: Int): BaseListItem(type) {
@@ -54,6 +53,7 @@ sealed class Item(type: Int): BaseListItem(type) {
 	): Item(TYPE_MATERIAL_YOU_ACTION) {
 		enum class Action {
 			GENERATOR,
+			CUSTOM_COLOR,
 		}
 	}
 

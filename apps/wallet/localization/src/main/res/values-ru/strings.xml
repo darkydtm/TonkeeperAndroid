@@ -631,6 +631,14 @@
 	<string name="color_blue">Синий</string>
 	<string name="color_purple">Фиолетовый</string>
 	<string name="color_pink">Розовый</string>
+	<string name="custom_color">Свой цвет</string>
+	<string name="select_custom_color">Выберите свой цвет</string>
+	<string name="hex_color">HEX-цвет</string>
+	<string name="invalid_hex_color">Введите цвет в формате #RRGGBB</string>
+	<string name="hue">Оттенок</string>
+	<string name="saturation_value">Насыщенность и яркость</string>
+	<string name="color_preview">Предпросмотр выбранного цвета</string>
+	<string name="apply">Применить</string>
     <string name="payment_method">Способ оплаты</string>
     <string name="downloading">Загрузка…</string>
     <string name="update_tonkeeper">Обновление Tonkeeper</string>

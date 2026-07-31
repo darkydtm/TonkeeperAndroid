@@ -2,7 +2,6 @@ package com.tonapps.tonkeeper.ui.screen.settings.theme
 
 import android.graphics.Rect
 import android.os.Bundle
-import com.tonapps.log.L
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,6 +10,7 @@ import com.tonapps.tonkeeper.ui.base.BaseListWalletScreen
 import com.tonapps.tonkeeper.ui.base.ScreenContext
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Adapter
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Item
+import com.tonapps.tonkeeper.ui.screen.settings.theme.picker.MaterialYouColorPickerScreen
 import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.wallet.localization.Localization
 import com.tonapps.wallet.data.core.MaterialYouGenerator
@@ -18,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import uikit.base.BaseFragment
 import uikit.extensions.collectFlow
 import uikit.extensions.dp
+import uikit.navigation.Navigation.Companion.navigation
 
 class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wallet>(ScreenContext.Wallet(wallet)), BaseFragment.SwipeBack {
 
@@ -80,6 +81,19 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
 	private fun onMaterialYouAction(action: Item.MaterialYouAction.Action) {
 		when (action) {
 			Item.MaterialYouAction.Action.GENERATOR -> showGeneratorPicker()
+			Item.MaterialYouAction.Action.CUSTOM_COLOR -> showColorPicker()
+		}
+	}
+
+	private fun showColorPicker() {
+		navigation?.addForResult(
+			MaterialYouColorPickerScreen.newInstance(viewModel.materialYouSettings.customColor),
+		) { result ->
+			if (result.containsKey(MaterialYouColorPickerScreen.RESULT_COLOR)) {
+				viewModel.setCustomColor(
+					result.getInt(MaterialYouColorPickerScreen.RESULT_COLOR),
+				)
+			}
 		}
 	}
 
