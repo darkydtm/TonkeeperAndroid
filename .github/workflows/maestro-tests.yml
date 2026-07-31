@@ -50,7 +50,7 @@ jobs:
   maestro-tests:
     name: Maestro — ${{ matrix.flow_group }}
     needs: [build-apk, discover-flow-groups]
-    runs-on: linux-x64-16
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 2

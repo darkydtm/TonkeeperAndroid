@@ -6,7 +6,7 @@ on:
 jobs:
   android-build:
     name: android-build
-    runs-on: macos-latest-xlarge
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout to git repository
