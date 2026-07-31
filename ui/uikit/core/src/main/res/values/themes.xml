@@ -77,10 +77,12 @@
         <item name="buttonGreenBackgroundColor">@color/buttonGreenBackgroundBlue</item>
         <item name="buttonGreenBackgroundDisabledColor">@color/buttonGreenBackgroundDisabledBlue</item>
         <item name="buttonGreenBackgroundHighlightedColor">@color/buttonGreenBackgroundDisabledBlue</item>
+		<item name="buttonGreenForegroundColor">@color/buttonGreenForegroundBlue</item>
 
         <item name="buttonOrangeBackgroundColor">@color/buttonOrangeBackgroundBlue</item>
         <item name="buttonOrangeBackgroundDisabledColor">@color/buttonOrangeBackgroundDisabledBlue</item>
         <item name="buttonOrangeBackgroundHighlightedColor">@color/buttonOrangeBackgroundDisabledBlue</item>
+		<item name="buttonOrangeForegroundColor">@color/buttonOrangeForegroundBlue</item>
 
         <item name="fieldBackgroundColor">@color/fieldBackgroundBlue</item>
         <item name="fieldActiveBorderColor">@color/fieldActiveBorderBlue</item>
@@ -143,10 +145,12 @@
         <item name="buttonGreenBackgroundColor">@color/buttonGreenBackgroundDark</item>
         <item name="buttonGreenBackgroundDisabledColor">@color/buttonGreenBackgroundDisabledDark</item>
         <item name="buttonGreenBackgroundHighlightedColor">@color/buttonGreenBackgroundDisabledDark</item>
+		<item name="buttonGreenForegroundColor">@color/buttonGreenForegroundDark</item>
 
         <item name="buttonOrangeBackgroundColor">@color/buttonOrangeBackgroundDark</item>
         <item name="buttonOrangeBackgroundDisabledColor">@color/buttonOrangeBackgroundDisabledDark</item>
         <item name="buttonOrangeBackgroundHighlightedColor">@color/buttonOrangeBackgroundDisabledDark</item>
+		<item name="buttonOrangeForegroundColor">@color/buttonOrangeForegroundDark</item>
 
         <item name="fieldBackgroundColor">@color/fieldBackgroundDark</item>
         <item name="fieldActiveBorderColor">@color/fieldActiveBorderDark</item>
@@ -209,10 +213,12 @@
         <item name="buttonGreenBackgroundColor">@color/buttonGreenBackgroundLight</item>
         <item name="buttonGreenBackgroundDisabledColor">@color/buttonGreenBackgroundDisabledLight</item>
         <item name="buttonGreenBackgroundHighlightedColor">@color/buttonGreenBackgroundDisabledLight</item>
+		<item name="buttonGreenForegroundColor">@color/buttonGreenForegroundLight</item>
 
         <item name="buttonOrangeBackgroundColor">@color/buttonOrangeBackgroundLight</item>
         <item name="buttonOrangeBackgroundDisabledColor">@color/buttonOrangeBackgroundDisabledLight</item>
         <item name="buttonOrangeBackgroundHighlightedColor">@color/buttonOrangeBackgroundDisabledLight</item>
+		<item name="buttonOrangeForegroundColor">@color/buttonOrangeForegroundLight</item>
 
         <item name="fieldBackgroundColor">@color/fieldBackgroundLight</item>
         <item name="fieldActiveBorderColor">@color/fieldActiveBorderLight</item>

@@ -36,10 +36,12 @@
     <color name="buttonGreenBackgroundLight">#25B86F</color>
     <color name="buttonGreenBackgroundDisabledLight">#2B9962</color>
     <color name="buttonGreenBackgroundHighlightedLight">#17C26D</color>
+	<color name="buttonGreenForegroundLight">#FFFFFF</color>
 
     <color name="buttonOrangeBackgroundLight">#F5A73B</color>
     <color name="buttonOrangeBackgroundDisabledLight">#D68B2F</color>
     <color name="buttonOrangeBackgroundHighlightedLight">#FFC25E</color>
+	<color name="buttonOrangeForegroundLight">#FFFFFF</color>
 
     <color name="fieldBackgroundLight">#1F818C99</color>
     <color name="fieldActiveBorderLight">#007AFF</color>
