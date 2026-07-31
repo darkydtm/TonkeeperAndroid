@@ -6,7 +6,7 @@ plugins {
 }
 
 kotlin {
-    androidLibrary {
+    android {
         namespace = "com.tonapps.compose.core"
         compileSdk = libs.versions.android.sdk.compile.get().toInt()
     }

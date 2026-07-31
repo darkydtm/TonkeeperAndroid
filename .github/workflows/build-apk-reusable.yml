@@ -16,9 +16,6 @@ on:
         required: true
         type: string
     outputs:
-      artifact-name:
-        description: Uploaded artifact name
-        value: ${{ jobs.build-apk.outputs.artifact-name }}
       version-code:
         description: Build version code derived from commit timestamp
         value: ${{ jobs.build-apk.outputs.version-code }}
@@ -28,7 +25,6 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     outputs:
-      artifact-name: ${{ steps.artifact_name.outputs.artifact_name }}
       version-code: ${{ steps.version_code.outputs.version_code }}
 
     steps:
