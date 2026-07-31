@@ -3,6 +3,7 @@ package com.tonapps.core
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Build
 import android.view.View
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -15,7 +16,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
 import androidx.navigationevent.compose.rememberNavigationEventDispatcherOwner
 import com.tonapps.apps.wallet.features.core.R
+import com.tonapps.core.theme.MaterialYouTheme
 import com.tonapps.wallet.data.settings.SettingsRepository
+import com.tonapps.wallet.data.core.Theme
 import org.koin.android.ext.android.inject
 import ui.theme.AppColorScheme
 import ui.theme.MoonTheme
@@ -34,16 +37,24 @@ abstract class ComposableFragment : BaseFragment(R.layout.fragment_compose_host)
     private val Context.isDarkMode: Boolean
         get() = uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
-    @get:Composable
-    private val theme: AppColorScheme
-        get() {
-            return when(settings.theme.key) {
-                "blue" -> appColorSchemeBlue()
-                "dark" -> appColorSchemeDark()
-                "light" -> appColorSchemeLight()
-                else -> if (requireContext().isDarkMode) appColorSchemeBlue() else appColorSchemeLight()
-            }
-        }
+	@get:Composable
+	private val theme: AppColorScheme
+		get() {
+			val context = requireContext()
+			if (settings.theme.isMaterialYou && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+				return MaterialYouTheme.appColorScheme(
+					context = context,
+					settings = settings.materialYouSettings,
+					dark = context.isDarkMode,
+				)
+			}
+			return when (settings.theme.key) {
+				Theme.BLUE_KEY -> appColorSchemeBlue()
+				Theme.DARK_KEY -> appColorSchemeDark()
+				Theme.LIGHT_KEY -> appColorSchemeLight()
+				else -> if (context.isDarkMode) appColorSchemeBlue() else appColorSchemeLight()
+			}
+		}
 
     private var isTopFragment by mutableStateOf(true)
 

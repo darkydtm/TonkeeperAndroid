@@ -1,16 +1,19 @@
 package com.tonapps.tonkeeper
 
 import android.content.Context
+import android.os.Build
 import androidx.compose.runtime.Composable
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.tonapps.core.helper.EnvironmentHelper
+import com.tonapps.core.theme.MaterialYouTheme
 import com.tonapps.tonkeeper.core.DevSettings
 import com.tonapps.tonkeeper.extensions.isDarkMode
 import com.tonapps.tonkeeper.os.AppInstall
 import com.tonapps.tonkeeper.os.DeviceCountry
 import com.tonapps.tonkeeperx.BuildConfig
 import com.tonapps.wallet.data.settings.SettingsRepository
+import com.tonapps.wallet.data.core.Theme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -79,16 +82,23 @@ class Environment(
         )
     }
 
-    @get:Composable
-    val theme: AppColorScheme
-        get() {
-            return when(settingsRepository.theme.key) {
-                "blue" -> appColorSchemeBlue()
-                "dark" -> appColorSchemeDark()
-                "light" -> appColorSchemeLight()
-                else -> if (context.isDarkMode) appColorSchemeBlue() else appColorSchemeLight()
-            }
-        }
+	@get:Composable
+	val theme: AppColorScheme
+		get() {
+			if (settingsRepository.theme.isMaterialYou && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+				return MaterialYouTheme.appColorScheme(
+					context = context,
+					settings = settingsRepository.materialYouSettings,
+					dark = context.isDarkMode,
+				)
+			}
+			return when (settingsRepository.theme.key) {
+				Theme.BLUE_KEY -> appColorSchemeBlue()
+				Theme.DARK_KEY -> appColorSchemeDark()
+				Theme.LIGHT_KEY -> appColorSchemeLight()
+				else -> if (context.isDarkMode) appColorSchemeBlue() else appColorSchemeLight()
+			}
+		}
 
     val installerSource: AppInstall.Source by lazy { AppInstall.request(context) }
 
