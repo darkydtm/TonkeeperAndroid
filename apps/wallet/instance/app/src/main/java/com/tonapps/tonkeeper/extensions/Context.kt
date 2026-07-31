@@ -58,7 +58,7 @@ val Context.isDarkMode: Boolean
     get() = uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
 val Context.isLightTheme: Boolean
-    get() = settingsRepository?.theme?.light ?: false
+	get() = settingsRepository?.isLightTheme ?: false
 
 fun Context.safeExternalOpenUri(uri: Uri) {
     if (TonConnectManager.isTonConnectDeepLink(uri)) {
