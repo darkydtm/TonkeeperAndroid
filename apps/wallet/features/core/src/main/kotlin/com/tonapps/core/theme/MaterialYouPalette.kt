@@ -92,16 +92,16 @@ fun MaterialYouPalette.toAppColorScheme(): AppColorScheme {
 			primaryForeground = Color(onPrimary),
 		),
 		buttonSecondary = ButtonColorScheme(
-			primaryBackground = Color(secondaryContainer),
-			primaryBackgroundDisable = Color(secondaryContainer).copy(alpha = 0.38f),
-			primaryBackgroundHighlighted = Color(surfaceContainerHighest),
-			primaryForeground = Color(onSecondaryContainer),
+			primaryBackground = Color(surfaceContainerLow),
+			primaryBackgroundDisable = Color(surfaceContainerLow).copy(alpha = 0.38f),
+			primaryBackgroundHighlighted = Color(surfaceContainer),
+			primaryForeground = onSurfaceColor,
 		),
 		buttonTertiary = ButtonColorScheme(
-			primaryBackground = Color(tertiaryContainer),
-			primaryBackgroundDisable = Color(tertiaryContainer).copy(alpha = 0.38f),
+			primaryBackground = Color(surfaceContainerHigh),
+			primaryBackgroundDisable = Color(surfaceContainerHigh).copy(alpha = 0.38f),
 			primaryBackgroundHighlighted = Color(surfaceContainerHighest),
-			primaryForeground = Color(onTertiaryContainer),
+			primaryForeground = onSurfaceColor,
 		),
 		buttonGreen = ButtonColorScheme(
 			primaryBackground = success,
@@ -130,7 +130,7 @@ fun MaterialYouPalette.toAppColorScheme(): AppColorScheme {
 		),
 		tabBar = TabBarColorScheme(
 			activeIcon = primaryColor,
-			inactiveIcon = Color(onSurfaceVariant),
+			inactiveIcon = Color(outline),
 		),
 		separator = SeparatorColorScheme(
 			common = Color(outlineVariant),
