@@ -10,7 +10,7 @@ concurrency:
 jobs:
   beta-build:
     name: Build Beta APK
-    runs-on: macos-latest-xlarge
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout to git repository

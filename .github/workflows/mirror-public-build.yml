@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build & Release APK
-    runs-on: macos-latest-xlarge
+    runs-on: ubuntu-latest
 
     permissions:
       contents: write
