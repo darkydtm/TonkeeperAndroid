@@ -83,7 +83,9 @@ abstract class NavigationActivity: BaseActivity(), Navigation, ViewTreeObserver.
         val fragment = supportFragmentManager.fragments.lastOrNull() as? BaseFragment ?: return
         if (fragment.onBackPressed()) {
             remove(fragment)
-        }
+		} else {
+			(fragment as? BaseFragment.PredictiveBackGesture)?.onPredictiveBackCommitted()
+		}
     }
 
     override fun onPreDraw(): Boolean {

@@ -49,20 +49,43 @@ open class BaseFragment(
     interface SingleTask
 
     interface PredictiveBackGesture {
-        fun onPredictiveBackCancelled() {
+		fun onPredictiveBackCancelled() {
 
-        }
+		}
 
-        fun onPredictiveBackProgressed(backEvent: BackEventCompat) {
+		fun onPredictiveBackCommitted() {
 
-        }
+		}
 
-        fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
+		fun onPredictiveBackProgressed(backEvent: BackEventCompat) {
 
-        }
+		}
+
+		fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
+
+		}
     }
 
     interface SwipeBack: PredictiveBackGesture {
+
+		private val swipeBackLayout: SwipeBackLayout?
+			get() = (this as BaseFragment).view as? SwipeBackLayout
+
+		override fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
+			swipeBackLayout?.startPredictiveBack(backEvent.swipeEdge)
+		}
+
+		override fun onPredictiveBackProgressed(backEvent: BackEventCompat) {
+			swipeBackLayout?.updatePredictiveBack(backEvent.progress)
+		}
+
+		override fun onPredictiveBackCancelled() {
+			swipeBackLayout?.cancelPredictiveBack()
+		}
+
+		override fun onPredictiveBackCommitted() {
+			swipeBackLayout?.completePredictiveBack()
+		}
 
         fun onEndShowingAnimation() {
 
