@@ -88,7 +88,7 @@ fun MaterialYouPalette.toAppColorScheme(): AppColorScheme {
 		buttonPrimary = ButtonColorScheme(
 			primaryBackground = primaryColor,
 			primaryBackgroundDisable = primaryColor.copy(alpha = 0.38f),
-			primaryBackgroundHighlighted = Color(primaryContainer),
+			primaryBackgroundHighlighted = primaryColor,
 			primaryForeground = Color(onPrimary),
 		),
 		buttonSecondary = ButtonColorScheme(
@@ -107,13 +107,13 @@ fun MaterialYouPalette.toAppColorScheme(): AppColorScheme {
 			primaryBackground = success,
 			primaryBackgroundDisable = success.copy(alpha = 0.64f),
 			primaryBackgroundHighlighted = success.copy(alpha = 0.84f),
-			primaryForeground = Color.White,
+			primaryForeground = Color.Black,
 		),
 		buttonOrange = ButtonColorScheme(
 			primaryBackground = warning,
 			primaryBackgroundDisable = warning.copy(alpha = 0.64f),
 			primaryBackgroundHighlighted = warning.copy(alpha = 0.84f),
-			primaryForeground = Color.White,
+			primaryForeground = Color.Black,
 		),
 		field = FieldColorScheme(
 			background = Color(surfaceContainerHigh),
