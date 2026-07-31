@@ -26,16 +26,17 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
 
     override val viewModel: ThemeViewModel by viewModel()
 
-	private val adapter = Adapter(
-		onClickTheme = { item -> viewModel.setTheme(item.theme.key) },
-		onWallpaperColorsChanged = viewModel::setWallpaperColors,
-		onMaterialYouAction = ::onMaterialYouAction,
-		onPresetSelected = viewModel::setPreset,
-	)
+	private lateinit var adapter: Adapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTitle(getString(Localization.appearance))
+		adapter = Adapter(
+			onClickTheme = { item -> viewModel.setTheme(item.theme.key) },
+			onWallpaperColorsChanged = viewModel::setWallpaperColors,
+			onMaterialYouAction = ::onMaterialYouAction,
+			onPresetSelected = viewModel::setPreset,
+		)
 
         setAdapter(adapter)
         addItemDecoration(object : RecyclerView.ItemDecoration() {
