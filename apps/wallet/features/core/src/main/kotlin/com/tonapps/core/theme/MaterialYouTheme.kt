@@ -1,10 +1,13 @@
 package com.tonapps.core.theme
 
 import android.annotation.SuppressLint
-import android.app.WallpaperManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.ui.graphics.toArgb
 import com.google.android.material.color.utilities.DynamicColor
 import com.google.android.material.color.utilities.DynamicScheme
 import com.google.android.material.color.utilities.Hct
@@ -43,6 +46,14 @@ object MaterialYouTheme {
 		dark: Boolean,
 	): MaterialYouPalette {
 		val seedColor = resolveSeedColor(context, settings)
+		if (settings.generator == MaterialYouGenerator.SYSTEM && settings.useWallpaperColors) {
+			val systemColors = if (dark) {
+				dynamicDarkColorScheme(context)
+			} else {
+				dynamicLightColorScheme(context)
+			}
+			return systemColors.toMaterialYouPalette(seedColor, dark, settings.amoled)
+		}
 		val scheme = createScheme(seedColor, settings.generator, dark)
 		return MaterialYouPalette(
 			seedColor = seedColor,
@@ -78,21 +89,13 @@ object MaterialYouTheme {
 			outline = colors.outline().argb(scheme),
 			outlineVariant = colors.outlineVariant().argb(scheme),
 			scrim = colors.scrim().argb(scheme),
-		)
+		).withAmoled(settings.amoled)
 	}
 
 	@RequiresApi(Build.VERSION_CODES.S)
 	fun resolveSeedColor(context: Context, settings: MaterialYouSettings): Int {
 		if (settings.useWallpaperColors) {
-			val wallpaperColor = runCatching {
-				WallpaperManager.getInstance(context)
-					.getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
-					?.primaryColor
-					?.toArgb()
-			}.getOrNull()
-			if (wallpaperColor != null) {
-				return wallpaperColor
-			}
+			return context.getColor(android.R.color.system_accent1_500)
 		}
 		return when (settings.colorSource) {
 			MaterialYouColorSource.PRESET -> settings.preset.color
@@ -107,6 +110,7 @@ object MaterialYouTheme {
 	): DynamicScheme {
 		val source = Hct.fromInt(seedColor)
 		return when (generator) {
+			MaterialYouGenerator.SYSTEM,
 			MaterialYouGenerator.TONAL_SPOT -> SchemeTonalSpot(source, dark, 0.0)
 			MaterialYouGenerator.VIBRANT -> SchemeVibrant(source, dark, 0.0)
 			MaterialYouGenerator.EXPRESSIVE -> SchemeExpressive(source, dark, 0.0)
@@ -121,5 +125,58 @@ object MaterialYouTheme {
 
 	private fun DynamicColor.argb(scheme: DynamicScheme): Int {
 		return getArgb(scheme)
+	}
+
+	private fun ColorScheme.toMaterialYouPalette(
+		seedColor: Int,
+		dark: Boolean,
+		amoled: Boolean,
+	): MaterialYouPalette {
+		return MaterialYouPalette(
+			seedColor = seedColor,
+			dark = dark,
+			primary = primary.toArgb(),
+			onPrimary = onPrimary.toArgb(),
+			primaryContainer = primaryContainer.toArgb(),
+			onPrimaryContainer = onPrimaryContainer.toArgb(),
+			secondary = secondary.toArgb(),
+			onSecondary = onSecondary.toArgb(),
+			secondaryContainer = secondaryContainer.toArgb(),
+			onSecondaryContainer = onSecondaryContainer.toArgb(),
+			tertiary = tertiary.toArgb(),
+			onTertiary = onTertiary.toArgb(),
+			tertiaryContainer = tertiaryContainer.toArgb(),
+			onTertiaryContainer = onTertiaryContainer.toArgb(),
+			error = error.toArgb(),
+			onError = onError.toArgb(),
+			errorContainer = errorContainer.toArgb(),
+			onErrorContainer = onErrorContainer.toArgb(),
+			background = background.toArgb(),
+			onBackground = onBackground.toArgb(),
+			surface = surface.toArgb(),
+			onSurface = onSurface.toArgb(),
+			onSurfaceVariant = onSurfaceVariant.toArgb(),
+			surfaceContainerLowest = surfaceContainerLowest.toArgb(),
+			surfaceContainerLow = surfaceContainerLow.toArgb(),
+			surfaceContainer = surfaceContainer.toArgb(),
+			surfaceContainerHigh = surfaceContainerHigh.toArgb(),
+			surfaceContainerHighest = surfaceContainerHighest.toArgb(),
+			inverseSurface = inverseSurface.toArgb(),
+			inverseOnSurface = inverseOnSurface.toArgb(),
+			outline = outline.toArgb(),
+			outlineVariant = outlineVariant.toArgb(),
+			scrim = scrim.toArgb(),
+		).withAmoled(amoled)
+	}
+
+	private fun MaterialYouPalette.withAmoled(enabled: Boolean): MaterialYouPalette {
+		if (!enabled || !dark) {
+			return this
+		}
+		return copy(
+			background = 0xFF000000.toInt(),
+			surface = 0xFF000000.toInt(),
+			surfaceContainerLowest = 0xFF000000.toInt(),
+		)
 	}
 }

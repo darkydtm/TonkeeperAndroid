@@ -67,6 +67,7 @@ class SettingsRepository(
 		private const val MATERIAL_YOU_COLOR_SOURCE_KEY = "material_you_color_source"
 		private const val MATERIAL_YOU_PRESET_KEY = "material_you_preset"
 		private const val MATERIAL_YOU_CUSTOM_COLOR_KEY = "material_you_custom_color"
+		private const val MATERIAL_YOU_AMOLED_KEY = "material_you_amoled"
         private const val HIDDEN_BALANCES_KEY = "hidden_balances"
         private const val FIREBASE_TOKEN_KEY = "firebase_token"
         private const val INSTALL_ID_KEY = "install_id"
@@ -181,6 +182,7 @@ class SettingsRepository(
 		customColor = MaterialYouHexColor.parse(
 			prefs.getString(MATERIAL_YOU_CUSTOM_COLOR_KEY, null),
 		) ?: MaterialYouPreset.BLUE.color,
+		amoled = prefs.getBoolean(MATERIAL_YOU_AMOLED_KEY, false),
 	)
 		private set
 
@@ -194,6 +196,7 @@ class SettingsRepository(
 			putString(MATERIAL_YOU_COLOR_SOURCE_KEY, value.colorSource.storageKey)
 			putString(MATERIAL_YOU_PRESET_KEY, value.preset.storageKey)
 			putString(MATERIAL_YOU_CUSTOM_COLOR_KEY, MaterialYouHexColor.format(value.customColor))
+			putBoolean(MATERIAL_YOU_AMOLED_KEY, value.amoled)
 		}
 		materialYouSettings = value
 	}

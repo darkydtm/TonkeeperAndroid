@@ -158,14 +158,14 @@ class RootActivity : BaseWalletActivity(),
 	private lateinit var migrationLoaderIcon: View
 	private var wallpaperSeedColor: Int? = null
 	private var wallpaperListenerRegistered = false
-	private val wallpaperColorsListener = WallpaperManager.OnColorsChangedListener { colors, which ->
+	private val wallpaperColorsListener = WallpaperManager.OnColorsChangedListener { _, which ->
 		if (which and WallpaperManager.FLAG_SYSTEM == 0 ||
 			!settingsRepository.theme.isMaterialYou ||
 			!settingsRepository.materialYouSettings.useWallpaperColors
 		) {
 			return@OnColorsChangedListener
 		}
-		val updatedSeedColor = colors?.primaryColor?.toArgb() ?: return@OnColorsChangedListener
+		val updatedSeedColor = getColor(android.R.color.system_accent1_500)
 		if (updatedSeedColor != wallpaperSeedColor) {
 			wallpaperSeedColor = updatedSeedColor
 			ActivityCompat.recreate(this)

@@ -613,6 +613,9 @@
 	<string name="use_wallpaper_colors">Использовать цвета обоев</string>
 	<string name="use_wallpaper_colors_description">Создавать палитру приложения из текущих обоев</string>
 	<string name="color_generator">Генератор цветов</string>
+	<string name="material_you_system">Системный</string>
+	<string name="material_you_amoled">AMOLED-тема</string>
+	<string name="material_you_amoled_description">Использовать черный фон в темном режиме</string>
 	<string name="base_color">Базовый цвет</string>
 	<string name="material_you_tonal_spot">Tonal Spot</string>
 	<string name="material_you_vibrant">Vibrant</string>

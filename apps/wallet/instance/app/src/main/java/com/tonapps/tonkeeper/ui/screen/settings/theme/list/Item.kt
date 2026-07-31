@@ -16,6 +16,7 @@ sealed class Item(type: Int): BaseListItem(type) {
 		const val TYPE_WALLPAPER_COLORS = 5
 		const val TYPE_MATERIAL_YOU_ACTION = 6
 		const val TYPE_MATERIAL_YOU_PRESETS = 7
+		const val TYPE_MATERIAL_YOU_AMOLED = 8
     }
 
     data class Theme(
@@ -44,6 +45,11 @@ sealed class Item(type: Int): BaseListItem(type) {
 		val position: ListCell.Position,
 		val enabled: Boolean,
 	): Item(TYPE_WALLPAPER_COLORS)
+
+	data class MaterialYouAmoled(
+		val position: ListCell.Position,
+		val enabled: Boolean,
+	): Item(TYPE_MATERIAL_YOU_AMOLED)
 
 	data class MaterialYouAction(
 		val position: ListCell.Position,

@@ -1,6 +1,7 @@
 package com.tonapps.wallet.data.core
 
 enum class MaterialYouGenerator(val storageKey: String) {
+	SYSTEM("system"),
 	TONAL_SPOT("tonal_spot"),
 	VIBRANT("vibrant"),
 	EXPRESSIVE("expressive"),
@@ -13,7 +14,7 @@ enum class MaterialYouGenerator(val storageKey: String) {
 
 	companion object {
 		fun fromStorageKey(value: String?): MaterialYouGenerator {
-			return entries.firstOrNull { it.storageKey == value } ?: TONAL_SPOT
+			return entries.firstOrNull { it.storageKey == value } ?: SYSTEM
 		}
 	}
 }
@@ -51,10 +52,11 @@ enum class MaterialYouColorSource(val storageKey: String) {
 
 data class MaterialYouSettings(
 	val useWallpaperColors: Boolean = true,
-	val generator: MaterialYouGenerator = MaterialYouGenerator.TONAL_SPOT,
+	val generator: MaterialYouGenerator = MaterialYouGenerator.SYSTEM,
 	val colorSource: MaterialYouColorSource = MaterialYouColorSource.PRESET,
 	val preset: MaterialYouPreset = MaterialYouPreset.BLUE,
 	val customColor: Int = MaterialYouPreset.BLUE.color,
+	val amoled: Boolean = false,
 )
 
 object MaterialYouHexColor {

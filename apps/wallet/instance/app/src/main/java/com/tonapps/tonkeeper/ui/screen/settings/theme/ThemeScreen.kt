@@ -34,6 +34,7 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
 		adapter = Adapter(
 			onClickTheme = { item -> viewModel.setTheme(item.theme.key) },
 			onWallpaperColorsChanged = viewModel::setWallpaperColors,
+			onMaterialYouAmoledChanged = viewModel::setAmoled,
 			onMaterialYouAction = ::onMaterialYouAction,
 			onPresetSelected = viewModel::setPreset,
 		)

@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.FontSizeHolder
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.Holder
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.IconHolder
+import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.MaterialYouAmoledHolder
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.MaterialYouActionHolder
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.MaterialYouPresetsHolder
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder.SpaceHolder
@@ -17,6 +18,7 @@ import com.tonapps.uikit.list.BaseListItem
 class Adapter(
 	private val onClickTheme: (item: Item.Theme) -> Unit,
 	private val onWallpaperColorsChanged: (enabled: Boolean) -> Unit,
+	private val onMaterialYouAmoledChanged: (enabled: Boolean) -> Unit,
 	private val onMaterialYouAction: (action: Item.MaterialYouAction.Action) -> Unit,
 	private val onPresetSelected: (preset: com.tonapps.wallet.data.core.MaterialYouPreset) -> Unit,
 ): BaseListAdapter() {
@@ -29,6 +31,7 @@ class Adapter(
             Item.TYPE_SPACE -> SpaceHolder(parent)
 			Item.TYPE_FONT_SIZE -> FontSizeHolder(parent)
 			Item.TYPE_WALLPAPER_COLORS -> WallpaperColorsHolder(parent, onWallpaperColorsChanged)
+			Item.TYPE_MATERIAL_YOU_AMOLED -> MaterialYouAmoledHolder(parent, onMaterialYouAmoledChanged)
 			Item.TYPE_MATERIAL_YOU_ACTION -> MaterialYouActionHolder(parent, onMaterialYouAction)
 			Item.TYPE_MATERIAL_YOU_PRESETS -> MaterialYouPresetsHolder(parent, onPresetSelected)
             else -> throw IllegalArgumentException("Unknown viewType: $viewType")

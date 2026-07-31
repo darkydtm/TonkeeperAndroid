@@ -53,6 +53,12 @@ class ThemeViewModel(
 		}
 	}
 
+	fun setAmoled(enabled: Boolean) {
+		updateMaterialYouSettings {
+			copy(amoled = enabled)
+		}
+	}
+
 	fun setPreset(preset: MaterialYouPreset) {
 		updateMaterialYouSettings {
 			copy(
@@ -74,6 +80,7 @@ class ThemeViewModel(
 	fun generatorTitle(generator: MaterialYouGenerator): String {
 		return getString(
 			when (generator) {
+				MaterialYouGenerator.SYSTEM -> Localization.material_you_system
 				MaterialYouGenerator.TONAL_SPOT -> Localization.material_you_tonal_spot
 				MaterialYouGenerator.VIBRANT -> Localization.material_you_vibrant
 				MaterialYouGenerator.EXPRESSIVE -> Localization.material_you_expressive
@@ -133,10 +140,16 @@ class ThemeViewModel(
 			)
 			items.add(
 				Item.MaterialYouAction(
-					position = ListCell.Position.LAST,
+					position = ListCell.Position.MIDDLE,
 					title = getString(Localization.color_generator),
 					description = generatorTitle(materialYouSettings.generator),
 					action = Item.MaterialYouAction.Action.GENERATOR,
+				),
+			)
+			items.add(
+				Item.MaterialYouAmoled(
+					position = ListCell.Position.LAST,
+					enabled = materialYouSettings.amoled,
 				),
 			)
 			if (!materialYouSettings.useWallpaperColors) {
