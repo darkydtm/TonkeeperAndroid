@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tonapps.tonkeeper.ui.base.BaseListWalletScreen
@@ -12,6 +13,7 @@ import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Adapter
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Item
 import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.wallet.localization.Localization
+import com.tonapps.wallet.data.core.MaterialYouGenerator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uikit.base.BaseFragment
 import uikit.extensions.collectFlow
@@ -23,9 +25,12 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
 
     override val viewModel: ThemeViewModel by viewModel()
 
-    private val adapter = Adapter { item ->
-        viewModel.setTheme(item.theme.resId)
-    }
+	private val adapter = Adapter(
+		onClickTheme = { item -> viewModel.setTheme(item.theme.key) },
+		onWallpaperColorsChanged = viewModel::setWallpaperColors,
+		onMaterialYouAction = ::onMaterialYouAction,
+		onPresetSelected = viewModel::setPreset,
+	)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,8 +47,9 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
             ) {
                 val position = parent.getChildAdapterPosition(view)
                 val item = adapter.getItem(position)
-                if (item is Item.Icon) {
-                    if (position == 6) {
+				if (item is Item.Icon) {
+					val previousItem = if (position > 0) adapter.getItem(position - 1) else null
+					if (previousItem !is Item.Icon) {
                         outRect.set(0, 0, 0, 0)
                     } else {
                         outRect.set(6.dp, 0, 0, 0)
@@ -68,8 +74,30 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
             override fun supportsPredictiveItemAnimations(): Boolean = false
         })
 
-        collectFlow(viewModel.uiItemsFlow, adapter::submitList)
-    }
+		collectFlow(viewModel.uiItemsFlow, adapter::submitList)
+	}
+
+	private fun onMaterialYouAction(action: Item.MaterialYouAction.Action) {
+		when (action) {
+			Item.MaterialYouAction.Action.GENERATOR -> showGeneratorPicker()
+		}
+	}
+
+	private fun showGeneratorPicker() {
+		val generators = MaterialYouGenerator.entries
+		val selected = generators.indexOf(viewModel.materialYouSettings.generator)
+		AlertDialog.Builder(requireContext())
+			.setTitle(getString(Localization.color_generator))
+			.setSingleChoiceItems(
+				generators.map(viewModel::generatorTitle).toTypedArray(),
+				selected,
+			) { dialog, index ->
+				viewModel.setGenerator(generators[index])
+				dialog.dismiss()
+			}
+			.setNegativeButton(getString(Localization.cancel), null)
+			.show()
+	}
 
     companion object {
         fun newInstance(wallet: WalletEntity) = ThemeScreen(wallet)
