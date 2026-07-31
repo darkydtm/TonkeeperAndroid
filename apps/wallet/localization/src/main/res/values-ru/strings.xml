@@ -608,7 +608,8 @@
     <string name="sign">Подписать</string>
     <string name="swipe_right">Свайп вправо</string>
     <string name="open">Открыть</string>
-    <string name="theme_light">Светлая</string>
+	<string name="theme_light">Светлая</string>
+	<string name="material_you">Material You</string>
     <string name="payment_method">Способ оплаты</string>
     <string name="downloading">Загрузка…</string>
     <string name="update_tonkeeper">Обновление Tonkeeper</string>

@@ -29,6 +29,7 @@ import com.tonapps.tonkeeper.ui.base.WalletContextScreen
 import com.tonapps.tonkeeper.ui.screen.send.transaction.SendTransactionScreen
 import com.tonapps.tonkeeper.ui.screen.swap.omniston.OmnistonScreen
 import com.tonapps.tonkeeperx.R
+import com.tonapps.wallet.data.core.Theme
 import com.tonapps.wallet.data.core.entity.SignRequestEntity
 import com.tonapps.wallet.data.settings.BatteryTransaction
 import com.tonapps.wallet.data.settings.SettingsRepository
@@ -128,9 +129,14 @@ class SwapScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragment_sw
         builder.appendQueryParameter("lang", requireContext().locale.toString())
         args.toToken?.let {
             builder.appendQueryParameter("tt", it)
-        }
-        val theme = settingsRepository.theme
-        builder.appendQueryParameter("theme", if (theme.isSystem) "dark" else theme.key)
+		}
+		val theme = settingsRepository.theme
+		val themeKey = if (theme.usesSystemAppearance) {
+			if (settingsRepository.isLightTheme) Theme.LIGHT_KEY else Theme.DARK_KEY
+		} else {
+			theme.key
+		}
+		builder.appendQueryParameter("theme", themeKey)
         return builder.build()
     }
 

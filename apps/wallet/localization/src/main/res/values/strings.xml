@@ -43,7 +43,8 @@
     <string name="provider">Provider</string>
     <string name="theme_deep_blue">Deep Blue</string>
     <string name="theme_dark">Dark</string>
-    <string name="theme_light">Light</string>
+	<string name="theme_light">Light</string>
+	<string name="material_you">Material You</string>
     <string name="payment_method">Payment Method</string>
     <string name="downloading">Downloading…</string>
     <string name="required">Required</string>
