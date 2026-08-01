@@ -72,7 +72,7 @@ open class BaseFragment(
 			get() = (this as BaseFragment).view as? SwipeBackLayout
 
 		override fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
-			swipeBackLayout?.startPredictiveBack(backEvent.swipeEdge)
+			swipeBackLayout?.startPredictiveBack()
 		}
 
 		override fun onPredictiveBackProgressed(backEvent: BackEventCompat) {

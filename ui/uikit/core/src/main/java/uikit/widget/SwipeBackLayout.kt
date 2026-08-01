@@ -9,7 +9,6 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.PathInterpolator
 import android.widget.FrameLayout
-import androidx.activity.BackEventCompat
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.math.MathUtils.clamp
@@ -49,7 +48,6 @@ class SwipeBackLayout @JvmOverloads constructor(
     private val contentContainer: FrameLayout
     private var dragHelper: ViewDragHelper? = null
 	private var predictiveAnimation: ValueAnimator? = null
-	private var predictiveEdge = BackEventCompat.EDGE_LEFT
 	private var predictiveBackActive = false
 	private var predictiveBackClosing = false
     private val drawCallback: ViewDragHelper.Callback
@@ -135,11 +133,10 @@ class SwipeBackLayout @JvmOverloads constructor(
         contentContainer.setView(content)
     }
 
-	fun startPredictiveBack(edge: Int) {
+	fun startPredictiveBack() {
 		animation.cancel()
 		cancelPredictiveAnimation()
 		alpha = 1f
-		predictiveEdge = edge
 		predictiveBackActive = true
 		predictiveBackClosing = false
 		applyPredictiveOffset(0f)
@@ -150,8 +147,7 @@ class SwipeBackLayout @JvmOverloads constructor(
 			return
 		}
 
-		val direction = if (predictiveEdge == BackEventCompat.EDGE_RIGHT) -1f else 1f
-		applyPredictiveOffset(measuredWidth * progress.coerceIn(0f, 1f) * direction)
+		applyPredictiveOffset(measuredWidth * progress.coerceIn(0f, 1f))
 	}
 
 	fun cancelPredictiveBack() {
@@ -173,13 +169,8 @@ class SwipeBackLayout @JvmOverloads constructor(
 		val progress = (abs(offset) / width).coerceIn(0f, 1f)
 		contentContainer.translationX = offset
 		bgView.alpha = 1f - progress
-		if (predictiveEdge == BackEventCompat.EDGE_RIGHT) {
-			shadowView.scaleX = -1f
-			shadowView.x = measuredWidth + offset
-		} else {
-			shadowView.scaleX = 1f
-			shadowView.x = offset - shadowView.width
-		}
+		shadowView.scaleX = 1f
+		shadowView.x = offset - shadowView.width
 	}
 
 	private fun resetPredictiveOffset() {
@@ -260,10 +251,9 @@ class SwipeBackLayout @JvmOverloads constructor(
         }
     }
 
-    fun startHideAnimation() {
+	fun startHideAnimation() {
 		if (predictiveBackActive) {
-			val direction = if (predictiveEdge == BackEventCompat.EDGE_RIGHT) -1f else 1f
-			animatePredictiveOffset(measuredWidth * direction, close = true)
+			animatePredictiveOffset(measuredWidth.toFloat(), close = true)
 			return
 		}
 
