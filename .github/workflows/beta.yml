@@ -38,18 +38,24 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Decode Keystore
-        run: echo "${{ secrets.ANDROID_DIST_SIGNING_KEY }}" | base64 -d > ${{ github.workspace }}/release.keystore
+        env:
+          ANDROID_DIST_SIGNING_KEY: ${{ secrets.ANDROID_DIST_SIGNING_KEY }}
+        run: printf '%s' "$ANDROID_DIST_SIGNING_KEY" | base64 --decode > "${{ github.workspace }}/release.keystore"
 
       - name: Build Beta APK
+        env:
+          TONKEEPER_UPLOAD_STORE_PASSWORD: ${{ secrets.TONKEEPER_UPLOAD_STORE_PASSWORD }}
+          TONKEEPER_UPLOAD_KEY_ALIAS: ${{ secrets.TONKEEPER_UPLOAD_KEY_ALIAS }}
+          TONKEEPER_UPLOAD_KEY_PASSWORD: ${{ secrets.TONKEEPER_UPLOAD_KEY_PASSWORD }}
         run: |
           ./gradlew :apps:wallet:instance:main:assembleDefaultRelease \
             --no-daemon \
             --no-build-cache \
             --no-configuration-cache \
-            -Pandroid.injected.signing.store.file=${{ github.workspace }}/release.keystore \
-            -Pandroid.injected.signing.store.password=${{ secrets.TONKEEPER_UPLOAD_STORE_PASSWORD }} \
-            -Pandroid.injected.signing.key.alias=${{ secrets.TONKEEPER_UPLOAD_KEY_ALIAS }} \
-            -Pandroid.injected.signing.key.password=${{ secrets.TONKEEPER_UPLOAD_KEY_PASSWORD }}
+            -Pandroid.injected.signing.store.file="${{ github.workspace }}/release.keystore" \
+            -Pandroid.injected.signing.store.password="$TONKEEPER_UPLOAD_STORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$TONKEEPER_UPLOAD_KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$TONKEEPER_UPLOAD_KEY_PASSWORD"
 
       - name: Upload Beta APK to artifacts
         uses: actions/upload-artifact@v7
