@@ -61,6 +61,7 @@ jobs:
         shell: bash
         env:
           TONKEEPER_DEBUG_STORE_FILE: ${{ secrets.TONKEEPER_DEBUG_STORE_FILE }}
+        if: env.TONKEEPER_DEBUG_STORE_FILE != ''
         run: printf '%s' "$TONKEEPER_DEBUG_STORE_FILE" | base64 --decode > "${{ github.workspace }}/internal.keystore"
 
       - name: Build APK
@@ -70,14 +71,21 @@ jobs:
           TONKEEPER_DEBUG_KEY_ALIAS: ${{ secrets.TONKEEPER_DEBUG_KEY_ALIAS }}
           TONKEEPER_DEBUG_KEY_PASSWORD: ${{ secrets.TONKEEPER_DEBUG_KEY_PASSWORD }}
         run: |
+          SIGNING_ARGS=()
+          if [[ -f "${{ github.workspace }}/internal.keystore" ]]; then
+            SIGNING_ARGS=(
+              -Pandroid.injected.signing.debug.file="${{ github.workspace }}/internal.keystore"
+              -Pandroid.injected.signing.debug.password="$TONKEEPER_DEBUG_STORE_PASSWORD"
+              -Pandroid.injected.signing.debug.key.alias="$TONKEEPER_DEBUG_KEY_ALIAS"
+              -Pandroid.injected.signing.debug.key.password="$TONKEEPER_DEBUG_KEY_PASSWORD"
+            )
+          fi
+
           ./gradlew ${{ inputs.gradle-task }} \
             --no-daemon \
             --no-build-cache \
             --no-configuration-cache \
-            -Pandroid.injected.signing.debug.file="${{ github.workspace }}/internal.keystore" \
-            -Pandroid.injected.signing.debug.password="$TONKEEPER_DEBUG_STORE_PASSWORD" \
-            -Pandroid.injected.signing.debug.key.alias="$TONKEEPER_DEBUG_KEY_ALIAS" \
-            -Pandroid.injected.signing.debug.key.password="$TONKEEPER_DEBUG_KEY_PASSWORD"
+            "${SIGNING_ARGS[@]}"
 
       - name: Compose artifact name
         id: artifact_name
