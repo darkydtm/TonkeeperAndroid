@@ -4,12 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/child_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+	<androidx.fragment.app.FragmentContainerView
+		android:id="@+id/child_fragment"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
 
-    <uikit.widget.BottomTabsView
+	<FrameLayout
+		android:id="@+id/settings"
+		android:layout_width="60dp"
+		android:layout_height="@dimen/barHeight"
+		android:layout_gravity="top|end"
+		android:clickable="true"
+		android:contentDescription="@string/settings"
+		android:focusable="true">
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:layout_width="@dimen/iconSize"
+			android:layout_height="@dimen/iconSize"
+			android:layout_gravity="center_vertical|end"
+			android:layout_marginEnd="@dimen/offsetMedium"
+			android:src="@drawable/ic_gear_outline_28"
+			android:tint="?attr/iconSecondaryColor" />
+
+		<View
+			android:id="@+id/settings_dot"
+			android:layout_width="6dp"
+			android:layout_height="6dp"
+			android:layout_gravity="top|end"
+			android:layout_marginTop="18dp"
+			android:layout_marginEnd="10dp"
+			android:visibility="gone" />
+
+	</FrameLayout>
+
+	<uikit.widget.BottomTabsView
         android:id="@+id/bottom_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

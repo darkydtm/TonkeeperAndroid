@@ -23,6 +23,7 @@ import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.wallet.localization.Localization
 import uikit.drawable.BarDrawable
 import uikit.extensions.collectFlow
+import uikit.extensions.dp
 import uikit.widget.EmptyLayout
 import uikit.widget.HeaderView
 
@@ -41,8 +42,9 @@ class CollectiblesScreen(wallet: WalletEntity): MainScreen.Child(R.layout.fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        headerView = view.findViewById(R.id.header)
-        headerView.title = getString(Localization.collectibles)
+		headerView = view.findViewById(R.id.header)
+		headerView.updatePadding(right = 80.dp)
+		headerView.title = getString(Localization.collectibles)
         headerView.setTitleGravity(Gravity.START)
         headerView.hideCloseIcon()
         if (requireContext().isLightTheme) {

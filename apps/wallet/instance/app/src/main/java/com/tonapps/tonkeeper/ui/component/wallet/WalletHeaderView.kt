@@ -24,7 +24,6 @@ import com.tonapps.uikit.icon.UIKitIcon
 import com.tonapps.blockchain.model.legacy.Wallet
 import com.tonapps.wallet.localization.Localization
 import uikit.drawable.BarDrawable
-import uikit.drawable.DotDrawable
 import uikit.drawable.HeaderDrawable
 import uikit.extensions.dp
 import uikit.extensions.getDimensionPixelSize
@@ -77,12 +76,10 @@ class WalletHeaderView @JvmOverloads constructor(
     private val swipeDetector = GestureDetector(context, swipeGestureListener, handler)
     private val scanView: AppCompatImageView
     private val historyView: AppCompatImageView
-    private val settingsView: View
-    private val walletView: View
+	private val walletView: View
     private val emojiView: EmojiView
     private val nameView: AppCompatTextView
     private val arrowView: AppCompatImageView
-    private val settingsDot: View
     private val drawable = HeaderDrawable(context).apply {
         if (context.isLightTheme) {
             setColor(context.backgroundPageColor)
@@ -108,12 +105,6 @@ class WalletHeaderView @JvmOverloads constructor(
 
     private var historyTooltip: BalloonTooltip? = null
 
-    var onSettingsClick: (() -> Unit)? = null
-        set(value) {
-            field = value
-            settingsView.setOnClickListener { value?.invoke() }
-        }
-
     var onWalletClick: (() -> Unit)? = null
         set(value) {
             field = value
@@ -133,15 +124,12 @@ class WalletHeaderView @JvmOverloads constructor(
 
         scanView.setImageResource(UIKitIcon.ic_qr_viewfinder_thin_28)
         historyView = findViewById(R.id.history)
-        settingsView = findViewById(R.id.settings)
-        walletView = findViewById(R.id.wallet)
+		walletView = findViewById(R.id.wallet)
         walletView.setOnTouchListener { v, event -> swipeDetector.onTouchEvent(event) }
         emojiView = findViewById(R.id.wallet_emoji)
         nameView = findViewById(R.id.wallet_name)
         arrowView = findViewById(R.id.wallet_arrow)
 
-        settingsDot = findViewById(R.id.settings_dot)
-        settingsDot.background = DotDrawable(context)
     }
 
     fun setHistoryVisible(visible: Boolean) {
@@ -197,10 +185,6 @@ class WalletHeaderView @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         dismissHistoryTooltip()
-    }
-
-    fun setDot(dot: Boolean) {
-        settingsDot.visibility = if (dot) View.VISIBLE else View.GONE
     }
 
     override fun setDivider(value: Boolean) {

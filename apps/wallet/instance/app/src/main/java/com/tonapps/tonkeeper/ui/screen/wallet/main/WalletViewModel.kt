@@ -110,14 +110,6 @@ class WalletViewModel(
     private val _uiItemsFlow = MutableStateFlow<List<Item>?>(null)
     val uiItemsFlow = _uiItemsFlow.asStateFlow().filterNotNull()
 
-    val hasBackupFlow = backupRepository.stream.map { backups ->
-        if (!wallet.hasPrivateKey) {
-            true
-        } else {
-            backups.indexOfFirst { it.walletId == wallet.id } > -1
-        }
-    }.map { !it }
-
     private val _streamFlow = combine(
         updateWalletSettings,
         batteryRepository.balanceUpdatedFlow,

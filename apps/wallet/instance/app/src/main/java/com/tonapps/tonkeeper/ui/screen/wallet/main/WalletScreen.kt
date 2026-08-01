@@ -10,7 +10,6 @@ import com.tonapps.tonkeeper.ui.component.wallet.WalletHeaderView
 import com.tonapps.tonkeeper.ui.screen.camera.CameraScreen
 import com.tonapps.tonkeeper.ui.screen.main.MainScreen
 import com.tonapps.tonkeeper.ui.screen.wallet.picker.PickerScreen
-import com.tonapps.tonkeeper.ui.screen.settings.main.SettingsScreen
 import com.tonapps.tonkeeper.ui.screen.wallet.main.list.Item.Status
 import com.tonapps.tonkeeper.ui.screen.wallet.main.list.WalletAdapter
 import com.tonapps.tonkeeper.ui.screen.watchonly.WatchInfoScreen
@@ -54,8 +53,7 @@ class WalletScreen(wallet: WalletEntity): MainScreen.Child(R.layout.fragment_wal
         headerView.onHistoryClick = { navigation?.add(TxEventsScreen.newInstance(wallet)) }
         headerView.setHistoryVisible(WalletFeature.TradingTab.isEnabled)
 
-        headerView.onSettingsClick = { navigation?.add(SettingsScreen.newInstance(wallet, "wallet")) }
-        headerView.doWalletSwipe = { right ->
+		headerView.doWalletSwipe = { right ->
             if (right) {
                 viewModel.prevWallet()
             } else {
@@ -70,8 +68,7 @@ class WalletScreen(wallet: WalletEntity): MainScreen.Child(R.layout.fragment_wal
         listView.adapter = adapter
 
         collectFlow(viewModel.uiLabelFlow.filterNotNull(), headerView::setWallet)
-        collectFlow(viewModel.hasBackupFlow, headerView::setDot)
-        collectFlow(viewModel.statusFlow) { status ->
+		collectFlow(viewModel.statusFlow) { status ->
             if (refreshLayout.isRefreshing && status != Status.Updating) {
                 refreshLayout.isRefreshing = false
             }

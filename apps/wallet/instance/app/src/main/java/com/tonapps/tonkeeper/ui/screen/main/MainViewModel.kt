@@ -9,6 +9,7 @@ import com.tonapps.tonkeeperx.R
 import com.tonapps.wallet.api.API
 import com.tonapps.wallet.data.account.AccountRepository
 import com.tonapps.blockchain.model.legacy.WalletEntity
+import com.tonapps.wallet.data.backup.BackupRepository
 import com.tonapps.wallet.data.browser.BrowserRepository
 import com.tonapps.wallet.data.collectibles.CollectiblesRepository
 import com.tonapps.wallet.data.events.EventsRepository
@@ -21,8 +22,9 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     app: Application,
-    private val accountRepository: AccountRepository,
-    private val api: API,
+	private val accountRepository: AccountRepository,
+	private val backupRepository: BackupRepository,
+	private val api: API,
     private val browserRepository: BrowserRepository,
     private val settingsRepository: SettingsRepository,
     private val collectiblesRepository: CollectiblesRepository,
@@ -35,7 +37,10 @@ class MainViewModel(
     private val _childBottomScrolled = MutableEffectFlow<Boolean>()
     val childBottomScrolled = _childBottomScrolled.asSharedFlow()
 
-    val selectedWalletFlow = accountRepository.selectedWalletFlow
+	val selectedWalletFlow = accountRepository.selectedWalletFlow
+	val needsBackupFlow = combine(selectedWalletFlow, backupRepository.stream) { wallet, backups ->
+		wallet.hasPrivateKey && backups.none { it.walletId == wallet.id }
+	}
 
     val disbleNftsFlow = combine(selectedWalletFlow, api.configFlow) { wallet, _ ->
         api.getConfig(wallet.network).flags.disableNfts

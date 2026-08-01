@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.FrameLayout
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.tonapps.blockchain.model.legacy.WalletCurrency
 import com.tonapps.blockchain.model.legacy.WalletEntity
@@ -26,6 +30,7 @@ import com.tonapps.core.flags.WalletTooltip
 import com.tonapps.tonkeeper.ui.screen.events.compose.history.TxEventsScreen
 import com.tonapps.tonkeeper.ui.screen.root.RootEvent
 import com.tonapps.tonkeeper.ui.screen.root.RootViewModel
+import com.tonapps.tonkeeper.ui.screen.settings.main.SettingsScreen
 import com.tonapps.tonkeeper.ui.screen.swap.SwapScreen
 import com.tonapps.tonkeeper.ui.screen.wallet.main.WalletScreen
 import com.tonapps.tonkeeper.ui.screen.wallet.picker.PickerScreen
@@ -44,6 +49,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uikit.base.BaseFragment
 import uikit.drawable.BarDrawable
+import uikit.drawable.DotDrawable
 import uikit.extensions.activity
 import uikit.extensions.collectFlow
 import uikit.extensions.isMaxScrollReached
@@ -121,9 +127,11 @@ class MainScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_main, S
 
     private val fragments: MutableMap<Int, Fragment> = mutableMapOf()
 
-    private var currentWalletId: String? = null
+	private var currentWallet: WalletEntity? = null
 
-    private lateinit var bottomTabsView: BottomTabsView
+	private lateinit var bottomTabsView: BottomTabsView
+	private lateinit var settingsView: View
+	private lateinit var settingsDotView: View
 
     private var tradingTabTooltip: BalloonTooltip? = null
 
@@ -131,8 +139,26 @@ class MainScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_main, S
         super.onViewCreated(view, savedInstanceState)
         childFragmentManager.removeAllFragments()
 
-        bottomTabsView = view.findViewById(R.id.bottom_tabs)
-        if (requireContext().isLightTheme) {
+		bottomTabsView = view.findViewById(R.id.bottom_tabs)
+		settingsView = view.findViewById(R.id.settings)
+		settingsDotView = view.findViewById(R.id.settings_dot)
+		settingsDotView.background = DotDrawable(requireContext())
+		settingsView.setOnClickListener {
+			currentWallet?.let { wallet ->
+				navigation?.add(SettingsScreen.newInstance(wallet, getCurrentFrom()))
+			}
+		}
+		ViewCompat.setOnApplyWindowInsetsListener(settingsView) { settings, insets ->
+			val statusInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+			settings.updateLayoutParams<FrameLayout.LayoutParams> {
+				topMargin = statusInsets.top
+			}
+			insets
+		}
+		collectFlow(viewModel.needsBackupFlow) {
+			settingsDotView.visibility = if (it) View.VISIBLE else View.GONE
+		}
+		if (requireContext().isLightTheme) {
             bottomTabsView.setBgColor(requireContext().backgroundPageColor)
         } else {
             bottomTabsView.setBgColor(requireContext().backgroundTransparentColor)
@@ -275,13 +301,13 @@ class MainScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_main, S
         view.alpha = 1f
     }
 
-    private fun applyWallet(wallet: WalletEntity) {
-        val walletChanged = currentWalletId != null && currentWalletId != wallet.id
-        if (walletChanged && fragments.isNotEmpty()) {
+	private fun applyWallet(wallet: WalletEntity) {
+		val walletChanged = currentWallet != null && currentWallet?.id != wallet.id
+		if (walletChanged && fragments.isNotEmpty()) {
             childFragmentManager.removeAllFragments()
             fragments.clear()
         }
-        currentWalletId = wallet.id
+		currentWallet = wallet
 
         bottomTabsView.doOnClick = { itemId ->
             if (itemId == R.id.trading) {

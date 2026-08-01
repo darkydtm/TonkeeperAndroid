@@ -92,10 +92,10 @@ private fun ShelvesContent(
 ) {
     MoonScaffold(
         topBar = {
-            MoonSearchCell(
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .padding(top = 16.dp, bottom = 8.dp),
+			MoonSearchCell(
+				modifier = Modifier
+					.statusBarsPadding()
+					.padding(top = 16.dp, end = 64.dp, bottom = 8.dp),
                 placeholder = stringResource(Localization.search_by_ticker),
                 onClick = onOpenSearch
             )

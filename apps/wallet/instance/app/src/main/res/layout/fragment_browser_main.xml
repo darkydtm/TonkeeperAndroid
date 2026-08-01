@@ -7,7 +7,8 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/barHeight"
-        android:paddingHorizontal="@dimen/offsetMedium">
+		android:paddingStart="@dimen/offsetMedium"
+		android:paddingEnd="80dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/Widget.App.TextTab"
