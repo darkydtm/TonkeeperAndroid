@@ -3,7 +3,6 @@ package com.tonapps.tonkeeper.ui.screen.settings.theme
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tonapps.tonkeeper.ui.base.BaseListWalletScreen
@@ -11,6 +10,7 @@ import com.tonapps.tonkeeper.ui.base.ScreenContext
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Adapter
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Item
 import com.tonapps.tonkeeper.ui.screen.settings.theme.picker.MaterialYouColorPickerScreen
+import com.tonapps.tonkeeper.ui.screen.settings.theme.picker.MaterialYouGeneratorPickerScreen
 import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.wallet.localization.Localization
 import com.tonapps.wallet.data.core.MaterialYouGenerator
@@ -100,19 +100,13 @@ class ThemeScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.Wall
 	}
 
 	private fun showGeneratorPicker() {
-		val generators = MaterialYouGenerator.entries
-		val selected = generators.indexOf(viewModel.materialYouSettings.generator)
-		AlertDialog.Builder(requireContext())
-			.setTitle(getString(Localization.color_generator))
-			.setSingleChoiceItems(
-				generators.map(viewModel::generatorTitle).toTypedArray(),
-				selected,
-			) { dialog, index ->
-				viewModel.setGenerator(generators[index])
-				dialog.dismiss()
+		navigation?.addForResult(
+			MaterialYouGeneratorPickerScreen.newInstance(viewModel.materialYouSettings.generator),
+		) { result ->
+			result.getString(MaterialYouGeneratorPickerScreen.RESULT_GENERATOR)?.let { storageKey ->
+				viewModel.setGenerator(MaterialYouGenerator.fromStorageKey(storageKey))
 			}
-			.setNegativeButton(getString(Localization.cancel), null)
-			.show()
+		}
 	}
 
     companion object {
