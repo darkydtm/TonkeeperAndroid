@@ -17,7 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.unit.dp
 import com.tonapps.tonkeeper.ui.screen.settings.theme.titleRes
 import com.tonapps.wallet.data.core.MaterialYouGenerator
@@ -29,6 +31,7 @@ fun MaterialYouGeneratorPicker(
 	onGeneratorSelected: (MaterialYouGenerator) -> Unit,
 ) {
 	val context = LocalContext.current
+	val nestedScrollInterop = rememberNestedScrollInteropConnection()
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -44,6 +47,7 @@ fun MaterialYouGeneratorPicker(
 		LazyColumn(
 			modifier = Modifier
 				.fillMaxWidth()
+				.nestedScroll(nestedScrollInterop)
 				.weight(1f),
 			verticalArrangement = Arrangement.spacedBy(8.dp),
 		) {
