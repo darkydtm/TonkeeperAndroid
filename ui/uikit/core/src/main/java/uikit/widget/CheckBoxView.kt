@@ -10,8 +10,10 @@ import com.tonapps.uikit.color.backgroundContentTintColor
 import com.tonapps.uikit.color.buttonPrimaryBackgroundColor
 import com.tonapps.uikit.color.iconTertiaryColor
 import com.tonapps.uikit.icon.UIKitIcon
+import uikit.HapticType
 import uikit.extensions.dp
 import uikit.extensions.getDrawable
+import uikit.extensions.haptic
 
 class CheckBoxView @JvmOverloads constructor(
     context: Context,
@@ -62,6 +64,7 @@ class CheckBoxView @JvmOverloads constructor(
 
     init {
         setOnClickListener {
+			haptic(HapticType.SELECTION)
             toggle()
         }
     }

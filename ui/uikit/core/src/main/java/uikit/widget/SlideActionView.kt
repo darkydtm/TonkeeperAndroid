@@ -6,9 +6,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Matrix
 import android.graphics.Shader
-import android.os.Build
 import android.util.AttributeSet
-import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -23,13 +21,12 @@ import com.tonapps.uikit.color.iconTertiaryColor
 import com.tonapps.uikit.color.stateList
 import com.tonapps.uikit.color.textTertiaryColor
 import com.tonapps.uikit.icon.UIKitIcon
+import uikit.HapticType
 import uikit.R
-import uikit.HapticHelper
 import uikit.extensions.dp
 import uikit.extensions.getDimension
 import uikit.extensions.getDimensionPixelSize
-import uikit.extensions.hapticConfirm
-import uikit.extensions.hapticReject
+import uikit.extensions.haptic
 import uikit.extensions.isDark
 import uikit.extensions.useAttributes
 
@@ -156,11 +153,10 @@ class SlideActionView @JvmOverloads constructor(
     }
 
     private fun done() {
-        HapticHelper.success(context)
+		haptic(HapticType.SUCCESS)
         icon = checkIcon
         doOnDone?.invoke()
         isDone = true
-        hapticConfirm()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

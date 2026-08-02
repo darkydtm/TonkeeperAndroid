@@ -15,7 +15,9 @@ import com.tonapps.uikit.color.buttonPrimaryForegroundColor
 import com.tonapps.uikit.color.buttonTertiaryBackgroundColor
 import com.tonapps.uikit.color.buttonTertiaryForegroundColor
 import uikit.ArgbEvaluator
+import uikit.HapticType
 import uikit.extensions.dp
+import uikit.extensions.haptic
 import uikit.extensions.range
 
 class SwitchView @JvmOverloads constructor(
@@ -71,11 +73,14 @@ class SwitchView @JvmOverloads constructor(
         setChecked(!checked, byUser)
     }
 
-    fun setChecked(newChecked: Boolean, byUser: Boolean) {
-        if (newChecked == checked) {
-            return
-        }
-        checked = newChecked
+	fun setChecked(newChecked: Boolean, byUser: Boolean) {
+		if (newChecked == checked) {
+			return
+		}
+		if (byUser) {
+			haptic(HapticType.SELECTION)
+		}
+		checked = newChecked
         doCheckedChanged?.invoke(checked, byUser)
         applyState(checked)
     }

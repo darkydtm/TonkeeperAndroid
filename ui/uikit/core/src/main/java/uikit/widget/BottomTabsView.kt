@@ -22,10 +22,12 @@ import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.model.KeyPath
 import com.tonapps.uikit.color.tabBarActiveIconColor
 import com.tonapps.uikit.color.tabBarInactiveIconColor
+import uikit.HapticType
 import uikit.R
 import uikit.drawable.FooterDrawable
 import uikit.extensions.createRipple
 import uikit.extensions.getDimensionPixelSize
+import uikit.extensions.haptic
 import uikit.extensions.setPaddingBottom
 import uikit.extensions.setPaddingHorizontal
 import uikit.extensions.useAttributes
@@ -233,6 +235,9 @@ class BottomTabsView @JvmOverloads constructor(
 
         if (menuItem.isCheckable) {
             view.setOnClickListener {
+				if (selectedItemId != menuItem.itemId) {
+					view.haptic(HapticType.SELECTION)
+				}
                 val icon = view.findViewById<ImageView>(R.id.icon)
                 if (icon is LottieAnimationView) {
                     icon.cancelAnimation()

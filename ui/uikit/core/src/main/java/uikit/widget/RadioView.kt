@@ -9,7 +9,9 @@ import androidx.core.graphics.ColorUtils
 import com.tonapps.uikit.color.backgroundContentTintColor
 import com.tonapps.uikit.color.buttonPrimaryBackgroundColor
 import com.tonapps.uikit.color.iconTertiaryColor
+import uikit.HapticType
 import uikit.extensions.dp
+import uikit.extensions.haptic
 
 class RadioView @JvmOverloads constructor(
     context: Context,
@@ -45,9 +47,12 @@ class RadioView @JvmOverloads constructor(
         color = context.buttonPrimaryBackgroundColor
     }
 
-    init {
-        setOnClickListener { toggle() }
-    }
+	init {
+		setOnClickListener {
+			haptic(HapticType.SELECTION)
+			toggle()
+		}
+	}
 
     fun toggle() {
         checked = !checked

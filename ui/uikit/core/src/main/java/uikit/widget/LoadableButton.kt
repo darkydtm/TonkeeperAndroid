@@ -1,16 +1,15 @@
 package uikit.widget
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
-import com.tonapps.log.L
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
-import com.tonapps.uikit.color.iconSecondaryColor
+import uikit.HapticType
 import uikit.R
 import uikit.UiButtonState
 import uikit.extensions.getDimensionPixelSize
+import uikit.extensions.haptic
 import uikit.extensions.useAttributes
 
 class LoadableButton @JvmOverloads constructor(
@@ -18,6 +17,8 @@ class LoadableButton @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
 ) : FrameLayout(context, attrs, defStyle) {
+
+	var hapticType: HapticType = HapticType.LIGHT
 
     private val button: Button
     private val loaderView: LoaderView
@@ -65,9 +66,17 @@ class LoadableButton @JvmOverloads constructor(
         }
     }
 
-    override fun setOnClickListener(l: OnClickListener?) {
-        button.setOnClickListener(l)
-    }
+	override fun setOnClickListener(l: OnClickListener?) {
+		if (l == null) {
+			button.setOnClickListener(null)
+			return
+		}
+
+		button.setOnClickListener { view ->
+			view.haptic(hapticType)
+			l.onClick(view)
+		}
+	}
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)

@@ -3,13 +3,11 @@ package uikit.widget
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import com.tonapps.log.L
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.Button
-import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
@@ -18,11 +16,13 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import uikit.HapticType
 import uikit.R
 import uikit.drawable.BarDrawable
 import uikit.drawable.HeaderDrawable
 import uikit.extensions.dp
 import uikit.extensions.getDimensionPixelSize
+import uikit.extensions.haptic
 import uikit.extensions.inflate
 import uikit.extensions.setPaddingHorizontal
 import uikit.extensions.setPaddingTop
@@ -78,6 +78,7 @@ open class HeaderView @JvmOverloads constructor(
             field = value
             closeView.setOnClickListener {
                 if (it.alpha != 0f) {
+					it.haptic(HapticType.LIGHT)
                     value?.invoke()
                 }
             }
@@ -88,6 +89,7 @@ open class HeaderView @JvmOverloads constructor(
             field = value
             actionView.setOnClickListener {
                 if (it.alpha != 0f) {
+					it.haptic(HapticType.LIGHT)
                     value?.invoke(it)
                 }
             }
@@ -181,7 +183,10 @@ open class HeaderView @JvmOverloads constructor(
     fun setRightButton(text: String, onClick: () -> Unit) {
         val button = inflate(R.layout.view_header_right_button) as Button
         button.text = text
-        button.setOnClickListener { onClick() }
+		button.setOnClickListener {
+			it.haptic(HapticType.LIGHT)
+			onClick()
+		}
         setRightContent(button)
     }
 
