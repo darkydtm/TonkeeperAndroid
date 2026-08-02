@@ -78,20 +78,7 @@ class ThemeViewModel(
 	}
 
 	fun generatorTitle(generator: MaterialYouGenerator): String {
-		return getString(
-			when (generator) {
-				MaterialYouGenerator.SYSTEM -> Localization.material_you_system
-				MaterialYouGenerator.TONAL_SPOT -> Localization.material_you_tonal_spot
-				MaterialYouGenerator.VIBRANT -> Localization.material_you_vibrant
-				MaterialYouGenerator.EXPRESSIVE -> Localization.material_you_expressive
-				MaterialYouGenerator.NEUTRAL -> Localization.material_you_neutral
-				MaterialYouGenerator.MONOCHROME -> Localization.material_you_monochrome
-				MaterialYouGenerator.RAINBOW -> Localization.material_you_rainbow
-				MaterialYouGenerator.FRUIT_SALAD -> Localization.material_you_fruit_salad
-				MaterialYouGenerator.FIDELITY -> Localization.material_you_fidelity
-				MaterialYouGenerator.CONTENT -> Localization.material_you_content
-			},
-		)
+		return getString(generator.titleRes())
 	}
 
 	private fun presetTitle(preset: MaterialYouPreset): String {
