@@ -7,6 +7,8 @@ import com.tonapps.wallet.data.core.MaterialYouGenerator
 import uikit.base.BaseFragment
 
 class MaterialYouGeneratorPickerScreen : ComposableFragment(), BaseFragment.BottomSheet {
+	override val heightRatio: Float = 0.5f
+
 	private val selectedGenerator: MaterialYouGenerator by lazy {
 		MaterialYouGenerator.fromStorageKey(
 			requireArguments().getString(ARG_SELECTED_GENERATOR),

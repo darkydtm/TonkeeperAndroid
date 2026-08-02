@@ -4,10 +4,11 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -31,7 +32,7 @@ fun MaterialYouGeneratorPicker(
 	val context = LocalContext.current
 	Column(
 		modifier = Modifier
-			.fillMaxWidth()
+			.fillMaxSize()
 			.navigationBarsPadding()
 			.padding(horizontal = 24.dp, vertical = 20.dp),
 		verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -44,7 +45,7 @@ fun MaterialYouGeneratorPicker(
 		LazyColumn(
 			modifier = Modifier
 				.fillMaxWidth()
-				.heightIn(max = 480.dp),
+				.weight(1f),
 			verticalArrangement = Arrangement.spacedBy(8.dp),
 		) {
 			items(
