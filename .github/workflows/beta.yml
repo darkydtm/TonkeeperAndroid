@@ -48,7 +48,7 @@ jobs:
           TONKEEPER_UPLOAD_KEY_ALIAS: ${{ secrets.TONKEEPER_UPLOAD_KEY_ALIAS }}
           TONKEEPER_UPLOAD_KEY_PASSWORD: ${{ secrets.TONKEEPER_UPLOAD_KEY_PASSWORD }}
         run: |
-          ./gradlew :apps:wallet:instance:main:assembleDefaultRelease \
+          ./gradlew :apps:wallet:instance:main:assembleDefaultBeta \
             --no-daemon \
             --no-build-cache \
             --no-configuration-cache \
@@ -61,4 +61,4 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: tonkeeper-beta-${{ env.VERSION_CODE }}
-          path: apps/wallet/instance/main/build/outputs/apk/default/release/*.apk
+          path: apps/wallet/instance/main/build/outputs/apk/default/beta/*.apk
