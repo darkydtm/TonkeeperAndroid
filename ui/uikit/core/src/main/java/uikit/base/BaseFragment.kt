@@ -93,6 +93,8 @@ open class BaseFragment(
     }
 
     interface BottomSheet {
+		val heightRatio: Float
+			get() = 1f
 
         fun onEndShowingAnimation() {
 
@@ -299,6 +301,7 @@ open class BaseFragment(
         this as BottomSheet
 
         val bottomSheetLayout = BottomSheetLayout(context)
+		bottomSheetLayout.heightRatio = heightRatio
         bottomSheetLayout.setContentView(view)
         bottomSheetLayout.doOnHide = ::finishInternal
         bottomSheetLayout.doOnAnimationEnd = ::onEndShowingAnimation

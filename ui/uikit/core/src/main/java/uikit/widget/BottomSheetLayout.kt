@@ -24,6 +24,13 @@ import uikit.extensions.roundTop
 import uikit.extensions.scale
 import uikit.extensions.setView
 import kotlin.math.abs
+import kotlin.math.roundToInt
+
+internal fun calculateBottomSheetHeight(availableHeight: Int, heightRatio: Float): Int {
+	require(availableHeight >= 0)
+	require(heightRatio > 0f && heightRatio <= 1f)
+	return (availableHeight * heightRatio).roundToInt()
+}
 
 class BottomSheetLayout @JvmOverloads constructor(
     context: Context,
@@ -42,6 +49,11 @@ class BottomSheetLayout @JvmOverloads constructor(
     var doOnAnimationEnd: (() -> Unit)? = null
     var doOnDragging: (() -> Unit)? = null
     var fragment: Fragment? = null
+	var heightRatio: Float = 1f
+		set(value) {
+			require(value > 0f && value <= 1f)
+			field = value
+		}
 
     private val parentRadius = context.getDimensionPixelSize(R.dimen.cornerMedium)
 
@@ -114,6 +126,18 @@ class BottomSheetLayout @JvmOverloads constructor(
         setPadding(0, statusInsets.top + defaultTopMargin, 0, 0)
         return super.onApplyWindowInsets(insets)
     }
+
+	override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+		val availableHeight = (
+			MeasureSpec.getSize(heightMeasureSpec) - paddingTop - paddingBottom
+		).coerceAtLeast(0)
+		contentView.layoutParams.height = if (heightRatio == 1f) {
+			LayoutParams.MATCH_PARENT
+		} else {
+			calculateBottomSheetHeight(availableHeight, heightRatio)
+		}
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+	}
 
     fun setContentView(view: View) {
         view.roundTop(context.getDimensionPixelSize(R.dimen.cornerMedium))
