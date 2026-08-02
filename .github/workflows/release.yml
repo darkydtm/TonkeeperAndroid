@@ -1,0 +1,65 @@
+name: Android Release Build
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-build:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to git repository
+        uses: actions/checkout@v6
+
+      - name: Get VERSION_CODE from commit timestamp
+        run: echo "VERSION_CODE=$(git log -1 --format=%ct)" >> $GITHUB_ENV
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Gradle Wrapper
+        uses: actions/cache@v5
+        with:
+          path: ~/.gradle/wrapper
+          key: gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Accept Android SDK licenses
+        run: yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Decode Keystore
+        env:
+          ANDROID_DIST_SIGNING_KEY: ${{ secrets.ANDROID_DIST_SIGNING_KEY }}
+        run: printf '%s' "$ANDROID_DIST_SIGNING_KEY" | base64 --decode > "${{ github.workspace }}/release.keystore"
+
+      - name: Build Release APK
+        env:
+          TONKEEPER_UPLOAD_STORE_PASSWORD: ${{ secrets.TONKEEPER_UPLOAD_STORE_PASSWORD }}
+          TONKEEPER_UPLOAD_KEY_ALIAS: ${{ secrets.TONKEEPER_UPLOAD_KEY_ALIAS }}
+          TONKEEPER_UPLOAD_KEY_PASSWORD: ${{ secrets.TONKEEPER_UPLOAD_KEY_PASSWORD }}
+        run: |
+          ./gradlew :apps:wallet:instance:main:assembleDefaultRelease \
+            --no-daemon \
+            --no-build-cache \
+            --no-configuration-cache \
+            -Pandroid.injected.signing.store.file="${{ github.workspace }}/release.keystore" \
+            -Pandroid.injected.signing.store.password="$TONKEEPER_UPLOAD_STORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$TONKEEPER_UPLOAD_KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$TONKEEPER_UPLOAD_KEY_PASSWORD"
+
+      - name: Upload Release APK to artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: tonkeeper-release-${{ env.VERSION_CODE }}
+          path: apps/wallet/instance/main/build/outputs/apk/default/release/*.apk
+          if-no-files-found: error
