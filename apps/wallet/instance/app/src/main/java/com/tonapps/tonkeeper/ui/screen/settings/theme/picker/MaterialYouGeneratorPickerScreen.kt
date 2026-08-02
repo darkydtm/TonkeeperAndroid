@@ -19,6 +19,7 @@ class MaterialYouGeneratorPickerScreen : ComposableFragment(), BaseFragment.Bott
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		view.setOnClickListener { finish() }
 		setContent {
 			MaterialYouGeneratorPicker(
 				selectedGenerator = selectedGenerator,
