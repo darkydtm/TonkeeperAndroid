@@ -8,6 +8,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import uikit.R
 import uikit.extensions.dp
 import uikit.extensions.getDimensionPixelSize
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.setPaddingHorizontal
 import uikit.extensions.useAttributes
 
@@ -33,7 +34,7 @@ class BackHeaderView @JvmOverloads constructor(
         titleView = findViewById(R.id.title)
         actionView = findViewById(R.id.action)
 
-        backView.setOnClickListener {
+        backView.setHapticClickListener {
             doOnBackClick?.invoke()
         }
 

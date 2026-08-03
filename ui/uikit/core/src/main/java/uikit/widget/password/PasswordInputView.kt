@@ -17,6 +17,7 @@ import uikit.extensions.focusWithKeyboard
 import uikit.extensions.getDimensionPixelSize
 import uikit.extensions.hideKeyboard
 import uikit.extensions.setCursorColor
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.startSnakeAnimation
 
 class PasswordInputView @JvmOverloads constructor(
@@ -71,7 +72,7 @@ class PasswordInputView @JvmOverloads constructor(
             }
         }
 
-        setOnClickListener {
+        setHapticClickListener {
             inputView.focusWithKeyboard()
         }
     }

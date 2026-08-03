@@ -9,11 +9,9 @@ import android.graphics.Outline
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import com.tonapps.log.L
-import android.view.HapticFeedbackConstants
 import android.view.PixelCopy
 import android.view.SurfaceView
 import android.view.TouchDelegate
@@ -49,6 +47,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import uikit.HapticType
 import uikit.insets.KeyboardAnimationCallback
 import kotlin.math.sin
 import androidx.core.graphics.drawable.toDrawable
@@ -279,23 +278,11 @@ fun ViewPager2.findViewHolderForAdapterPosition(position: Int): RecyclerView.Vie
 }
 
 fun View.hapticConfirm() {
-    post {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            performHapticFeedback(HapticFeedbackConstants.CONFIRM)
-        } else {
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-        }
-    }
+	haptic(HapticType.CONFIRM)
 }
 
 fun View.hapticReject() {
-    post {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            performHapticFeedback(HapticFeedbackConstants.REJECT)
-        } else {
-            performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-        }
-    }
+	haptic(HapticType.ERROR)
 }
 
 fun View.runAnimation(@AnimRes resId: Int): Animation {
@@ -412,7 +399,7 @@ fun View.roundBottom(@IdRes id: Int, radius: Int) {
 }
 
 fun View.setOnClickListener(@IdRes id: Int, block: () -> Unit) {
-    findViewById<View>(id).setOnClickListener { block() }
+	findViewById<View>(id).setHapticClickListener { block() }
 }
 
 fun View.setBackgroundColor(@IdRes id: Int, color: Int) {

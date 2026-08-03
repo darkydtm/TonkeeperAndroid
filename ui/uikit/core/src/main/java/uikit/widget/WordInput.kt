@@ -20,6 +20,7 @@ import uikit.extensions.hideKeyboard
 import uikit.extensions.isVisibleForUser
 import uikit.extensions.requestFocusWithSelection
 import uikit.extensions.setCursorColor
+import uikit.extensions.setHapticClickListener
 
 class WordInput @JvmOverloads constructor(
     context: Context,
@@ -62,7 +63,7 @@ class WordInput @JvmOverloads constructor(
             return@setOnKeyListener false
         }
 
-        setOnClickListener { focus() }
+        setHapticClickListener { focus() }
     }
 
     private fun onPressDelete(): Boolean {

@@ -26,6 +26,7 @@ import uikit.extensions.hideKeyboard
 import uikit.extensions.range
 import uikit.extensions.scale
 import uikit.extensions.setCursorColor
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.useAttributes
 
 class InputView @JvmOverloads constructor(
@@ -163,7 +164,7 @@ class InputView @JvmOverloads constructor(
     var doOnButtonClick: (() -> Unit)? = null
         set(value) {
             field = value
-            actionView.setOnClickListener {
+            actionView.setHapticClickListener {
                 value?.invoke()
             }
         }
@@ -173,7 +174,7 @@ class InputView @JvmOverloads constructor(
     var doOnIconClick: (() -> Unit)? = null
         set(value) {
             field = value
-            iconView.setOnClickListener {
+            iconView.setHapticClickListener {
                 value?.invoke()
             }
         }
@@ -245,7 +246,7 @@ class InputView @JvmOverloads constructor(
         loaderView = findViewById(R.id.input_loader)
         donemarkView = findViewById(R.id.input_donemark)
 
-        clearView.setOnClickListener {
+        clearView.setHapticClickListener {
             if (isEnabled) {
                 editText.text = null
             }
@@ -261,7 +262,7 @@ class InputView @JvmOverloads constructor(
             disableClearButton = it.getBoolean(R.styleable.InputView_disableClearButton, false)
         }
 
-        setOnClickListener {
+        setHapticClickListener {
             editText.focusWithKeyboard()
         }
     }

@@ -14,6 +14,7 @@ import uikit.R
 import uikit.base.BaseDialog
 import uikit.extensions.dp
 import uikit.extensions.scale
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.setTextOrGone
 
 class AlertDialog private constructor(
@@ -88,7 +89,7 @@ class AlertDialog private constructor(
         }
         view.visibility = View.VISIBLE
         view.text = button.title
-        view.setOnClickListener {
+        view.setHapticClickListener {
             if (isShowing) {
                 button.action?.invoke(this)
                 dismiss()

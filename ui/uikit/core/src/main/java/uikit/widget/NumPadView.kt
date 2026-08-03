@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import uikit.R
 import uikit.extensions.dp
+import uikit.extensions.setHapticClickListener
 
 class NumPadView @JvmOverloads constructor(
     context: Context,
@@ -32,7 +33,7 @@ class NumPadView @JvmOverloads constructor(
     var doOnBackspaceClick: (() -> Unit)? = null
         set(value) {
             field = value
-            backspaceView.setOnClickListener {
+            backspaceView.setHapticClickListener {
                 value?.invoke()
             }
         }

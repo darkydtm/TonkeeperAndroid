@@ -25,6 +25,7 @@ import androidx.fragment.app.findFragment
 import com.tonapps.uikit.color.accentBlueColor
 import uikit.R
 import uikit.extensions.dp
+import uikit.extensions.setHapticClickListener
 import java.lang.ref.WeakReference
 import java.util.WeakHashMap
 
@@ -352,7 +353,7 @@ class BalloonTooltip private constructor(
         tooltipView.findViewById<TextView>(R.id.tooltip_message).text = messageText
         tooltipView.findViewById<ImageView>(R.id.tooltip_arrow).setColorFilter(context.accentBlueColor)
         onClickListener?.let { listener ->
-            tooltipView.setOnClickListener { listener() }
+			tooltipView.setHapticClickListener { listener() }
         }
     }
 

@@ -8,7 +8,9 @@ import android.view.View.MeasureSpec
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.tonapps.uikit.color.textPrimaryColor
+import uikit.HapticType
 import uikit.extensions.dp
+import uikit.extensions.haptic
 
 class ChartPeriodView @JvmOverloads constructor(
     context: Context,
@@ -37,6 +39,9 @@ class ChartPeriodView @JvmOverloads constructor(
         ChartPeriod.entries.forEach { period ->
             val button = createButton(period)
             button.setOnClickListener {
+				if (selectedPeriod != period) {
+					button.haptic(HapticType.SELECTION)
+				}
                 selectedPeriod = period
             }
             addView(button, buttonParams)

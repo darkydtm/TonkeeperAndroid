@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import uikit.R
 import uikit.drawable.HeaderDrawable
 import uikit.extensions.getDimensionPixelSize
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.setPaddingHorizontal
 import uikit.extensions.useAttributes
 
@@ -26,7 +27,7 @@ class ModalHeader @JvmOverloads constructor(
     var onCloseClick: (() -> Unit)? = null
         set(value) {
             field = value
-            closeView.setOnClickListener { value?.invoke() }
+			closeView.setHapticClickListener { value?.invoke() }
         }
 
     init {
@@ -57,4 +58,3 @@ class ModalHeader @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(barHeight, MeasureSpec.EXACTLY))
     }
 }
-

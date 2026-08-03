@@ -12,6 +12,7 @@ import uikit.R
 import uikit.extensions.dp
 import uikit.extensions.focusWithKeyboard
 import uikit.extensions.hideKeyboard
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.useAttributes
 
 class SearchInput @JvmOverloads constructor(
@@ -51,7 +52,7 @@ class SearchInput @JvmOverloads constructor(
         }
 
         actionView = findViewById(R.id.action)
-        actionView.setOnClickListener {
+        actionView.setHapticClickListener {
             cancel()
         }
 

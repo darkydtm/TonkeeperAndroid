@@ -24,6 +24,7 @@ import uikit.base.BaseFragment
 import uikit.extensions.dp
 import uikit.extensions.getViews
 import uikit.extensions.round
+import uikit.extensions.setHapticClickListener
 import uikit.widget.AsyncImageView
 import uikit.widget.RowLayout
 
@@ -76,7 +77,7 @@ open class BaseStoriesScreen: BaseFragment(R.layout.fragment_stories) {
         super.onViewCreated(view, savedInstanceState)
         view.setBackgroundColor(Color.BLACK)
 
-        view.findViewById<View>(R.id.stories_close).setOnClickListener { finish() }
+        view.findViewById<View>(R.id.stories_close).setHapticClickListener { finish() }
 
         contentView = view.findViewById(R.id.stories_content)
         contentView.round(20f.dp)
@@ -93,7 +94,7 @@ open class BaseStoriesScreen: BaseFragment(R.layout.fragment_stories) {
         titleView = view.findViewById(R.id.story_title)
         subtitleView = view.findViewById(R.id.story_subtitle)
         button = view.findViewById(R.id.story_button)
-        button.setOnClickListener { onStoryButton(state.currentIndex) }
+        button.setHapticClickListener { onStoryButton(state.currentIndex) }
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             val statusBarOffset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top

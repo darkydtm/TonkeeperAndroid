@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import uikit.R
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.useAttributes
 
 class EmptyLayout @JvmOverloads constructor(
@@ -17,8 +18,8 @@ class EmptyLayout @JvmOverloads constructor(
     var doOnButtonClick: ((first: Boolean) -> Unit)? = null
         set(value) {
             field = value
-            firstButton.setOnClickListener { value?.invoke(true) }
-            secondButton.setOnClickListener { value?.invoke(false) }
+			firstButton.setHapticClickListener { value?.invoke(true) }
+			secondButton.setHapticClickListener { value?.invoke(false) }
         }
 
     private val titleView: AppCompatTextView
