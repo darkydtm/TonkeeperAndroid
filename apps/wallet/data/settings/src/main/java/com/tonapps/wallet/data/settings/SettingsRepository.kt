@@ -45,6 +45,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
+import uikit.HapticHelper
+import uikit.HapticStrength
 
 // TODO need to be refactored
 class SettingsRepository(
@@ -81,6 +83,7 @@ class SettingsRepository(
         private const val STORIES_VIEWED_PREFIX = "stories_viewed_"
         private const val LEDGER_CONNECT_USB = "ledger_connect_usb"
         private const val SEND_TOOLTIP_SHOWN_KEY = "send_tooltip_shown"
+		private const val HAPTIC_STRENGTH_KEY = "haptic_strength"
     }
 
     private val _currencyFlow = MutableEffectFlow<WalletCurrency>()
@@ -124,6 +127,18 @@ class SettingsRepository(
     }
 
     val prefs = context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
+	var hapticStrength: Float = HapticStrength.normalize(
+		prefs.getFloat(HAPTIC_STRENGTH_KEY, HapticStrength.DEFAULT),
+	).also { HapticHelper.strength = it }
+		set(value) {
+			val normalized = HapticStrength.normalize(value)
+			if (normalized != field) {
+				prefs.edit { putFloat(HAPTIC_STRENGTH_KEY, normalized) }
+				field = normalized
+			}
+			HapticHelper.strength = normalized
+		}
+
     private val tokenPrefsFolder = TokenPrefsFolder(context, scope)
     private val walletPrefsFolder = WalletPrefsFolder(context, scope)
     private val migrationHelper = RNMigrationHelper(scope, context, rnLegacy)
