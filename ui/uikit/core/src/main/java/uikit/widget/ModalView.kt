@@ -9,7 +9,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.marginBottom
-import androidx.core.view.updateMargins
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import uikit.R
@@ -18,7 +17,6 @@ import uikit.extensions.getDimensionPixelSize
 import uikit.extensions.range
 import uikit.extensions.roundTop
 import uikit.extensions.scale
-import uikit.extensions.setPaddingBottom
 import uikit.extensions.setView
 import kotlin.math.abs
 
@@ -27,11 +25,6 @@ class ModalView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
 ) : FrameLayout(context, attrs, defStyle) {
-
-    companion object {
-        private const val parentScale = .92f
-        private const val parentAlpha = .8f
-    }
 
     var doOnHide: (() -> Unit)? = null
 
@@ -60,6 +53,17 @@ class ModalView @JvmOverloads constructor(
     val behavior: BottomSheetBehavior<FrameLayout>
     var fragment: Fragment? = null
     var scaleBackground: Boolean = false
+	private val predictiveBackController by lazy {
+		VerticalPredictiveBackController(
+			container = this,
+			content = bottomSheetView,
+			onProgress = { onAnimationUpdateParent(1f - it) },
+			onClose = {
+				doOnHide?.invoke()
+				onAnimationUpdateParent(0f)
+			},
+		)
+	}
 
     private val parentRootView: View? by lazy {
         context.activity?.findViewById(R.id.root_container)
@@ -120,13 +124,33 @@ class ModalView @JvmOverloads constructor(
     }
 
     fun hide(force: Boolean) {
+		if (predictiveBackController.close()) {
+			return
+		}
         if (force) {
             behavior.isHideable = true
         }
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
+	fun startPredictiveBack() {
+		predictiveBackController.start()
+	}
+
+	fun updatePredictiveBack(progress: Float) {
+		predictiveBackController.update(progress)
+	}
+
+	fun cancelPredictiveBack() {
+		predictiveBackController.cancel()
+	}
+
+	fun completePredictiveBack() {
+		predictiveBackController.complete()
+	}
+
     override fun onDetachedFromWindow() {
+		predictiveBackController.dispose()
         onAnimationUpdateParent(0f)
         super.onDetachedFromWindow()
     }
@@ -155,4 +179,9 @@ class ModalView @JvmOverloads constructor(
     }
 
     override fun hasOverlappingRendering() = false
+
+	private companion object {
+		private const val parentScale = .92f
+		private const val parentAlpha = .8f
+	}
 }

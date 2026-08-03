@@ -48,22 +48,14 @@ open class BaseFragment(
 
     interface SingleTask
 
-    interface PredictiveBackGesture {
-		fun onPredictiveBackCancelled() {
+	interface PredictiveBackGesture {
+		fun onPredictiveBackCancelled() {}
 
-		}
+		fun onPredictiveBackCommitted() {}
 
-		fun onPredictiveBackCommitted() {
+		fun onPredictiveBackProgressed(backEvent: BackEventCompat) {}
 
-		}
-
-		fun onPredictiveBackProgressed(backEvent: BackEventCompat) {
-
-		}
-
-		fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
-
-		}
+		fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {}
     }
 
     interface SwipeBack: PredictiveBackGesture {
@@ -87,31 +79,47 @@ open class BaseFragment(
 			swipeBackLayout?.completePredictiveBack()
 		}
 
-        fun onEndShowingAnimation() {
-
-        }
+		fun onEndShowingAnimation() {}
     }
 
-    interface BottomSheet {
+	interface BottomSheet: PredictiveBackGesture {
 		val heightRatio: Float
 			get() = 1f
 
-        fun onEndShowingAnimation() {
+		private val bottomSheetLayout: BottomSheetLayout?
+			get() = (this as BaseFragment).view as? BottomSheetLayout
 
-        }
+		override fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
+			bottomSheetLayout?.startPredictiveBack()
+		}
 
-        fun onDragging() {
+		override fun onPredictiveBackProgressed(backEvent: BackEventCompat) {
+			bottomSheetLayout?.updatePredictiveBack(backEvent.progress)
+		}
 
-        }
+		override fun onPredictiveBackCancelled() {
+			bottomSheetLayout?.cancelPredictiveBack()
+		}
+
+		override fun onPredictiveBackCommitted() {
+			bottomSheetLayout?.completePredictiveBack()
+		}
+
+		fun onEndShowingAnimation() {}
+
+		fun onDragging() {}
     }
 
-    interface Modal {
+    interface Modal: PredictiveBackGesture {
 
         private val fragment: BaseFragment
             get() = this as BaseFragment
 
         private val view: ModalView
             get() = fragment.view as ModalView
+
+		val scaleBackground: Boolean
+			get() = false
 
         val behavior: BottomSheetBehavior<FrameLayout>
             get() = view.behavior
@@ -122,12 +130,23 @@ open class BaseFragment(
         val coordinatorView: CoordinatorLayout
             get() = view.coordinatorView
 
-        val scaleBackground: Boolean
-            get() = false
+		override fun onPredictiveOnBackStarted(backEvent: BackEventCompat) {
+			(fragment.view as? ModalView)?.startPredictiveBack()
+		}
 
-        fun onEndShowingAnimation() {
+		override fun onPredictiveBackProgressed(backEvent: BackEventCompat) {
+			(fragment.view as? ModalView)?.updatePredictiveBack(backEvent.progress)
+		}
 
-        }
+		override fun onPredictiveBackCancelled() {
+			(fragment.view as? ModalView)?.cancelPredictiveBack()
+		}
+
+		override fun onPredictiveBackCommitted() {
+			(fragment.view as? ModalView)?.completePredictiveBack()
+		}
+
+		fun onEndShowingAnimation() {}
     }
 
     open val fragmentName: String
