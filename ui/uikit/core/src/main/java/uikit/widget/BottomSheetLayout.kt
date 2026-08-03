@@ -38,13 +38,6 @@ class BottomSheetLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
 
-    private companion object {
-        private const val parentScale = .92f
-        private const val parentAlpha = .8f
-        private val defaultTopMargin = 22.dp
-        private val interpolator = PathInterpolator(.2f, 0f, 0f, 1f)
-    }
-
     var doOnHide: (() -> Unit)? = null
     var doOnAnimationEnd: (() -> Unit)? = null
     var doOnDragging: (() -> Unit)? = null
@@ -106,6 +99,14 @@ class BottomSheetLayout @JvmOverloads constructor(
 
     private val coordinatorView: CoordinatorLayout
     private val contentView: FrameLayout
+	private val predictiveBackController by lazy {
+		VerticalPredictiveBackController(
+			container = this,
+			content = contentView,
+			onProgress = { onAnimationUpdateParent(1f - it) },
+			onClose = ::releaseScreen,
+		)
+	}
 
     val behavior: BottomSheetBehavior<FrameLayout>
 
@@ -171,11 +172,31 @@ class BottomSheetLayout @JvmOverloads constructor(
     }
 
     fun hide(force: Boolean) {
+		if (predictiveBackController.close()) {
+			return
+		}
         if (force) {
             behavior.isHideable = true
         }
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
+
+	fun startPredictiveBack() {
+		parentAnimator.cancel()
+		predictiveBackController.start()
+	}
+
+	fun updatePredictiveBack(progress: Float) {
+		predictiveBackController.update(progress)
+	}
+
+	fun cancelPredictiveBack() {
+		predictiveBackController.cancel()
+	}
+
+	fun completePredictiveBack() {
+		predictiveBackController.complete()
+	}
 
     private fun onAnimationUpdateParent(progress: Float) {
         if (stackViews.size > 1) {
@@ -193,5 +214,18 @@ class BottomSheetLayout @JvmOverloads constructor(
         onAnimationUpdateParent(0f)
     }
 
+	override fun onDetachedFromWindow() {
+		predictiveBackController.dispose()
+		onAnimationUpdateParent(0f)
+		super.onDetachedFromWindow()
+	}
+
     override fun hasOverlappingRendering() = false
+
+	private companion object {
+		private const val parentScale = .92f
+		private const val parentAlpha = .8f
+		private val defaultTopMargin = 22.dp
+		private val interpolator = PathInterpolator(.2f, 0f, 0f, 1f)
+	}
 }
