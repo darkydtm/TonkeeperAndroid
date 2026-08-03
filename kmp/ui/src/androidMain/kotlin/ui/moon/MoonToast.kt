@@ -32,8 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.delay
@@ -44,6 +42,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ui.theme.Dimens
 import ui.theme.UIKit
+import ui.haptic.HapticType
+import ui.haptic.rememberHaptic
 import kotlin.coroutines.resume
 
 private const val AnimationDuration = 160
@@ -107,7 +107,7 @@ fun MoonToastHost(
     toast: @Composable (MoonToastData) -> Unit = { MoonToastContent(it) },
 ) {
     val data = hostState.currentData
-    val haptic = LocalHapticFeedback.current
+	val haptic = rememberHaptic(HapticType.CONFIRM)
     val statusBarPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
     // Keep the last non-null data so the content is still rendered during exit animation
@@ -121,7 +121,7 @@ fun MoonToastHost(
 
     LaunchedEffect(data) {
         if (data != null) {
-            haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+			haptic()
             if (!data.loading) {
                 delay(AutoDismissDelay)
                 hostState.dismiss()

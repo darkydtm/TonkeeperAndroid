@@ -21,6 +21,11 @@ enum class HapticType {
 }
 
 @Composable
+fun rememberHaptic(type: HapticType = HapticType.LIGHT): () -> Unit {
+	return rememberPlatformHaptic(type)
+}
+
+@Composable
 fun rememberHapticClick(
 	type: HapticType = HapticType.LIGHT,
 	onClick: () -> Unit,

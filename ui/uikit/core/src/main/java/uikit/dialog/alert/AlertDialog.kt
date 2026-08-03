@@ -50,7 +50,7 @@ class AlertDialog private constructor(
         rootView = findViewById(R.id.alert_root)
 
         outsideView = findViewById(R.id.alert_outside)
-        outsideView.setOnClickListener { dismiss() }
+		outsideView.setHapticClickListener { dismiss() }
 
         bodyView = findViewById(R.id.alert_body)
         bodyView.setOnClickListener {  }

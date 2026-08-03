@@ -1,13 +1,12 @@
 package uikit.widget.item
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.uikit.list.ListCell
 import uikit.R
-import uikit.extensions.dp
-import uikit.extensions.getDimensionPixelSize
-import uikit.extensions.setPaddingVertical
 import uikit.extensions.useAttributes
 import uikit.widget.SwitchView
 
@@ -51,7 +50,7 @@ class ItemSwitchView @JvmOverloads constructor(
         subtitleView = findViewById(R.id.subtitle)
         switchView = findViewById(R.id.check)
 
-        setOnClickListener {
+        setHapticClickListener {
             setChecked(!isChecked(), true)
         }
 

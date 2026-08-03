@@ -17,6 +17,7 @@ import uikit.extensions.getDimensionPixelSize
 import uikit.extensions.range
 import uikit.extensions.roundTop
 import uikit.extensions.scale
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.setView
 import kotlin.math.abs
 
@@ -87,7 +88,7 @@ class ModalView @JvmOverloads constructor(
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
         behavior.isFitToContents = true
 
-        findViewById<View>(R.id.modal_touch_outside).setOnClickListener {
+		findViewById<View>(R.id.modal_touch_outside).setHapticClickListener {
             hide(false)
         }
         doOnLayout { onAnimationUpdateParent(0f) }

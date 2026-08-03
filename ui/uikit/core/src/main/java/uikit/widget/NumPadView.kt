@@ -2,7 +2,6 @@ package uikit.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.HapticFeedbackConstants
 import android.view.SoundEffectConstants
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +46,7 @@ class NumPadView @JvmOverloads constructor(
     init {
         for (i in 0 until BUTTON_COUNT) {
             val button: View = createButton(i)
-            button.setOnClickListener(this)
+			button.setHapticClickListener { onClick(it) }
             addView(button)
         }
     }
@@ -83,7 +82,6 @@ class NumPadView @JvmOverloads constructor(
 
         doOnNumberClick?.invoke(number)
         v.playSoundEffect(SoundEffectConstants.CLICK)
-        performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

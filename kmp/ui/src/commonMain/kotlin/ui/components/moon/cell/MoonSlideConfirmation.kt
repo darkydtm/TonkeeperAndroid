@@ -43,12 +43,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import ui.haptic.hapticClickable
+import ui.haptic.HapticType
+import ui.haptic.rememberHaptic
 import com.tonapps.uikit.icon.UIKitIcon
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -181,7 +181,7 @@ private fun Slider(
 ) {
     val colors = UIKit.colorScheme
     val scope = rememberCoroutineScope()
-    val haptic = LocalHapticFeedback.current
+	val haptic = rememberHaptic(HapticType.CONFIRM)
 
     val offsetX = sliderState.offsetX
 
@@ -225,7 +225,7 @@ private fun Slider(
                         onDragEnd = {
                             scope.launch {
                                 if (offsetX.value >= maxDragPx) {
-                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+									haptic()
                                     onConfirm()
                                 } else {
                                     sliderState.reset()
