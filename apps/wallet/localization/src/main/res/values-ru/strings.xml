@@ -658,6 +658,7 @@
     <string name="tap_to_update">Нажмите, чтобы обновить</string>
     <string name="download">Скачать</string>
     <string name="appearance">Оформление</string>
+	<string name="haptic_strength">Сила вибрации</string>
     <string name="color_scheme">Цветовая схема</string>
     <string name="app_icon">Иконка приложения</string>
     <string name="app_icon_changed">Иконка приложения изменен</string>

@@ -20,6 +20,7 @@ sealed class Item(type: Int, val name: String): BaseListItem(type) {
         const val TYPE_ICON = 3
         const val TYPE_LOGO = 4
         const val TYPE_TRON = 5
+		const val TYPE_HAPTIC_STRENGTH = 6
     }
 
     data class Account(
@@ -46,6 +47,11 @@ sealed class Item(type: Int, val name: String): BaseListItem(type) {
     data class TronToggle(
         val enabled: Boolean,
     ): Item(TYPE_TRON, "tron")
+
+	data class HapticStrength(
+		val value: Float,
+		val position: ListCell.Position,
+	) : Item(TYPE_HAPTIC_STRENGTH, "haptic_strength")
 
     data object Space: Item(TYPE_SPACE, "")
 

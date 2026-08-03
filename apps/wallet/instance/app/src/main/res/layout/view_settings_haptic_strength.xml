@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:paddingHorizontal="@dimen/offsetMedium"
+	android:paddingTop="@dimen/offsetMedium">
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:textAppearance="@style/TextAppearance.Label1"
+			android:textColor="?attr/textPrimaryColor" />
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/value"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end"
+			android:textAppearance="@style/TextAppearance.Body2"
+			android:textColor="?attr/textSecondaryColor" />
+
+	</FrameLayout>
+
+	<com.tonapps.tonkeeper.ui.screen.settings.main.list.holder.HapticStrengthSliderView
+		android:id="@+id/slider"
+		android:layout_width="match_parent"
+		android:layout_height="48dp" />
+
+</LinearLayout>

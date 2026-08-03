@@ -120,6 +120,17 @@ class SettingsViewModel(
         FirebaseHelper.searchEngine(engine.title)
     }
 
+	fun setHapticStrength(value: Float) {
+		settingsRepository.hapticStrength = value
+		_uiItemsFlow.value = _uiItemsFlow.value.map { item ->
+			if (item is Item.HapticStrength) {
+				item.copy(value = settingsRepository.hapticStrength)
+			} else {
+				item
+			}
+		}
+	}
+
     fun signOut(callback: () -> Unit) {
         analytics.simpleTrackEvent("delete_wallet")
         viewModelScope.launch(Dispatchers.IO) {
@@ -288,7 +299,8 @@ class SettingsViewModel(
         if (WidgetManager.isRequestPinAppWidgetSupported) {
             uiItems.add(Item.Widget(ListCell.Position.MIDDLE))
         }
-        uiItems.add(Item.Theme(ListCell.Position.LAST))
+		uiItems.add(Item.HapticStrength(settingsRepository.hapticStrength, ListCell.Position.MIDDLE))
+		uiItems.add(Item.Theme(ListCell.Position.LAST))
 
         uiItems.add(Item.Space)
         uiItems.add(Item.FAQ(ListCell.Position.FIRST, config.faqUrl))

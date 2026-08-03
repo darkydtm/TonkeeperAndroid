@@ -2,6 +2,7 @@ package com.tonapps.tonkeeper.ui.screen.settings.main.list
 
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.settings.main.list.holder.AccountHolder
+import com.tonapps.tonkeeper.ui.screen.settings.main.list.holder.HapticStrengthHolder
 import com.tonapps.tonkeeper.ui.screen.settings.main.list.holder.IconHolder
 import com.tonapps.tonkeeper.ui.screen.settings.main.list.holder.LogoHolder
 import com.tonapps.tonkeeper.ui.screen.settings.main.list.holder.SpaceHolder
@@ -12,7 +13,8 @@ import com.tonapps.uikit.list.BaseListHolder
 import com.tonapps.uikit.list.BaseListItem
 
 class Adapter(
-    private val onClick: ((Item) -> Unit)
+	private val onClick: (Item) -> Unit,
+	private val onHapticStrengthChanged: (Float) -> Unit,
 ): BaseListAdapter() {
 
     override fun createHolder(parent: ViewGroup, viewType: Int): BaseListHolder<out BaseListItem> {
@@ -23,6 +25,11 @@ class Adapter(
             Item.TYPE_ICON -> IconHolder(parent, onClick)
             Item.TYPE_LOGO -> LogoHolder(parent, onClick)
             Item.TYPE_TRON -> TronHolder(parent, onClick)
+			Item.TYPE_HAPTIC_STRENGTH -> HapticStrengthHolder(
+				parent,
+				onClick,
+				onHapticStrengthChanged,
+			)
             else -> throw IllegalArgumentException("Unknown view type: $viewType")
         }
     }

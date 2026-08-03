@@ -26,6 +26,7 @@
     <string name="add_contact">Add to Address Book</string>
     <string name="add_to_home_screen">Add to Home Screen</string>
     <string name="appearance">Appearance</string>
+	<string name="haptic_strength">Haptic strength</string>
     <string name="color_scheme">Color Scheme</string>
     <string name="app_icon">App Icon</string>
     <string name="app_icon_changed">App icon changed</string>

@@ -36,6 +36,7 @@ import uikit.base.BaseFragment
 import uikit.dialog.alert.AlertDialog
 import uikit.extensions.collectFlow
 import uikit.widget.item.ItemTextView
+import uikit.HapticHelper
 
 class SettingsScreen(
     wallet: WalletEntity
@@ -55,7 +56,7 @@ class SettingsScreen(
         ActionSheet(requireContext())
     }
 
-    private val adapter = Adapter(::onClickItem)
+    private val adapter = Adapter(::onClickItem, ::onHapticStrengthChanged)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +102,11 @@ class SettingsScreen(
             else -> return
         }
     }
+
+	private fun onHapticStrengthChanged(value: Float) {
+		viewModel.setHapticStrength(value)
+		HapticHelper.impactLight(requireContext())
+	}
 
     private fun openRate() {
         activity?.let {
