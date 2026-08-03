@@ -9,8 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.Role
 
 enum class HapticType {
@@ -27,11 +25,11 @@ fun rememberHapticClick(
 	type: HapticType = HapticType.LIGHT,
 	onClick: () -> Unit,
 ): () -> Unit {
-	val haptic = LocalHapticFeedback.current
+	val haptic = rememberPlatformHaptic(type)
 	val currentOnClick = rememberUpdatedState(onClick)
-	return remember(haptic, type) {
+	return remember(haptic) {
 		{
-			haptic.performHapticFeedback(type.toComposeType())
+			haptic()
 			currentOnClick.value()
 		}
 	}
@@ -46,10 +44,10 @@ fun Modifier.hapticClickable(
 	onClick: () -> Unit,
 ): Modifier {
 	return composed {
-		val haptic = LocalHapticFeedback.current
+		val haptic = rememberPlatformHaptic(type)
 		val currentOnClick = rememberUpdatedState(onClick)
 		val currentOnClickWithHaptic = {
-			haptic.performHapticFeedback(type.toComposeType())
+			haptic()
 			currentOnClick.value()
 		}
 		if (interactionSource != null || indication != null) {
@@ -78,22 +76,13 @@ fun Modifier.hapticSelectable(
 	onClick: () -> Unit,
 ): Modifier {
 	return composed {
-		val haptic = LocalHapticFeedback.current
+		val haptic = rememberPlatformHaptic(type)
 		val currentOnClick = rememberUpdatedState(onClick)
 		selectable(selected = selected, enabled = enabled, role = role) {
 			if (!selected) {
-				haptic.performHapticFeedback(type.toComposeType())
+				haptic()
 			}
 			currentOnClick.value()
 		}
 	}
-}
-
-private fun HapticType.toComposeType(): HapticFeedbackType = when (this) {
-	HapticType.LIGHT -> HapticFeedbackType.ContextClick
-	HapticType.SELECTION -> HapticFeedbackType.SegmentTick
-	HapticType.CONFIRM,
-	HapticType.SUCCESS -> HapticFeedbackType.Confirm
-	HapticType.WARNING,
-	HapticType.ERROR -> HapticFeedbackType.Reject
 }
