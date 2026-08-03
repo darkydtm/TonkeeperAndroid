@@ -13,7 +13,7 @@ captures
 .build-cache
 tools/build/
 mavenLocal
-internal.keystore
+internal.jks
 
 ## Codex generated skill artifacts
 .codex/skills/tk-impact-analisys/reports/
