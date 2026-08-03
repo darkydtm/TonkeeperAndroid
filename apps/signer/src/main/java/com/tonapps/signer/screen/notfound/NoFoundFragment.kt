@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.notfound
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -12,7 +14,7 @@ class NoFoundFragment: BaseFragment(R.layout.fragment_notfound), BaseFragment.Mo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<HeaderView>(R.id.header).doOnActionClick = { finish() }
-        view.findViewById<Button>(R.id.ok).setOnClickListener { finish() }
+        view.findViewById<Button>(R.id.ok).setHapticClickListener { finish() }
     }
 
     companion object {

@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.name
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -51,7 +53,7 @@ class NameFragment: BaseFragment(R.layout.fragment_name), BaseFragment.BottomShe
         nameInput.setOnDoneActionListener {save() }
 
         saveButton = view.findViewById(R.id.save)
-        saveButton.setOnClickListener { save() }
+        saveButton.setHapticClickListener { save() }
 
         nameInput.doOnTextChange = {
             nameInput.error = false

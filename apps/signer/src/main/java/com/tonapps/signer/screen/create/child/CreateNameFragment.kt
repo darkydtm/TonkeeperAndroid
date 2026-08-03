@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.create.child
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -47,7 +49,7 @@ class CreateNameFragment: BaseFragment(R.layout.fragment_create_name) {
         actionView.pinToBottomInsets()
 
         doneButton = view.findViewById(R.id.done)
-        doneButton.setOnClickListener { done() }
+        doneButton.setHapticClickListener { done() }
 
         loaderView = view.findViewById(R.id.loader)
 

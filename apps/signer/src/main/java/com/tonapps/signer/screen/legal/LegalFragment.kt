@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.legal
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import com.tonapps.signer.R
@@ -15,12 +17,12 @@ class LegalFragment: BaseFragment(R.layout.fragment_legal), BaseFragment.SwipeBa
         header.doOnCloseClick = { finish() }
 
         val termsView = view.findViewById<View>(R.id.terms)
-        termsView.setOnClickListener {
+        termsView.setHapticClickListener {
             navigation?.openURL("https://tonkeeper.com/terms")
         }
 
         val privacyView = view.findViewById<View>(R.id.privacy)
-        privacyView.setOnClickListener {
+        privacyView.setHapticClickListener {
             navigation?.openURL("https://tonkeeper.com/privacy")
         }
     }

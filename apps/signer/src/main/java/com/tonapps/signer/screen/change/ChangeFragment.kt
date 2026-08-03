@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.change
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -65,7 +67,7 @@ class ChangeFragment: BaseFragment(R.layout.fragment_change), BaseFragment.Swipe
         actionView.pinToBottomInsets()
 
         continueButton = view.findViewById(R.id.done)
-        continueButton.setOnClickListener { changeViewModel.continuePassword() }
+        continueButton.setHapticClickListener { changeViewModel.continuePassword() }
 
         loaderView = view.findViewById(R.id.loader)
         successView = view.findViewById(R.id.success)

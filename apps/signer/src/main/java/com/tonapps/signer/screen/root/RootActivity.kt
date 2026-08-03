@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.root
 
+import uikit.extensions.setHapticClickListener
+
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -68,10 +70,10 @@ class RootActivity: NavigationActivity() {
         sheetContainer = findViewById(uikit.R.id.sheet_container)
 
         lockView = findViewById(R.id.lock)
-        lockView.setOnClickListener {  }
+		lockView.setOnClickListener {  }
 
         lockSignOutButton = findViewById(R.id.lock_sign_out)
-        lockSignOutButton.setOnClickListener { signOut() }
+        lockSignOutButton.setHapticClickListener { signOut() }
 
         lockPasswordView = findViewById(R.id.lock_password)
         lockPasswordView.doOnPassword = ::checkPassword

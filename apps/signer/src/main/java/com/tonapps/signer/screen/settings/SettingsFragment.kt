@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.settings
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -36,19 +38,19 @@ class SettingsFragment: BaseFragment(R.layout.fragment_settings), BaseFragment.S
         scrollView = view.findViewById(R.id.scroll)
 
         changeView = view.findViewById(R.id.change)
-        changeView.setOnClickListener { navigation?.add(ChangeFragment.newInstance()) }
+        changeView.setHapticClickListener { navigation?.add(ChangeFragment.newInstance()) }
 
         supportView = view.findViewById(R.id.support)
-        supportView.setOnClickListener { openSupport() }
+        supportView.setHapticClickListener { openSupport() }
 
         legalView = view.findViewById(R.id.legal)
-        legalView.setOnClickListener {
+        legalView.setHapticClickListener {
             navigation?.add(LegalFragment.newInstance())
         }
 
         versionView = view.findViewById(R.id.version)
         versionView.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-        versionView.setOnClickListener {
+        versionView.setHapticClickListener {
             navigation?.add(DebugFragment.newInstance())
         }
     }

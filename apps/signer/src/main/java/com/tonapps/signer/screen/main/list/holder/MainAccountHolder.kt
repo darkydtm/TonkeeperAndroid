@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.signer.R
 import com.tonapps.signer.extensions.short8
@@ -16,7 +18,7 @@ class MainAccountHolder(
 
     override fun onBind(item: MainItem.Account) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             selectAccountCallback(item.id)
         }
 

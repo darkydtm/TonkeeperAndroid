@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import com.tonapps.signer.R
@@ -18,9 +20,9 @@ class MainActionsHolder(
     private val settingsView = findViewById<View>(R.id.settings)
 
     init {
-        scanView.setOnClickListener { Navigation.from(context)?.add(CameraFragment.newInstance()) }
-        addView.setOnClickListener { Navigation.from(context)?.add(AddFragment.newInstance()) }
-        settingsView.setOnClickListener { Navigation.from(context)?.add(SettingsFragment.newInstance()) }
+        scanView.setHapticClickListener { Navigation.from(context)?.add(CameraFragment.newInstance()) }
+        addView.setHapticClickListener { Navigation.from(context)?.add(AddFragment.newInstance()) }
+        settingsView.setHapticClickListener { Navigation.from(context)?.add(SettingsFragment.newInstance()) }
     }
 
     override fun onBind(item: MainItem.Actions) {

@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.crash
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -49,7 +51,7 @@ class CrashActivity: BaseActivity() {
         stackView.text = stack
 
         val copyButton = findViewById<TextView>(R.id.copy)
-        copyButton.setOnClickListener {
+        copyButton.setHapticClickListener {
             copyToClipboard(stack)
         }
     }

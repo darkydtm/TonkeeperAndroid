@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.create.child
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -68,10 +70,10 @@ class CreatePhraseFragment: BaseFragment(R.layout.fragment_create_phrase) {
         }
 
         nextButton = view.findViewById(R.id.next)
-        nextButton.setOnClickListener { saveMnemonic() }
+        nextButton.setHapticClickListener { saveMnemonic() }
 
         pasteButton = view.findViewById(R.id.paste)
-        pasteButton.setOnClickListener { paste() }
+        pasteButton.setHapticClickListener { paste() }
 
         collectFlow(createViewModel.page(PageType.Phrase)) {
             wordFormView.focus()

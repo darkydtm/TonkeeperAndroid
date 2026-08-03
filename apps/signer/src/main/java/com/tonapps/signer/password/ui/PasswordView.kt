@@ -1,5 +1,7 @@
 package com.tonapps.signer.password.ui
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -36,7 +38,7 @@ class PasswordView @JvmOverloads constructor(
         actionView.pinToBottomInsets()
 
         doneButton = findViewById(R.id.password_button)
-        doneButton.setOnClickListener { sendPassword() }
+        doneButton.setHapticClickListener { sendPassword() }
 
         loaderView = findViewById(R.id.password_loader)
         successView = findViewById(R.id.password_success)

@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.emulate
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -16,7 +18,7 @@ class EmulateFragment: BaseFragment(R.layout.fragment_emulate), BaseFragment.Mod
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<HeaderView>(R.id.header).doOnActionClick = { finish() }
-        view.findViewById<Button>(R.id.done).setOnClickListener { finish() }
+        view.findViewById<Button>(R.id.done).setHapticClickListener { finish() }
 
         val qrView = view.findViewById<QRView>(R.id.qr)
         qrView.setCorrectionLevelL()

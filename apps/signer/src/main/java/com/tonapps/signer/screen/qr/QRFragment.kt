@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.qr
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +61,7 @@ class QRFragment: BaseFragment(R.layout.fragment_qr), BaseFragment.Modal {
         labelView = view.findViewById(R.id.label)
 
         doneButton = view.findViewById(R.id.done)
-        doneButton.setOnClickListener { finish() }
+        doneButton.setHapticClickListener { finish() }
 
         collectFlow(keyRepository.getKey(id).filterNotNull(), ::setKeyEntity)
     }

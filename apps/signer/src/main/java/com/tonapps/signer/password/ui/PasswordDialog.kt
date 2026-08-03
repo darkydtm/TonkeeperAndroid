@@ -40,7 +40,7 @@ class PasswordDialog(
         setContentView(R.layout.dialog_password)
 
         rootView = findViewById(R.id.root)
-        rootView.setOnClickListener {  }
+		rootView.setOnClickListener {  }
 
         headerView = findViewById(R.id.header)
         headerView.doOnCloseClick = { dismiss() }

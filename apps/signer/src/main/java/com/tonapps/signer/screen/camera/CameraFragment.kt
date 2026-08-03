@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.camera
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -78,7 +80,7 @@ class CameraFragment: BaseFragment(R.layout.fragment_camera), BaseFragment.Botto
 
         buttonSettings = view.findViewById(R.id.button_settings)
         buttonSettings.applyBottomInsets()
-        buttonSettings.setOnClickListener {
+        buttonSettings.setHapticClickListener {
             requireContext().openAppSettings()
             finish()
         }
@@ -152,7 +154,7 @@ class CameraFragment: BaseFragment(R.layout.fragment_camera), BaseFragment.Botto
             HapticHelper.impactLight(requireContext())
         }
 
-        flashView.setOnClickListener {
+        flashView.setHapticClickListener {
             val flashMode = cameraController.torchState.value == TorchState.ON
             cameraController.enableTorch(!flashMode)
         }

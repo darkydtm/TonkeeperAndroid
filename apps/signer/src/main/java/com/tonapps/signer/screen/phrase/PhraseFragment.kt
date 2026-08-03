@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.phrase
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -41,7 +43,7 @@ class PhraseFragment: BaseFragment(R.layout.fragment_phrase), BaseFragment.Swipe
         phraseWordsView.setWords(mnemonic)
 
         copyButton = view.findViewById(R.id.copy)
-        copyButton.setOnClickListener {
+        copyButton.setHapticClickListener {
             val content = mnemonic.joinToString(" ")
             requireContext().copyToClipboard(content, true)
         }

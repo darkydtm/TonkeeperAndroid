@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.sign
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -90,7 +92,7 @@ class SignFragment: BaseFragment(R.layout.fragment_sign), BaseFragment.Modal {
         super.onViewCreated(view, savedInstanceState)
 
         closeView = view.findViewById(R.id.close)
-        closeView.setOnClickListener { reject() }
+        closeView.setHapticClickListener { reject() }
 
         subtitleView = view.findViewById(R.id.subtitle)
 
@@ -100,7 +102,7 @@ class SignFragment: BaseFragment(R.layout.fragment_sign), BaseFragment.Modal {
         auditView = view.findViewById(R.id.audit)
 
         showAuditView = view.findViewById(R.id.show_audit)
-        showAuditView.setOnClickListener { showDetails() }
+        showAuditView.setHapticClickListener { showDetails() }
 
         rawView = view.findViewById(R.id.raw)
         rawView.setOnLongClickListener {
@@ -117,13 +119,13 @@ class SignFragment: BaseFragment(R.layout.fragment_sign), BaseFragment.Modal {
         }
 
         emulateButton = view.findViewById(R.id.emulate)
-        emulateButton.setOnClickListener { emulateBody(false) }
+        emulateButton.setHapticClickListener { emulateBody(false) }
 
         copyButton = view.findViewById(R.id.copy)
-        copyButton.setOnClickListener { copyBody() }
+        copyButton.setHapticClickListener { copyBody() }
 
         qrView = view.findViewById(R.id.qr)
-        qrView.setOnClickListener { emulateBody(true) }
+        qrView.setHapticClickListener { emulateBody(true) }
 
         actionView = view.findViewById(R.id.action)
 

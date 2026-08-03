@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.add
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -21,13 +23,13 @@ class AddFragment: BaseFragment(R.layout.fragment_add_key), BaseFragment.Modal {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         closeButton = view.findViewById(R.id.close)
-        closeButton.setOnClickListener { finish() }
+        closeButton.setHapticClickListener { finish() }
 
         createButton = view.findViewById(R.id.create)
-        createButton.setOnClickListener { openCreate(false) }
+        createButton.setHapticClickListener { openCreate(false) }
 
         importButton = view.findViewById(R.id.imprt)
-        importButton.setOnClickListener { openCreate(true) }
+        importButton.setHapticClickListener { openCreate(true) }
     }
 
     private fun openCreate(import: Boolean) {

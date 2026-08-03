@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.intro
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -30,10 +32,10 @@ class IntroFragment: BaseFragment(R.layout.fragment_intro) {
         }
 
         newKeyButton = view.findViewById(R.id.new_key)
-        newKeyButton.setOnClickListener { openCreateFragment(false) }
+        newKeyButton.setHapticClickListener { openCreateFragment(false) }
 
         importKeyButton = view.findViewById(R.id.import_key)
-        importKeyButton.setOnClickListener { openCreateFragment(true) }
+        importKeyButton.setHapticClickListener { openCreateFragment(true) }
     }
 
     private fun openCreateFragment(import: Boolean) {

@@ -1,5 +1,7 @@
 package com.tonapps.signer.screen.create.child
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -66,7 +68,7 @@ class CreatePasswordFragment : BaseFragment(R.layout.fragment_create_password) {
         }
 
         doneButton = view.findViewById(R.id.done)
-        doneButton.setOnClickListener { sendPassword() }
+        doneButton.setHapticClickListener { sendPassword() }
         doneButton.pinToBottomInsets()
 
         passwordInput.doAfterValueChanged {
