@@ -11,6 +11,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ui.haptic.rememberHapticClick
 
 @Composable
 fun MoonAccentButton(
@@ -23,7 +24,7 @@ fun MoonAccentButton(
     onClick: () -> Unit,
 ) {
     Button(
-        onClick = onClick,
+        onClick = rememberHapticClick(onClick = onClick),
         enabled = enabled,
         modifier = modifier.height(size.height),
         shape = size.shape,
@@ -53,7 +54,7 @@ fun MoonTextButton(
     onClick: () -> Unit,
 ) {
     TextButton(
-        onClick = onClick,
+        onClick = rememberHapticClick(onClick = onClick),
         enabled = enabled,
         modifier = modifier.height(size.height),
         shape = size.shape
@@ -64,4 +65,3 @@ fun MoonTextButton(
         )
     }
 }
-

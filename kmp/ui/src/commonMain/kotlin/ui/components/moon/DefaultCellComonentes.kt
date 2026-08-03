@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -40,6 +39,7 @@ import coil3.compose.AsyncImagePainter
 import ui.theme.Dimens
 import ui.theme.UIKit
 import ui.workaround.isEmpty
+import ui.haptic.hapticClickable
 
 ///////
 @Composable
@@ -75,7 +75,7 @@ fun MoonActionIcon(
             .size(size)
             .clip(CircleShape)
             .background(backgroundColor)
-            .let { if (onClick != null) it.clickable(onClick = onClick) else it },
+            .let { if (onClick != null) it.hapticClickable(onClick = onClick) else it },
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -300,7 +300,7 @@ private fun Modifier.defaultIconModifier(
     size(size)
         .run {
             if (onClick != null) {
-                clickable(
+				hapticClickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple(bounded = false),
                     onClick = onClick
@@ -322,7 +322,7 @@ private fun Modifier.defaultImageModifier(
         .clip(shape)
         .run {
             if (onClick != null) {
-                clickable(
+				hapticClickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple(bounded = false),
                     onClick = onClick

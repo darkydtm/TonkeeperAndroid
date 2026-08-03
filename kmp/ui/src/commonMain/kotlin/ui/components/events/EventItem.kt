@@ -1,7 +1,6 @@
 package ui.components.events
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,6 +10,7 @@ import ui.theme.Dimens
 import ui.theme.Shapes.shape
 import ui.theme.UIKit
 import ui.theme.modifiers.bottomDivider
+import ui.haptic.hapticClickable
 
 sealed class EventItemClickPart {
     data class Action(val index: Int): EventItemClickPart()
@@ -30,7 +30,7 @@ fun EventItem(
                 .clip(action.position.shape())
                 .background(UIKit.colorScheme.background.content)
                 .bottomDivider(action.showDivider)
-                .clickable(onClick = {
+                .hapticClickable(onClick = {
                     onClick(event.id, EventItemClickPart.Action(index))
                 })
                 .padding(bottom = Dimens.offsetMedium),

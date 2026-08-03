@@ -1,6 +1,5 @@
 package ui.components.popup
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -19,6 +18,7 @@ import ui.ComposeIcon
 import ui.components.moon.MoonAsyncImage
 import ui.theme.Dimens
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @Composable
 fun ActionMenuItem(
@@ -28,7 +28,7 @@ fun ActionMenuItem(
 ) {
     Row(
         modifier = Modifier
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .height(48.dp)
             .padding(horizontal = Dimens.offsetMedium),
         verticalAlignment = Alignment.CenterVertically,
@@ -62,7 +62,7 @@ fun ActionMenuItem(
 ) {
     Row(
         modifier = Modifier
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .height(48.dp)
             .padding(horizontal = Dimens.offsetMedium),
         verticalAlignment = Alignment.CenterVertically,

@@ -1,7 +1,6 @@
 package ui.components.events
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +26,7 @@ import ui.theme.Shapes
 import ui.theme.UIKit
 import ui.theme.resources.Res
 import ui.theme.resources.ic_verification_16
+import ui.haptic.hapticClickable
 
 private val imageSize = 64.dp
 
@@ -45,7 +45,7 @@ internal fun EventActionProduct(
             .height(imageSize)
             .clip(Shapes.medium12)
             .background(UIKit.colorScheme.background.contentTint)
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .semantics(mergeDescendants = true) { role = Role.Button },
         verticalAlignment = Alignment.CenterVertically
     ) {

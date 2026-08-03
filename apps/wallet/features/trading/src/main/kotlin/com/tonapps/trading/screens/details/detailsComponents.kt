@@ -68,6 +68,9 @@ import ui.components.popup.ComposeActionItem
 import ui.painterResource
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.HapticType
+import ui.haptic.hapticClickable
+import ui.haptic.rememberHapticClick
 import uikit.chart.ChartPeriod
 import uikit.chart.ChartPoint
 import uikit.chart.ChartView
@@ -98,7 +101,7 @@ internal fun SectionTitle(
         if (onSeeAllClick != null) {
             Text(
                 text = stringResource(Localization.see_all),
-                modifier = Modifier.clickable { onSeeAllClick() },
+                modifier = Modifier.hapticClickable { onSeeAllClick() },
                 style = UIKit.typography.body2,
                 color = UIKit.colorScheme.text.accent,
             )
@@ -181,7 +184,7 @@ private fun MaxStakingApyLabel(
         modifier = Modifier
             .clip(Shapes.medium)
             .background(UIKit.colorScheme.accent.green.copy(alpha = 0.16f))
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 6.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -270,6 +273,9 @@ private fun ChartPeriodSelector(
             Row(modifier = Modifier.fillMaxSize()) {
                 periods.forEach { period ->
                     val interactionSource = remember(period) { MutableInteractionSource() }
+					val hapticOnPeriodSelected = rememberHapticClick(HapticType.SELECTION) {
+						onPeriodSelected(period)
+					}
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -277,7 +283,13 @@ private fun ChartPeriodSelector(
                             .clickable(
                                 interactionSource = interactionSource,
                                 indication = null,
-                                onClick = { onPeriodSelected(period) },
+								onClick = {
+									if (period != chartPeriod) {
+										hapticOnPeriodSelected()
+									} else {
+										onPeriodSelected(period)
+									}
+								},
                             ),
                         contentAlignment = Alignment.Center,
                     ) {

@@ -13,7 +13,6 @@ import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -68,6 +67,7 @@ import ui.components.moon.MoonTopAppBar
 import ui.components.moon.container.MoonSurface
 import ui.components.moon.dialog.MoonModalDialog
 import ui.components.moon.dialog.rememberDialogNavigator
+import ui.haptic.hapticClickable
 import ui.theme.UIKit
 import java.util.concurrent.Executors
 
@@ -200,7 +200,7 @@ fun ScannerScreen(
                     .size(32.dp)
                     .clip(CircleShape)
                     .background(dimWhite)
-                    .clickable (onClick = { onClose() }),
+					.hapticClickable(onClick = { onClose() }),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
@@ -221,7 +221,7 @@ fun ScannerScreen(
                     .padding(bottom = 24.dp)
                     .clip(RoundedCornerShape(24.dp))
                     .background(Color(0xFF454545))
-                    .clickable {
+					.hapticClickable {
                         galleryLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
@@ -318,7 +318,7 @@ private fun CameraOverlay(
                         .size(48.dp)
                         .clip(CircleShape)
                         .background(if (flashEnabled) Color.White else dimWhite)
-                        .clickable(onClick = onFlashClick),
+						.hapticClickable(onClick = onFlashClick),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(

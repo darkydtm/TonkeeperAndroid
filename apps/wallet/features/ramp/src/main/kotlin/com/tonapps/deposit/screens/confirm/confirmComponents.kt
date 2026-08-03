@@ -1,6 +1,5 @@
 package com.tonapps.deposit.screens.confirm
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,8 @@ import ui.components.moon.MoonItemIcon
 import ui.components.moon.MoonItemSubtitle
 import ui.components.moon.MoonItemTitle
 import ui.theme.UIKit
+import ui.haptic.HapticType
+import ui.haptic.hapticClickable
 
 @Composable
 internal fun FeeItemCell(
@@ -28,7 +29,7 @@ internal fun FeeItemCell(
 ) {
     Row(
         modifier = Modifier
-            .clickable(onClick = onClick)
+			.hapticClickable(type = HapticType.SELECTION, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,

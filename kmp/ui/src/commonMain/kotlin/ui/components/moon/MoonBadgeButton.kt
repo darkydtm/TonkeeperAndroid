@@ -1,7 +1,6 @@
 package ui.components.moon
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -14,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import ui.theme.UIKit
 import ui.theme.modifiers.modifyIf
+import ui.haptic.hapticClickable
 
 // TODO combine with chip
 @Composable
@@ -45,7 +45,7 @@ fun MoonBadgeButton(
             .background(UIKit.colorScheme.background.contentTint)
             .padding(8.dp)
             .modifyIf {
-                onClick?.let { clickable(onClick = onClick) }
+				onClick?.let { hapticClickable(onClick = onClick) }
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)

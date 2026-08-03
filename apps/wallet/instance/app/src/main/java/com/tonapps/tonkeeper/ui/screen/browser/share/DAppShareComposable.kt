@@ -3,7 +3,6 @@ package com.tonapps.tonkeeper.ui.screen.browser.share
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,6 +38,7 @@ import ui.components.moon.ButtonColorsSecondary
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @Composable
 fun UrlView(
@@ -60,7 +60,7 @@ fun UrlView(
             maxLines = 1,
             color = UIKit.colorScheme.text.primary,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.clickable { onCopy() }
+			modifier = Modifier.hapticClickable { onCopy() }
         )
         Box(
             modifier = Modifier

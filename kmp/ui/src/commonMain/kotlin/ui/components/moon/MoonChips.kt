@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +22,7 @@ import kotlinx.collections.immutable.ImmutableList
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticSelectable
 
 @Immutable
 data class MoonItem(
@@ -51,10 +51,10 @@ fun MoonChip(
 
     val modifier = Modifier
         .clip(Shapes.medium)
-        .selectable(
+		.hapticSelectable(
             selected = selected,
-            onClick = onClick,
             role = Role.Checkbox,
+            onClick = onClick,
         )
         .height(Dimens.sizeAction)
 

@@ -2,7 +2,6 @@ package ui.components.moon
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +18,8 @@ import org.jetbrains.compose.resources.painterResource
 import ui.theme.UIKit
 import ui.theme.resources.Res
 import ui.theme.resources.ic_done_bold_16
+import ui.haptic.HapticType
+import ui.haptic.hapticClickable
 
 @Composable
 fun MoonCheckbox(
@@ -46,7 +47,7 @@ fun MoonCheckbox(
             .padding(3.dp)
             .run {
                 if (onCheckedChange != null) {
-                    clickable(enabled = enabled) {
+					hapticClickable(enabled = enabled, type = HapticType.SELECTION) {
                         onCheckedChange(!checked)
                     }
                 } else {

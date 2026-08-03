@@ -1,7 +1,6 @@
 package ui.components.moon
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @Composable
 fun MoonTag(
@@ -34,7 +34,7 @@ fun MoonTag(
     Row(
         modifier = modifier
             .clip(Shapes.medium)
-            .clickable(onClick = { onClick?.invoke() })
+			.let { if (onClick != null) it.hapticClickable(onClick = onClick) else it }
             .height(Dimens.sizeAction)
             .background(colors.buttonSecondary.primaryBackground)
             .padding(horizontal = 16.dp, vertical = 8.dp),

@@ -1,6 +1,5 @@
 package ui.components.moon.cell
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 class PropertyCellStyle(
     val titleStyle: TextStyle,
@@ -119,7 +119,7 @@ fun PropertyCellCustom(
             .fillMaxWidth()
             .run {
                 onClick
-                    ?.let { clickable(onClick = onClick) }
+					?.let { hapticClickable(onClick = onClick) }
                     ?: this
             }
             .then(newModifier),

@@ -1,12 +1,12 @@
 package ui.components.details
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import ui.components.moon.MoonDivider
 import ui.theme.Dimens
+import ui.haptic.hapticClickable
 
 @Composable
 internal fun TKDetailsItem(
@@ -16,7 +16,7 @@ internal fun TKDetailsItem(
 ) {
     TKDetailsRow(
         modifier = Modifier
-            .clickable(
+            .hapticClickable(
                 enabled = row.clickable,
                 role = Role.Button,
                 onClick = {

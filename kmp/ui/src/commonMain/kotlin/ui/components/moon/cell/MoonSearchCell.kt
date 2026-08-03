@@ -2,7 +2,6 @@ package ui.components.moon.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -43,6 +42,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ui.theme.UIKit
 import ui.theme.resources.Res
+import ui.haptic.hapticClickable
+import ui.haptic.rememberHapticClick
 import ui.theme.resources.cancel
 import ui.theme.resources.ic_magnifying_glass_16
 import ui.theme.resources.ic_xmark_circle_16
@@ -68,6 +69,10 @@ fun MoonSearchCell(
     onClick: (() -> Unit)? = null,
 ) {
     val state = remember { mutableStateOf(false) }
+	val hapticOnClear = rememberHapticClick {
+		searchText.value = ""
+		onChanged?.invoke(searchText.value)
+	}
 
     Row(
         modifier = Modifier
@@ -92,7 +97,7 @@ fun MoonSearchCell(
                 )
                 .clip(UIKit.shapes.large)
                 .background(UIKit.colorScheme.background.content)
-                .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
+                .then(if (onClick != null) Modifier.hapticClickable(onClick = onClick) else Modifier),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
@@ -130,10 +135,7 @@ fun MoonSearchCell(
                     trailingIcon = if (text.isNotEmpty()) {
                         {
                             IconButton(
-                                onClick = {
-                                    text = ""
-                                    onChanged?.invoke(text)
-                                }
+								onClick = hapticOnClear
                             ) {
                                 Icon(
                                     painter = painterResource(Res.drawable.ic_xmark_circle_16),
@@ -157,7 +159,7 @@ fun MoonSearchCell(
         if (onCancel != null) {
             Box(
                 modifier = Modifier
-                    .clickable(onClick = onCancel)
+					.hapticClickable(onClick = onCancel)
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Text(

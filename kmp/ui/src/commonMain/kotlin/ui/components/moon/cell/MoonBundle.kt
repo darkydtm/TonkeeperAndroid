@@ -1,8 +1,6 @@
 package ui.components.moon.cell
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -26,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import ui.components.moon.MoonItemDivider
 import ui.components.moon.MoonItemSubtitle
 import ui.components.moon.MoonItemTitle
+import ui.haptic.hapticClickable
 import ui.theme.UIKit
 
 enum class MoonBundlePosition {
@@ -79,7 +78,7 @@ fun MoonBundleTitleCell(
             Modifier.fillMaxWidth()
                 .run {
                     if (onClick != null) {
-                        clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
+						hapticClickable {
                             onClick()
                         }
                     } else {
@@ -124,7 +123,7 @@ fun MoonBundleCell(
             .background(backgroundColor)
             .run {
                 if (onClick != null) {
-                    clickable {
+					hapticClickable {
                         onClick()
                     }
                 } else {

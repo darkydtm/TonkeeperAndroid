@@ -1,7 +1,6 @@
 package ui.components.moon
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -13,6 +12,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import ui.theme.Dimens
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @Deprecated("Use MoonActionIcon instead")
 @Composable
@@ -26,7 +26,7 @@ fun MoonActionIcon(
         contentDescription = contentDescription,
         modifier = Modifier
             .clip(CircleShape)
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .actionButton(),
         tint = UIKit.colorScheme.buttonSecondary.primaryForeground
     )

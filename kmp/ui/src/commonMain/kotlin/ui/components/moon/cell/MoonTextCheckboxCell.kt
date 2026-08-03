@@ -13,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.components.moon.MoonCheckbox
+import ui.haptic.HapticType
+import ui.haptic.rememberHapticClick
 import ui.theme.UIKit
 
 @Composable
@@ -21,12 +23,16 @@ fun MoonTextCheckboxCell(
     isChecked: Boolean,
     onCheckedChanged: (Boolean) -> Unit,
 ) {
+	val hapticOnClick = rememberHapticClick(HapticType.SELECTION) {
+		onCheckedChanged(!isChecked)
+	}
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
-                onCheckedChanged(!isChecked)
+				hapticOnClick()
             },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
@@ -40,4 +46,3 @@ fun MoonTextCheckboxCell(
         )
     }
 }
-

@@ -1,7 +1,6 @@
 package com.tonapps.deposit.screens.confirm
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -73,6 +72,7 @@ import ui.text.withLink
 import ui.theme.LocalAppColorScheme
 import ui.theme.UIKit
 import ui.theme.modifiers.modifyIf
+import ui.haptic.hapticClickable
 import ui.theme.modifiers.rememberShimmerPhase
 import ui.theme.modifiers.shimmer
 import ui.utils.toRichSpanStyle
@@ -814,7 +814,7 @@ fun MoonPropertyBigCell(
     Row(
         modifier = Modifier
             .padding(16.dp)
-            .modifyIf { onClick?.let { clickable(onClick = it) } },
+			.modifyIf { onClick?.let { hapticClickable(onClick = it) } },
     ) {
         title()
 
@@ -894,4 +894,3 @@ private fun ExpandendScreen() {
         }
     }
 }
-

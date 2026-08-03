@@ -11,7 +11,6 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,6 +48,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
+import ui.haptic.hapticClickable
 import com.tonapps.uikit.icon.UIKitIcon
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -111,7 +111,7 @@ fun MoonSlideConfirmation(
             MoonErrorCell(
                 text = error,
                 height = ItemWidth,
-                modifier = if (onRetry != null) Modifier.clickable { onRetry() } else Modifier,
+                modifier = if (onRetry != null) Modifier.hapticClickable { onRetry() } else Modifier,
             )
         } else {
             when (state) {

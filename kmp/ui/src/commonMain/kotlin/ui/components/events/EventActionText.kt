@@ -1,7 +1,6 @@
 package ui.components.events
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -29,6 +28,7 @@ import ui.components.moon.MoonSpoiler
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @Composable
 internal fun EventActionText(
@@ -65,7 +65,7 @@ private fun EventActionEncryptedText(
     Box(
         modifier = modifier
             .clip(Shapes.medium12)
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .background(UIKit.colorScheme.background.contentTint)
             .padding(horizontal = 8.dp, vertical = 4.dp),
     ) {

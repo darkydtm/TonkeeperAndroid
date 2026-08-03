@@ -2,7 +2,6 @@ package com.tonapps.deposit.screens.qr
 
 import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -71,6 +70,8 @@ import ui.components.moon.container.MoonCutBadgedBox
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
+import ui.haptic.hapticSelectable
 import ui.utils.uppercased
 
 @Composable
@@ -243,7 +244,7 @@ fun QrContent(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCopyClick() }
+				.hapticClickable { onCopyClick() }
                 .semantics(mergeDescendants = false) {
                     testTagsAsResourceId = true
                     testTag = "wallet_address_text"
@@ -373,7 +374,10 @@ fun Tabs(
                     )
                     .wrapContentHeight(align = Alignment.CenterVertically)
                     .padding(horizontal = Dimens.offsetMedium)
-                    .clickable { onTabClick(tab) },
+					.hapticSelectable(
+						selected = isSelected,
+						onClick = { onTabClick(tab) },
+					),
                 style = UIKit.typography.label2,
                 color = UIKit.colorScheme.text.primary
             )

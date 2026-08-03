@@ -26,6 +26,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ui.theme.UIKit
+import ui.haptic.HapticType
+import ui.haptic.rememberHapticClick
 
 @Composable
 fun MoonExpandableText(
@@ -42,6 +44,9 @@ fun MoonExpandableText(
     val interactionSource = remember { MutableInteractionSource() }
     var isExpanded by remember { mutableStateOf(false) }
     var isOverflowing by remember(text, maxLines) { mutableStateOf(false) }
+	val hapticOnExpand = rememberHapticClick(HapticType.LIGHT) {
+		isExpanded = true
+	}
 
     Box(
         modifier = modifier
@@ -51,7 +56,7 @@ fun MoonExpandableText(
                 interactionSource = interactionSource,
                 indication = null,
             ) {
-                isExpanded = true
+				hapticOnExpand()
             },
     ) {
         Text(

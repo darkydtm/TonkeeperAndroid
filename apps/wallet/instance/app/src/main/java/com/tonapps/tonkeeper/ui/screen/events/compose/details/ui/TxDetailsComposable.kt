@@ -1,6 +1,5 @@
 package com.tonapps.tonkeeper.ui.screen.events.compose.details.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +23,7 @@ import ui.components.modal.TKModalScaffold
 import ui.components.moon.MoonAsyncImage
 import ui.theme.Dimens
 import ui.theme.Shapes
+import ui.haptic.hapticClickable
 
 @Composable
 fun TxDetailsComposable(
@@ -68,7 +68,7 @@ fun TxDetailsComposable(
                     MoonAsyncImage(
                         modifier = Modifier
                             .clip(Shapes.large)
-                            .clickable(onClick = { viewModel.openNft() }),
+                            .hapticClickable(onClick = { viewModel.openNft() }),
                         image = uiState.imageUrl!!,
                         size = 96.dp,
                     )

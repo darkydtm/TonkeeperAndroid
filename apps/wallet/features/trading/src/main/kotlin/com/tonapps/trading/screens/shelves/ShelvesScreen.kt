@@ -1,7 +1,6 @@
 package com.tonapps.trading.screens.shelves
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,6 +53,7 @@ import ui.preview.ThemedPreview
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @Composable
 fun ShelvesScreen(
@@ -220,7 +220,7 @@ private fun ShelfContainer(
                 Text(
                     modifier = Modifier
                         .clip(Shapes.medium12)
-                        .clickable(onClick = onClickSeeAll)
+                        .hapticClickable(onClick = onClickSeeAll)
                         .padding(vertical = 12.dp),
                     text = stringResource(Localization.show_all),
                     style = UIKit.typography.body2,
@@ -273,7 +273,7 @@ private fun AssetItem(
         modifier = Modifier
             .fillMaxWidth()
             .clip(Shapes.medium12)
-            .clickable(onClick = onClick)
+            .hapticClickable(onClick = onClick)
             .padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

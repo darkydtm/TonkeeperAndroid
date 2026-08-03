@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import ui.haptic.rememberHapticClick
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +40,9 @@ fun BaseTextCell(
     minHeight: Dp = DefaultItemHeight,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) {
+	val hapticOnClick = onClick?.let { rememberHapticClick(onClick = it) }
+	val hapticOnLongClick = onLongClick?.let { rememberHapticClick(onClick = it) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +52,10 @@ fun BaseTextCell(
                 if (onClick == null) {
                     this
                 } else {
-                    combinedClickable(onClick = onClick, onLongClick = onLongClick)
+					combinedClickable(
+						onClick = hapticOnClick ?: {},
+						onLongClick = hapticOnLongClick,
+					)
                 }
             }
             .then(modifier)

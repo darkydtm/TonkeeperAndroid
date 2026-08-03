@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.theme.UIKit
+import ui.haptic.rememberHapticClick
 
 object MoonButtonCellDefaults {
 
@@ -78,7 +79,7 @@ fun MoonButtonCell(
             .background(UIKit.colorScheme.background.transparent)
             .padding(contentPadding)
             .height(56.dp),
-        onClick = onClick,
+        onClick = rememberHapticClick(onClick = onClick),
         elevation = null,
         enabled = enabled,
         colors = colors,

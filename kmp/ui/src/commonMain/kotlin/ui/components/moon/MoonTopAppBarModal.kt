@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import ui.painterResource
 import ui.theme.Dimens
 import ui.theme.UIKit
+import ui.haptic.rememberHapticClick
 
 private const val HEADER_ANIMATION_DURATION_MS = 180
 
@@ -87,6 +88,7 @@ fun MoonTopAppBar(
         if (hasCustomActions && actionIconAlpha > 0.01f) Dimens.offsetExtraSmall else 0.dp
 
     val titleInteractionSource = remember { MutableInteractionSource() }
+	val hapticOnTitleClick = onTitleClick?.let { rememberHapticClick(onClick = it) }
 
     Column(
         modifier = modifier
@@ -124,7 +126,7 @@ fun MoonTopAppBar(
                         .then(
                             if (onTitleClick != null) {
                                 Modifier.clickable(
-                                    onClick = onTitleClick,
+                                    onClick = hapticOnTitleClick ?: {},
                                     interactionSource = titleInteractionSource,
                                     indication = null,
                                 )

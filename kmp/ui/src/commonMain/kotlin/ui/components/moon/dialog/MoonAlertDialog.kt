@@ -1,6 +1,5 @@
 package ui.components.moon.dialog
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import ui.components.moon.MoonDivider
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.hapticClickable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,7 +115,7 @@ private fun AlertButton(
     Box(
         modifier = modifier
             .height(56.dp)
-            .clickable(onClick = onClick),
+            .hapticClickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Text(

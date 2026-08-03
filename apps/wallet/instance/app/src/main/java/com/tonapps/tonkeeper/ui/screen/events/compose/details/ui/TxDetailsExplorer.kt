@@ -22,18 +22,22 @@ import com.tonapps.uikit.icon.UIKitIcon
 import com.tonapps.wallet.localization.Localization
 import ui.theme.Dimens
 import ui.theme.UIKit
+import ui.haptic.rememberHapticClick
 
 @Composable
 fun TxDetailsExplorer(
     viewModel: TxDetailsViewModel,
     hash: String
 ) {
+	val hapticOnClick = rememberHapticClick { viewModel.openTx() }
+	val hapticOnLongClick = rememberHapticClick { viewModel.copyTxHash() }
+
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(18.dp))
             .combinedClickable(
-                onClick = { viewModel.openTx() },
-                onLongClick = { viewModel.copyTxHash() }
+				onClick = hapticOnClick,
+				onLongClick = hapticOnLongClick,
             )
             .height(36.dp)
             .background(UIKit.colorScheme.buttonSecondary.primaryBackground)

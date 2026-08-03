@@ -1,7 +1,6 @@
 package com.tonapps.deposit.screens.send
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -68,6 +67,8 @@ import kotlinx.coroutines.flow.flowOf
 import ui.components.moon.MoonBadgeButton
 import ui.components.moon.MoonItemIcon
 import ui.components.moon.MoonItemImage
+import ui.haptic.HapticType
+import ui.haptic.hapticClickable
 import ui.components.moon.MoonItemSubtitle
 import ui.components.moon.MoonItemTitle
 import ui.components.moon.MoonTopAppBar
@@ -398,7 +399,7 @@ private fun SendInputContent(
                     MoonItemSubtitle(
                         modifier = Modifier
                             .padding(horizontal = 20.dp, vertical = 4.dp)
-                            .clickable { uriHandler.openUri(state.tronSwapUrl) },
+							.hapticClickable { uriHandler.openUri(state.tronSwapUrl) },
                         text = swapAnnotated,
                     )
                 }
@@ -518,7 +519,7 @@ private fun SendInputContent(
                         )
                     } else {
                         Row(
-                            modifier = Modifier.clickable { onSwap() },
+							modifier = Modifier.hapticClickable { onSwap() },
                             horizontalArrangement = Arrangement.spacedBy(4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
@@ -559,7 +560,7 @@ private fun SendInputContent(
                             MoonItemSubtitle(
                                 text = stringResource(Localization.max).uppercased(),
                                 color = UIKit.colorScheme.text.accent,
-                                modifier = Modifier.clickable { onSetMax() },
+								modifier = Modifier.hapticClickable { onSetMax() },
                             )
                         }
                     }
@@ -703,7 +704,7 @@ private fun CommentEncryptionHint(
                 stringResource(Localization.encrypt_comment)
             },
             color = UIKit.colorScheme.accent.blue,
-            modifier = Modifier.clickable(onClick = onToggle),
+			modifier = Modifier.hapticClickable(type = HapticType.SELECTION, onClick = onToggle),
         )
     }
 }

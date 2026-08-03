@@ -1,6 +1,5 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme.picker
 
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.tonapps.tonkeeper.ui.screen.settings.theme.titleRes
 import com.tonapps.wallet.data.core.MaterialYouGenerator
 import com.tonapps.wallet.localization.Localization
+import ui.haptic.hapticSelectable
 
 @Composable
 fun MaterialYouGeneratorPicker(
@@ -77,7 +77,7 @@ private fun GeneratorRow(
 		modifier = Modifier
 			.fillMaxWidth()
 			.clip(shape)
-			.selectable(
+			.hapticSelectable(
 				selected = selected,
 				onClick = onClick,
 			),

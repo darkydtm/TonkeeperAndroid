@@ -37,6 +37,8 @@ import ui.preview.ThemedPreview
 import ui.theme.Dimens
 import ui.theme.Shapes
 import ui.theme.UIKit
+import ui.haptic.HapticType
+import ui.haptic.rememberHapticClick
 
 private const val TAB_PILL_ANIMATION_MS = 200
 
@@ -102,6 +104,10 @@ fun MoonContentTabs(
 
         Row(modifier = Modifier.fillMaxSize()) {
             items.forEach { item ->
+				val hapticOnClick = rememberHapticClick(HapticType.SELECTION) {
+					onSelect(item)
+				}
+
                 Text(
                     text = item.title,
                     modifier = Modifier
@@ -111,7 +117,13 @@ fun MoonContentTabs(
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() },
-                        ) { onSelect(item) }
+						) {
+							if (item.id != selectedId) {
+								hapticOnClick()
+							} else {
+								onSelect(item)
+							}
+						}
                         .wrapContentHeight(align = Alignment.CenterVertically)
                         .padding(horizontal = Dimens.offsetMedium),
                     style = UIKit.typography.label2,
