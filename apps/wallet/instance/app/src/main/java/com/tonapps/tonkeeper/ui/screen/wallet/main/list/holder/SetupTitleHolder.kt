@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.koin.settingsRepository
@@ -14,7 +16,7 @@ class SetupTitleHolder(parent: ViewGroup): Holder<Item.SetupTitle>(parent, R.lay
 
     override fun onBind(item: Item.SetupTitle) {
         doneButton.visibility = if (item.showDone) View.VISIBLE else View.GONE
-        doneButton.setOnClickListener {
+        doneButton.setHapticClickListener {
             settingsRepository?.setupHide(item.walletId)
         }
     }

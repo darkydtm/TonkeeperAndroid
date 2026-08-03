@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -36,7 +38,7 @@ class ApkHolder(parent: ViewGroup): Holder<Item.ApkStatus>(parent, R.layout.view
         titleView.text = "%s %s".format(appTitle, status.apk.apkName.value)
         descriptionView.setText(Localization.tap_to_update)
         iconView.setImageResource(UIKitIcon.ic_update_24)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             apkManager?.install(context, status.file)
         }
     }
@@ -51,7 +53,7 @@ class ApkHolder(parent: ViewGroup): Holder<Item.ApkStatus>(parent, R.layout.view
     private fun failed(status: APKManager.Status.Failed) {
         titleView.text = "%s %s".format(appTitle, status.apk.apkName.value)
         descriptionView.setText(Localization.download_error)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             apkManager?.download(status.apk)
         }
     }

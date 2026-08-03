@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component.token
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -38,7 +40,7 @@ class TokenPickerView @JvmOverloads constructor(
     }
 
     fun setWallet(wallet: WalletEntity) {
-        setOnClickListener { openPicker(wallet) }
+        setHapticClickListener { openPicker(wallet) }
     }
 
     private fun openPicker(wallet: WalletEntity) {

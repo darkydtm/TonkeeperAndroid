@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.recharge.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -35,11 +37,11 @@ class AddressHolder(
             }
         }
 
-        addressBookView.setOnClickListener {
+        addressBookView.setHapticClickListener {
             openAddressBook()
         }
 
-        pasteView.setOnClickListener {
+        pasteView.setHapticClickListener {
             inputView.text = context.clipboardText()
         }
 

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.contacts.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.send.contacts.main.list.Item
 import com.tonapps.uikit.color.iconPrimaryColor
@@ -16,7 +18,7 @@ class MyWalletHolder(
     }
 
     override fun onBind(item: Item.MyWallet) {
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
         itemView.background = item.position.drawable(context)
 
         emojiView.setEmoji(item.emoji, itemView.context.iconPrimaryColor)

@@ -69,7 +69,7 @@ class InitScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_init, S
         headerView.doOnLayout { viewModel.setUiTopOffset(it.measuredHeight) }
 
         loaderContainerView = view.findViewById(R.id.loader_container)
-        loaderContainerView.setOnClickListener { }
+		loaderContainerView.setOnClickListener { }
         loaderContainerView.setBackgroundColor(requireContext().backgroundPageColor.withAlpha(.64f))
 
         loaderIconView = view.findViewById(R.id.loader_icon)

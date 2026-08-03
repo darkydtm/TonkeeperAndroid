@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.Manifest
 import android.os.Build
 import android.view.ViewGroup
@@ -44,7 +46,7 @@ class SetupSwitchHolder(parent: ViewGroup): Holder<Item.SetupSwitch>(parent, R.l
         val greenColor = context.accentGreenColor
         iconView.imageTintList = greenColor.stateList
         iconView.backgroundTintList = greenColor.withAlpha(.12f).stateList
-        itemView.setOnClickListener { switchView.toggle(true) }
+        itemView.setHapticClickListener { switchView.toggle(true) }
     }
 
     override fun onBind(item: Item.SetupSwitch) {

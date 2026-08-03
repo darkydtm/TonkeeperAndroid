@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.swap.picker.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -31,7 +33,7 @@ class TokenHolder(
     }
 
     override fun onBind(item: Item.Token) {
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
         itemView.background = item.position.drawable(context)
         imageView.setPlaceholder(null)
         imageView.setImageURIWithResize(item.iconUri, ResizeOptions.forSquareSize(72))

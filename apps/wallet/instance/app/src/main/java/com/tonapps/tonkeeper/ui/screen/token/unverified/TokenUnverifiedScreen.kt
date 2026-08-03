@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.unverified
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import com.tonapps.tonkeeperx.R
@@ -13,7 +15,7 @@ class TokenUnverifiedScreen: BaseFragment(R.layout.fragment_token_unverified), B
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<HeaderView>(R.id.header).doOnActionClick = { finish() }
-        view.findViewById<View>(R.id.button).setOnClickListener { finish() }
+        view.findViewById<View>(R.id.button).setHapticClickListener { finish() }
     }
 
     companion object {

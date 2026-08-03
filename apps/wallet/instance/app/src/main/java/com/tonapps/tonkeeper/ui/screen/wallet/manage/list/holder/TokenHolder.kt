@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.manage.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
@@ -73,14 +75,14 @@ class TokenHolder(
             balanceView.setTextColor(context.accentOrangeColor)
         }
 
-        pinnedView.setOnClickListener {
+        pinnedView.setHapticClickListener {
             val pinned = !item.pinned
             doOnPinChange(item.address, pinned)
             applyPinnedState(pinned)
         }
         applyPinnedState(item.pinned)
 
-        hiddenView.setOnClickListener {
+        hiddenView.setHapticClickListener {
             val hidden = !item.hidden
             doOnHiddeChange(item.address, hidden)
             applyHiddenState(hidden, item.pinned)

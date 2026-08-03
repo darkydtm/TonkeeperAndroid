@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +56,7 @@ class EthenaBalanceHolder(parent: ViewGroup) :
             }
         }
 
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             if (item.staked) {
                 item.methodType?.let {
                     context.navigation?.add(

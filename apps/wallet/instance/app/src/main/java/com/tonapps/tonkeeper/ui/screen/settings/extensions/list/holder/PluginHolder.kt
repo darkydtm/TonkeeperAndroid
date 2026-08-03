@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.extensions.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.blockchain.ton.extensions.toUserFriendly
@@ -27,7 +29,7 @@ class PluginHolder(
             item.plugin.address.toUserFriendly(wallet = false, testnet = item.wallet.testnet).short8
         val isLegacySubscription = item.plugin.type == "subscription_v1"
         disableButton.visibility = if (isLegacySubscription) View.VISIBLE else View.GONE
-        disableButton.setOnClickListener {
+        disableButton.setHapticClickListener {
             context.navigation?.add(
                 RemoveExtensionScreen.newInstance(
                     item.wallet,

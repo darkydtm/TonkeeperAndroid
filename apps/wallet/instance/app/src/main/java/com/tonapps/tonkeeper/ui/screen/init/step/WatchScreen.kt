@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -38,7 +40,7 @@ class WatchScreen: BaseFragment(R.layout.fragment_init_watch) {
         inputView.setOnDoneActionListener { next() }
 
         button = view.findViewById(R.id.button)
-        button.setOnClickListener { next() }
+        button.setHapticClickListener { next() }
         button.pinToBottomInsets()
 
         collectFlow(initViewModel.uiTopOffset) {

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.main.list.explore.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import com.tonapps.log.L
 import android.view.ViewGroup
 import android.widget.Button
@@ -30,7 +32,7 @@ class ExploreAdsHolder(parent: ViewGroup): ExploreHolder<ExploreItem.Ads>(parent
         descriptionView.text = item.app.description
         actionButton.text = item.button.title
 
-        actionButton.setOnClickListener {
+        actionButton.setHapticClickListener {
             L.d("ExploreAdsHolderLog", "url: ${item.uri}")
             val result = item.button.payload.toUriOrNull()
                 ?.let { DeepLinkRoute.resolve(it) }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.picker.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.add.AddWalletScreen
@@ -13,7 +15,7 @@ class AddHolder(
     private val addButton = findViewById<View>(R.id.add)
 
     init {
-        addButton.setOnClickListener {
+        addButton.setHapticClickListener {
             navigation?.add(AddWalletScreen.newInstance(true))
         }
     }

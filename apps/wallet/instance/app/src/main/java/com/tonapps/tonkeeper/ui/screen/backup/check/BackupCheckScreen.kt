@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.backup.check
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -79,7 +81,7 @@ class BackupCheckScreen(wallet: WalletEntity): WalletContextScreen(R.layout.frag
 
         button = view.findViewById(R.id.done)
         button.isEnabled = false
-        button.setOnClickListener { saveBackup() }
+        button.setHapticClickListener { saveBackup() }
 
         scrollView.doKeyboardAnimation { offset, progress, _ ->
             scrollView.updatePadding(bottom = offset + button.height)

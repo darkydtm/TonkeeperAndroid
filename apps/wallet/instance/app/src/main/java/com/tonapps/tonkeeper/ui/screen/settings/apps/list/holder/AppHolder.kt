@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.apps.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
@@ -25,7 +27,7 @@ class AppHolder(
         iconView.setImageURI(item.iconUrl, ResizeOptions.forSquareSize(44))
         titleView.text = item.title
         hostView.text = item.host
-        disconnectButton.setOnClickListener {
+        disconnectButton.setHapticClickListener {
             disconnectApp(item.app)
         }
     }

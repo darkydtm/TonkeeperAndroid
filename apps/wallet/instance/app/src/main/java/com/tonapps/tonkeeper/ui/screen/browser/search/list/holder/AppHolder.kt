@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.search.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.ui.screen.browser.search.list.Item
@@ -18,7 +20,7 @@ class AppHolder(
 
     override fun onBind(item: Item.App) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener { onClick(item.name, item.url,  item.icon.toString(), true) }
+        itemView.setHapticClickListener { onClick(item.name, item.url,  item.icon.toString(), true) }
 
         iconView.setImageURI(item.icon)
 

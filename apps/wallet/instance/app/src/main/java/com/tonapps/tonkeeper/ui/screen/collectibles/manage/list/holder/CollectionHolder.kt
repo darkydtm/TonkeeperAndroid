@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.collectibles.manage.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -36,7 +38,7 @@ class CollectionHolder(
             actionView.visibility = View.GONE
             actionView.setOnClickListener(null)
             chevronView.visibility = View.VISIBLE
-            itemView.setOnClickListener { onClick(item) }
+            itemView.setHapticClickListener { onClick(item) }
         } else {
             chevronView.visibility = View.GONE
             actionView.visibility = View.VISIBLE
@@ -45,7 +47,7 @@ class CollectionHolder(
             } else {
                 UIKitIcon.ic_plus
             })
-            actionView.setOnClickListener { onClick(item) }
+            actionView.setHapticClickListener { onClick(item) }
             itemView.setOnClickListener(null)
         }
     }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.contacts.add
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -40,7 +42,7 @@ class AddContactScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragm
         requireArguments().getString(ARG_ADDRESS)?.let { addressView.text = it }
 
         button = view.findViewById(R.id.button)
-        button.setOnClickListener {
+        button.setHapticClickListener {
             hideKeyboard()
             viewModel.save()
         }

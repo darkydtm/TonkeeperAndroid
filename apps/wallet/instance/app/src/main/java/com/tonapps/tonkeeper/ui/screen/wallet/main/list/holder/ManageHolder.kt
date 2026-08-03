@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import android.widget.Button
 import com.tonapps.tonkeeper.ui.screen.wallet.main.list.Item
@@ -14,7 +16,7 @@ class ManageHolder(
     private val button = findViewById<Button>(R.id.button)
 
     override fun onBind(item: Item.Manage) {
-        button.setOnClickListener {
+        button.setHapticClickListener {
             Navigation.from(context)?.add(TokensManageScreen.newInstance(item.wallet))
         }
     }

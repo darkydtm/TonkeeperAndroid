@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.dialog.encrypted
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -41,9 +43,9 @@ class EncryptedCommentScreen(context: Context): ModalDialog(context, R.layout.fr
         checkboxContainerView = findViewById(R.id.checkbox_container)!!
         checkboxView = findViewById(R.id.checkbox)!!
 
-        checkboxContainerView.setOnClickListener { checkboxView.toggle() }
+        checkboxContainerView.setHapticClickListener { checkboxView.toggle() }
 
-        button.setOnClickListener {
+        button.setHapticClickListener {
             noShowAgain = checkboxView.checked
             dismiss()
         }

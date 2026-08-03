@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.stake.details
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -71,7 +73,7 @@ class StakeDetailsFragment :
         applyLinks(args.links)
 
         button = view.findViewById(R.id.choose_button)
-        button.setOnClickListener {
+        button.setHapticClickListener {
             primaryViewModel.selectPool(args.pool)
             popBackStack(StakeAmountFragment.TAG)
         }
@@ -86,7 +88,7 @@ class StakeDetailsFragment :
                 requireContext().inflate(R.layout.view_link, linksView) as AppCompatTextView
             linkView.text = host
             linkView.setLeftDrawable(linkDrawable)
-            linkView.setOnClickListener { BrowserHelper.open(requireContext(), link) }
+            linkView.setHapticClickListener { BrowserHelper.open(requireContext(), link) }
             linksView.addView(linkView)
         }
     }

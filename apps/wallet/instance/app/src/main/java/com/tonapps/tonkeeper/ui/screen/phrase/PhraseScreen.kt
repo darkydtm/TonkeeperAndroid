@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.phrase
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.TypedValue
@@ -85,12 +87,12 @@ class PhraseScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragment_
         }
 
         copyButton = view.findViewById(R.id.copy)
-        copyButton.setOnClickListener {
+        copyButton.setHapticClickListener {
             requireContext().copyToClipboard(args.words.joinToString(" "), true)
         }
 
         tronButton = view.findViewById(R.id.tron)
-        tronButton.setOnClickListener {
+        tronButton.setHapticClickListener {
             lifecycleScope.launch {
                 val tronWords = requireContext().accountRepository?.getTronMnemonic(wallet.id) ?: return@launch
                 navigation?.add(newInstance(wallet, tronWords, isTron = true))
@@ -98,7 +100,7 @@ class PhraseScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragment_
         }
 
         checkButton = view.findViewById(R.id.check)
-        checkButton.setOnClickListener {
+        checkButton.setHapticClickListener {
             navigation?.add(BackupCheckScreen.newInstance(wallet, args.words, args.backupId))
             finish()
         }

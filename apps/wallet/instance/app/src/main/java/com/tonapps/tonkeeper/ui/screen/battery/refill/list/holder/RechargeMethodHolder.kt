@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.refill.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -19,7 +21,7 @@ class RechargeMethodHolder(
 
     override fun onBind(item: Item.RechargeMethod) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener { navigation?.add(BatteryRechargeScreen.newInstance(item.wallet, item.token)) }
+        itemView.setHapticClickListener { navigation?.add(BatteryRechargeScreen.newInstance(item.wallet, item.token)) }
         asyncImageView.setImageURI(item.imageUri, this)
         asyncImageView.visibility = View.VISIBLE
         titleView.text = context.getString(Localization.battery_refill_crypto, item.symbol)

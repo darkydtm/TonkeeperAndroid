@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.text.SpannableStringBuilder
 import android.view.View
@@ -42,7 +44,7 @@ class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_c
 
     override fun onBind(item: Item.Token) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             openToken(item)
         }
         if (item.blacklist) {
@@ -89,7 +91,7 @@ class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_c
         if (item.isUSDe && item.balance.isZero) {
             balanceContainerView.visibility = View.GONE
             openButtonView.visibility = View.VISIBLE
-            openButtonView.setOnClickListener {
+            openButtonView.setHapticClickListener {
                 openToken(item)
             }
         } else {

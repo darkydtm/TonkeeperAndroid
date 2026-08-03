@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.os.Bundle
 import com.tonapps.log.L
@@ -15,13 +17,13 @@ class UpdateAvailableDialog(
 ): ModalDialog(context, R.layout.dialog_update_available) {
 
     init {
-        findViewById<View>(R.id.later)!!.setOnClickListener { closeAndClick() }
+        findViewById<View>(R.id.later)!!.setHapticClickListener { closeAndClick() }
         findViewById<HeaderView>(R.id.header)!!.doOnActionClick = { closeAndClick() }
     }
 
     fun show(callback: () -> Unit) {
         super.show()
-        findViewById<View>(R.id.update)!!.setOnClickListener {
+        findViewById<View>(R.id.update)!!.setHapticClickListener {
             callback()
             dismiss()
         }

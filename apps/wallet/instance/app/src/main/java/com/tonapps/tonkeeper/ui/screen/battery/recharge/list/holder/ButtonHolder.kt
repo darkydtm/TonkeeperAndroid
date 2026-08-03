@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.recharge.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import android.widget.Button
 import com.tonapps.tonkeeper.ui.screen.battery.recharge.list.Item
@@ -13,7 +15,7 @@ class ButtonHolder(
     private val buttonView = itemView.findViewById<Button>(R.id.button)
 
     override fun onBind(item: Item.Button) {
-        buttonView.setOnClickListener {
+        buttonView.setHapticClickListener {
             onContinue()
         }
         buttonView.isEnabled = item.isEnabled

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.external.qr.keystone.add
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import androidx.camera.view.PreviewView
@@ -46,19 +48,19 @@ class KeystoneAddScreen: QRCameraScreen(R.layout.fragment_add_keystone), BaseFra
         val constantWhiteColor = requireContext().constantWhiteColor.withAlpha(.08f).stateList
 
         val closeView = view.findViewById<View>(R.id.close)
-        closeView.setOnClickListener { finish() }
+        closeView.setHapticClickListener { finish() }
         closeView.backgroundTintList = constantWhiteColor
 
         val aboutView = view.findViewById<View>(R.id.about)
         aboutView.backgroundTintList = constantWhiteColor
-        aboutView.setOnClickListener {
+        aboutView.setHapticClickListener {
             BrowserHelper.open(requireActivity(), "https://keyst.one/")
         }
 
         cameraView = view.findViewById(R.id.camera)
 
         flashView = view.findViewById(R.id.flash)
-        flashView.setOnClickListener { toggleFlash() }
+        flashView.setHapticClickListener { toggleFlash() }
 
         collectFlow(urFlow<CryptoHDKey>().map { cryptoHDKey ->
             val name = if (cryptoHDKey.name.isNullOrBlank()) {

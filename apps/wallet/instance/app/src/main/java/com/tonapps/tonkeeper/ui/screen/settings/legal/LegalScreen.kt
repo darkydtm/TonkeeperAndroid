@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.legal
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import com.tonapps.tonkeeper.helper.BrowserHelper
@@ -24,12 +26,12 @@ class LegalScreen: BaseFragment(R.layout.fragment_legal), BaseFragment.SwipeBack
         val serverConfig = requireContext().serverConfig!!
 
         termsView = view.findViewById(R.id.terms)
-        termsView.setOnClickListener {
+        termsView.setHapticClickListener {
             BrowserHelper.open(requireActivity(), serverConfig.termsOfUseUrl)
         }
 
         privacyView = view.findViewById(R.id.privacy)
-        privacyView.setOnClickListener {
+        privacyView.setHapticClickListener {
             BrowserHelper.open(requireActivity(), serverConfig.privacyPolicyUrl)
         }
     }

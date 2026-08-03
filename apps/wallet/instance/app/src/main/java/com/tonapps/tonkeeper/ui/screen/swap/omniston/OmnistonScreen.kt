@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.swap.omniston
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -113,7 +115,7 @@ class OmnistonScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View>(R.id.edit).setOnClickListener {
+        view.findViewById<View>(R.id.edit).setHapticClickListener {
             reset()
             sendInputView.focusWithKeyboard()
         }
@@ -151,7 +153,7 @@ class OmnistonScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragmen
         valueDifferenceView.setInfoIcon(
             requireContext().drawable(UIKitIcon.ic_information_circle_16, requireContext().textSecondaryColor)
         )
-        valueDifferenceView.setOnClickListener {
+        valueDifferenceView.setHapticClickListener {
             context?.showToast(Localization.value_difference_info)
         }
 
@@ -181,13 +183,13 @@ class OmnistonScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragmen
             viewModel.pickCurrency(TwinInput.Type.Receive)
         }
 
-        view.findViewById<View>(R.id.switch_button).setOnClickListener(::switch)
+		view.findViewById<View>(R.id.switch_button).setHapticClickListener { switch(it) }
 
-        reviewReceiveView.setOnClickListener {
+        reviewReceiveView.setHapticClickListener {
             receiveInputView.focusWithKeyboard()
             reset()
         }
-        reviewSendView.setOnClickListener {
+        reviewSendView.setHapticClickListener {
             sendInputView.focusWithKeyboard()
             reset()
         }
@@ -197,7 +199,7 @@ class OmnistonScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragmen
         applyDisclaimer()
 
         continueButton = view.findViewById(R.id.continue_button)
-        continueButton.setOnClickListener { next() }
+        continueButton.setHapticClickListener { next() }
 
         actionContainerDrawable = FooterDrawable(requireContext())
         actionContainerDrawable.setColor(requireContext().backgroundPageColor)
@@ -533,7 +535,7 @@ class OmnistonScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragmen
         setLineValue(R.id.details_fee, state.getFeeFormat(requireContext()))
         if (state.canUseBattery && state.canEditFeeMethod) {
             feeView.name = getString(Localization.fee).withInterpunct().withClickable(requireContext(), Localization.edit)
-            feeView.setOnClickListener { selectFeeMethod(state) }
+            feeView.setHapticClickListener { selectFeeMethod(state) }
         } else {
             feeView.name = getString(Localization.fee)
             feeView.setOnClickListener(null)

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.notifications.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -19,7 +21,7 @@ class AppHolder(
     private val pushView = findViewById<SwitchView>(R.id.push)
 
     init {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             pushView.toggle(true)
         }
     }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.refill.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
@@ -32,7 +34,7 @@ class BatteryHolder(
     }
 
     override fun onBind(item: Item.Battery) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             context.hideKeyboard()
         }
         batteryView.setBatteryLevel(item.balance)

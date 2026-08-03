@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uikit.base.BaseFragment
 import uikit.extensions.collectFlow
+import uikit.extensions.setHapticClickListener
 import uikit.widget.HeaderView
 import uikit.widget.item.ItemSwitchView
 import uikit.widget.item.ItemTextView
@@ -129,10 +130,10 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
         }
 
         shareLogs = view.findViewById(R.id.share_logs)
-        shareLogs.setOnClickListener {
+        shareLogs.setHapticClickListener {
             if (!L.hasLogs()) {
                 navigation?.toast("No logs found!")
-                return@setOnClickListener
+                return@setHapticClickListener
             }
 
             L.capture { file ->
@@ -163,14 +164,14 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
 
 
         importMnemonicAgainView = view.findViewById(R.id.import_mnemonic_again)
-        importMnemonicAgainView.setOnClickListener { importMnemonicAgain(false) }
+        importMnemonicAgainView.setHapticClickListener { importMnemonicAgain(false) }
         importMnemonicAgainView.setOnLongClickListener { importMnemonicAgain(true); true }
 
         importPasscodeView = view.findViewById(R.id.import_passcode)
-        importPasscodeView.setOnClickListener { importPasscode() }
+        importPasscodeView.setHapticClickListener { importPasscode() }
 
         importDAppsView = view.findViewById(R.id.import_dapps)
-        importDAppsView.setOnClickListener { importDApps() }
+        importDAppsView.setHapticClickListener { importDApps() }
 
         logView = view.findViewById(R.id.log)
         logDataView = view.findViewById(R.id.log_data)
@@ -192,7 +193,7 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
             debugCountryInput.visibility = View.GONE
         }
 
-        view.findViewById<Button>(R.id.log_close).setOnClickListener {
+        view.findViewById<Button>(R.id.log_close).setHapticClickListener {
             logView.visibility = View.GONE
         }
 
@@ -206,11 +207,11 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
             true
         }
 
-        view.findViewById<View>(R.id.copy_firebase_push).setOnClickListener {
+        view.findViewById<View>(R.id.copy_firebase_push).setHapticClickListener {
             copyFirebasePushToken()
         }
 
-        view.findViewById<View>(R.id.copy_install_id).setOnClickListener {
+        view.findViewById<View>(R.id.copy_install_id).setHapticClickListener {
             requireContext().copyToClipboard(viewModel.installId, true)
             navigation?.toast("Install ID copied to clipboard")
         }
@@ -221,7 +222,7 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
 //             if (!BuildConfig.DEBUG) {
 //                 visibility = View.GONE
 //             }
-            setOnClickListener {
+            setHapticClickListener {
                 navigation?.add(DevSettingsFragment.newInstance(ROUTE_FEATURE_FLAGS))
             }
         }
@@ -230,7 +231,7 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
             if (!BuildConfig.DEBUG) {
                 visibility = View.GONE
             }
-            setOnClickListener {
+            setHapticClickListener {
                 navigation?.add(DevSettingsFragment.newInstance(ROUTE_TOOLTIPS))
             }
         }
@@ -287,7 +288,7 @@ class DevScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_dev, Scr
         logView.visibility = View.VISIBLE
         logDataView.setText(message)
 
-        logCopy.setOnClickListener {
+        logCopy.setHapticClickListener {
             requireContext().copyToClipboard(message, true)
         }
     }

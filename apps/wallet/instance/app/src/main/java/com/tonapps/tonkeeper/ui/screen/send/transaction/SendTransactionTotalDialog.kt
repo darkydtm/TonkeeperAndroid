@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.transaction
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.view.View
 import android.widget.Button
@@ -14,8 +16,8 @@ class SendTransactionTotalDialog(context: Context): ModalDialog(context, R.layou
     private val buttonView = findViewById<Button>(R.id.button)!!
 
     init {
-        closeView.setOnClickListener { dismiss() }
-        buttonView.setOnClickListener { dismiss() }
+        closeView.setHapticClickListener { dismiss() }
+        buttonView.setHapticClickListener { dismiss() }
     }
 
     fun show(title: String, description: String) {

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.more.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.helper.BrowserHelper.openDApp
@@ -17,7 +19,7 @@ class Holder(parent: ViewGroup): BaseListHolder<Item>(parent, R.layout.view_brow
 
     override fun onBind(item: Item) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             item.app.openDApp(context, item.wallet, "browser_all", item.country)
         }
 

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.core.history.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -94,7 +96,7 @@ class HistoryActionHolder(
         }
 
         if (!disableOpenAction) {
-            itemView.setOnClickListener { context.navigation?.add(TransactionScreen.newInstance(item)) }
+            itemView.setHapticClickListener { context.navigation?.add(TransactionScreen.newInstance(item)) }
         }
 
         itemView.background = item.position.drawable(context)
@@ -121,7 +123,7 @@ class HistoryActionHolder(
             spannable.setSpan(span, spannable.length - 1, spannable.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
             subtitleView.text = spannable
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 showFeeMethods(item.sendFee, itemView)
             }
         }
@@ -203,11 +205,11 @@ class HistoryActionHolder(
         if (comment.isEncrypted) {
             commentView.text = context.getString(Localization.encrypted_comment)
             commentView.setLeftDrawable(lockDrawable)
-            commentView.setOnClickListener { requestDecryptComment(comment, txId, senderAddress) }
+            commentView.setHapticClickListener { requestDecryptComment(comment, txId, senderAddress) }
         } else {
             commentView.text = comment.body.max24
             commentView.setLeftDrawable(null)
-            commentView.setOnClickListener {
+            commentView.setHapticClickListener {
                 context.navigation?.add(
                     TransactionScreen.newInstance(
                         item!!
@@ -242,7 +244,7 @@ class HistoryActionHolder(
 
         val nft = item.nft!!
         nftView.visibility = View.VISIBLE
-        nftView.setOnClickListener {
+        nftView.setHapticClickListener {
             Navigation.from(context)?.add(NftScreen.newInstance(item.wallet, nft))
         }
         loadNftImage(nft.mediumUri, item.hiddenBalance)

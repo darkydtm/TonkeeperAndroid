@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.add.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.add.list.Item
 import uikit.widget.ActionCellView
@@ -12,7 +14,7 @@ class WalletHolder(
     private val itemActionView = itemView as ActionCellView
 
     override fun onBind(item: Item.Wallet) {
-        itemActionView.setOnClickListener { onClick(item) }
+        itemActionView.setHapticClickListener { onClick(item) }
         itemActionView.iconRes = item.iconResId
         itemActionView.title = getString(item.titleResId)
         itemActionView.subtitle = getString(item.subtitleResId)

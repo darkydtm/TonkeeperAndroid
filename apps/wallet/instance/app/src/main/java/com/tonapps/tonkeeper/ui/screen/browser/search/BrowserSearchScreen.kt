@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.search
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -109,7 +111,7 @@ class BrowserSearchScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fr
         }
         contentView = view.findViewById(R.id.content)
 
-        view.findViewById<View>(R.id.search_icon).setOnClickListener { searchInput.hideKeyboard() }
+        view.findViewById<View>(R.id.search_icon).setHapticClickListener { searchInput.hideKeyboard() }
 
         placeholderView = view.findViewById(R.id.placeholder)
 
@@ -121,7 +123,7 @@ class BrowserSearchScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fr
             placeholderView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
 
-        view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
+        view.findViewById<Button>(R.id.cancel_button).setHapticClickListener {
             finish()
         }
     }

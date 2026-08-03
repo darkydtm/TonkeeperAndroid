@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.nft
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -108,8 +110,8 @@ class NftScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_nf
         previewView = view.findViewById(R.id.preview)
         domainExpirationView = view.findViewById(R.id.domain_expiration)
 
-        view.findViewById<Button>(R.id.report_spam).setOnClickListener { reportSpam(true) }
-        view.findViewById<Button>(R.id.not_spam).setOnClickListener { reportSpam(false) }
+        view.findViewById<Button>(R.id.report_spam).setHapticClickListener { reportSpam(true) }
+        view.findViewById<Button>(R.id.not_spam).setHapticClickListener { reportSpam(false) }
 
         val imageView = view.findViewById<AsyncImageView>(R.id.image)
         imageView.setRoundTop(16f.dp)
@@ -143,7 +145,7 @@ class NftScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_nf
         }
 
         val transferButton = view.findViewById<Button>(R.id.transfer)
-        transferButton.setOnClickListener {
+        transferButton.setHapticClickListener {
             navigation?.add(
                 SendScreen.newInstance(
                     wallet = wallet,
@@ -163,7 +165,7 @@ class NftScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_nf
                     locale = requireContext().locale
                 )
             )
-            domainRenewButton.setOnClickListener { viewModel.renewDomain() }
+            domainRenewButton.setHapticClickListener { viewModel.renewDomain() }
             domainRenewButton.isEnabled = !nftEntity.inSale
         } else {
             domainRenewButton.visibility = View.GONE
@@ -178,7 +180,7 @@ class NftScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_nf
             for ((index, button) in nftEntity.metadata.buttons.take(5).withIndex()) {
                 val buttonView = newNftButton(buttonsContainer, index == 0)
                 buttonView.text = button.label
-                buttonView.setOnClickListener { openButtonDApp(button.uri) }
+                buttonView.setHapticClickListener { openButtonDApp(button.uri) }
             }
         }
 
@@ -438,7 +440,7 @@ class NftScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_nf
     private fun setOwner(view: View, address: String) {
         val ownerContainerView = view.findViewById<View>(R.id.owner_container)
         ownerContainerView.background = ListCell.Position.FIRST.drawable(requireContext())
-        ownerContainerView.setOnClickListener {
+        ownerContainerView.setHapticClickListener {
             context?.copyWithToast(address)
         }
 
@@ -448,13 +450,13 @@ class NftScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_nf
 
     private fun setAddress(view: View, address: String) {
         val explorerView = view.findViewById<AppCompatTextView>(R.id.open_explorer)
-        explorerView.setOnClickListener {
+        explorerView.setHapticClickListener {
             openTonViewer()
         }
 
         val addressContainerView = view.findViewById<View>(R.id.address_container)
         addressContainerView.background = ListCell.Position.LAST.drawable(requireContext())
-        addressContainerView.setOnClickListener {
+        addressContainerView.setHapticClickListener {
             context?.copyWithToast(address)
         }
 

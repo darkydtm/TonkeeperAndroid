@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.collectibles.manage
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.view.View
 import android.widget.Button
@@ -30,11 +32,11 @@ class CollectionSpamDialog(context: Context): ModalDialog(context, R.layout.dial
         nameView.text = item.title
         iconView.setImageURI(item.imageUri, null)
         addressView.text = item.address.short8
-        button.setOnClickListener {
+        button.setHapticClickListener {
             notSpamCallback()
             dismiss()
         }
-        rowAddressView.setOnClickListener {
+        rowAddressView.setHapticClickListener {
             context.copyToClipboard(item.address)
         }
     }

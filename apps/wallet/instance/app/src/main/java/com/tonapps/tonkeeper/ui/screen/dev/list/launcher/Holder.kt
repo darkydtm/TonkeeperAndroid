@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.dev.list.launcher
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -18,7 +20,7 @@ class Holder(
     private val radio = findViewById<RadioView>(R.id.radio)
 
     init {
-        itemView.setOnClickListener { radio.toggle() }
+        itemView.setHapticClickListener { radio.toggle() }
     }
 
     override fun onBind(item: Item) {

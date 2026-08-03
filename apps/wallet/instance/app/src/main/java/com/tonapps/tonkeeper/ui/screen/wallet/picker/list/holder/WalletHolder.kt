@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.picker.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.RippleDrawable
@@ -70,12 +72,12 @@ class WalletHolder(
 
     fun updateEditMode(item: Item.Wallet) {
         if (item.editMode) {
-            pencilView.setOnClickListener { navigation?.add(EditNameScreen.newInstance(item.wallet)) }
+            pencilView.setHapticClickListener { navigation?.add(EditNameScreen.newInstance(item.wallet)) }
             itemView.setOnClickListener(null)
             editView.visibility = View.VISIBLE
             checkView.visibility = View.GONE
         } else {
-            itemView.setOnClickListener { onClick(item.wallet) }
+            itemView.setHapticClickListener { onClick(item.wallet) }
             pencilView.setOnClickListener(null)
             editView.visibility = View.GONE
             checkView.visibility = View.VISIBLE

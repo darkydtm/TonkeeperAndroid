@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.main
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -143,7 +145,7 @@ class MainScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_main, S
 		settingsView = view.findViewById(R.id.settings)
 		settingsDotView = view.findViewById(R.id.settings_dot)
 		settingsDotView.background = DotDrawable(requireContext())
-		settingsView.setOnClickListener {
+		settingsView.setHapticClickListener {
 			currentWallet?.let { wallet ->
 				navigation?.add(SettingsScreen.newInstance(wallet, getCurrentFrom()))
 			}

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.core.history.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.net.toUri
@@ -28,7 +30,7 @@ class HistoryAppHolder(
     override fun onBind(item: HistoryItem.App) {
         itemView.isClickable = item.isClickable
         if (item.isClickable) {
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 navigation?.add(
                 DAppScreen.newInstance(
                     wallet = item.wallet,

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.root
 
+import uikit.extensions.setHapticClickListener
+
 import android.annotation.SuppressLint
 import android.app.WallpaperManager
 import android.content.Context
@@ -189,17 +191,17 @@ class RootActivity : BaseWalletActivity(),
         handleIntent(intent)
 
         lockView = findViewById(R.id.lock)
-        lockView.setOnClickListener { }
+		lockView.setOnClickListener { }
         lockPasscodeView = findViewById(R.id.lock_passcode)
         lockPasscodeView.doOnCheck = {
             passcodeManager.lockscreenCheck(this, it)
         }
 
         lockSignOut = findViewById(R.id.lock_sign_out)
-        lockSignOut.setOnClickListener { signOutAll() }
+        lockSignOut.setHapticClickListener { signOutAll() }
 
         migrationLoaderContainer = findViewById(R.id.migration_loader_container)
-        migrationLoaderContainer.setOnClickListener { }
+		migrationLoaderContainer.setOnClickListener { }
         migrationLoaderIcon = findViewById(R.id.migration_loader_icon)
 
         ViewCompat.setOnApplyWindowInsetsListener(lockView) { _, insets ->

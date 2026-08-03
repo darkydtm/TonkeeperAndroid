@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.tonconnect
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.view.View
 import com.tonapps.tonkeeper.ui.screen.settings.security.SecurityScreen
@@ -18,7 +20,7 @@ class TonConnectSafeModeDialog(context: Context): ModalDialog(context, R.layout.
     init {
         findViewById<ModalHeader>(R.id.header)!!.onCloseClick = { dismiss() }
 
-        findViewById<View>(R.id.cancel)!!.setOnClickListener {
+        findViewById<View>(R.id.cancel)!!.setHapticClickListener {
             dismiss()
         }
     }
@@ -26,7 +28,7 @@ class TonConnectSafeModeDialog(context: Context): ModalDialog(context, R.layout.
 
     fun show(wallet: WalletEntity) {
         super.show()
-        findViewById<View>(R.id.open_settings)!!.setOnClickListener {
+        findViewById<View>(R.id.open_settings)!!.setHapticClickListener {
             dismiss()
             navigation?.add(SecurityScreen.newInstance(wallet))
         }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -24,8 +26,8 @@ class EthenaMethodHolder(parent: ViewGroup) :
     override fun onBind(item: Item.EthenaMethod) {
         itemView.background = item.position.drawable(context)
 
-        itemView.setOnClickListener { openDapp(item) }
-        openButtonView.setOnClickListener { openDapp(item) }
+        itemView.setHapticClickListener { openDapp(item) }
+        openButtonView.setHapticClickListener { openDapp(item) }
 
         titleView.text = getString(Localization.deposit_and_stake)
         apyView.text = context.getString(Localization.ethena_operated_by, item.name)

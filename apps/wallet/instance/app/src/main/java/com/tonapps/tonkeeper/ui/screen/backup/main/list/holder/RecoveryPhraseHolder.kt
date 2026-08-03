@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.backup.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.backup.main.list.Item
 import com.tonapps.uikit.icon.UIKitIcon
@@ -19,6 +21,6 @@ class RecoveryPhraseHolder(
     }
 
     override fun onBind(item: Item.RecoveryPhrase) {
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
     }
 }

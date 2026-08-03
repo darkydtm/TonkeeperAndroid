@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.start
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -30,21 +32,21 @@ class StartScreen : BaseFragment(R.layout.fragment_intro) {
         }
 
         val newWalletButton = view.findViewById<Button>(R.id.new_wallet)
-        newWalletButton.setOnClickListener {
+        newWalletButton.setHapticClickListener {
             navigation?.add(InitScreen.newInstance(InitArgs.Type.New))
         }
 
         val importWalletButton = view.findViewById<Button>(R.id.import_wallet)
-        importWalletButton.setOnClickListener {
+        importWalletButton.setHapticClickListener {
             navigation?.add(AddWalletScreen.newInstance(false))
         }
 
         val termsView = view.findViewById<AppCompatTextView>(R.id.terms)
         termsView.text = getSpannable(Localization.start_agree)
-        termsView.setOnClickListener {
+        termsView.setHapticClickListener {
             BrowserHelper.open(
                 requireContext(),
-                requireContext().serverConfig?.termsOfUseUrl ?: return@setOnClickListener
+                requireContext().serverConfig?.termsOfUseUrl ?: return@setHapticClickListener
             )
         }
     }

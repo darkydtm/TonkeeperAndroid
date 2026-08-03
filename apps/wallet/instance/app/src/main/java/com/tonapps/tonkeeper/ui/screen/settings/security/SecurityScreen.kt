@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.security
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -84,7 +86,7 @@ class SecurityScreen(wallet: WalletEntity): BaseWalletScreen<ScreenContext.Walle
         }
 
         changePasscodeView = view.findViewById(R.id.change_passcode)
-        changePasscodeView.setOnClickListener { navigation?.add(ChangePasscodeScreen.newInstance()) }
+        changePasscodeView.setHapticClickListener { navigation?.add(ChangePasscodeScreen.newInstance()) }
         if (!wallet.hasPrivateKey) {
             changePasscodeView.visibility = View.GONE
         }
@@ -99,13 +101,13 @@ class SecurityScreen(wallet: WalletEntity): BaseWalletScreen<ScreenContext.Walle
 
         safeModeDisabledView = view.findViewById(R.id.safe_mode_disabled)
         safeModeDisabledView.text = requireContext().getSpannable(Localization.safe_mode_disabled)
-        safeModeDisabledView.setOnClickListener {
+        safeModeDisabledView.setHapticClickListener {
             viewModel.setSafeModeState(SafeModeState.DisabledPermanently)
         }
 
         val safeModeDescriptionView = view.findViewById<AppCompatTextView>(R.id.safe_mode_description)
         safeModeDescriptionView.text = requireContext().getSpannable(Localization.safe_mode_description)
-        safeModeDescriptionView.setOnClickListener {
+        safeModeDescriptionView.setHapticClickListener {
             navigation?.add(SafeModeStoriesScreen.newInstance())
         }
 

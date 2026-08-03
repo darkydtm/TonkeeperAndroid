@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.unstake.amount
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -46,9 +48,9 @@ class UnStakeAmountFragment: BaseHolderWalletScreen.ChildFragment<UnStakeScreen,
         availableView = view.findViewById(R.id.available)
 
         button = view.findViewById(R.id.next_button)
-        button.setOnClickListener { primaryViewModel.confirm() }
+        button.setHapticClickListener { primaryViewModel.confirm() }
 
-        view.findViewById<View>(R.id.max).setOnClickListener { applyMax() }
+        view.findViewById<View>(R.id.max).setHapticClickListener { applyMax() }
 
         collectFlow(primaryViewModel.availableUiStateFlow, ::applyAvailableState)
         collectFlow(primaryViewModel.cycleEndFormatFlow) { date ->

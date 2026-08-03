@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.onramp.main.view
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -89,7 +91,7 @@ class CurrencyInputView @JvmOverloads constructor(
         setBackgroundColor(context.fieldBackgroundColor)
         setPadding(offsetMedium)
         setDefault()
-        setOnClickListener {
+        setHapticClickListener {
             focusWithKeyboard()
         }
 
@@ -102,7 +104,7 @@ class CurrencyInputView @JvmOverloads constructor(
         inputContainerView = findViewById(R.id.input_container)
 
         currencyEmptyView = findViewById(R.id.input_currency_empty)
-        currencyEmptyView.setOnClickListener { doOnCurrencyClick?.invoke() }
+        currencyEmptyView.setHapticClickListener { doOnCurrencyClick?.invoke() }
 
         valueView = findViewById(R.id.input_value)
         valueView.setOnFocusChangeListener { _, hasFocus ->
@@ -119,7 +121,7 @@ class CurrencyInputView @JvmOverloads constructor(
         }
 
         currencyPickerView = findViewById(R.id.input_currency)
-        currencyPickerView.setOnClickListener { doOnCurrencyClick?.invoke() }
+        currencyPickerView.setHapticClickListener { doOnCurrencyClick?.invoke() }
 
         context.useAttributes(attrs, R.styleable.CurrencyInputView) {
             titleView.text = it.getString(R.styleable.CurrencyInputView_android_title)
@@ -207,7 +209,7 @@ class CurrencyInputView @JvmOverloads constructor(
 
     private fun showMaxButton(fallbackValue: Coins? = null) {
         tokenBalanceMaxView.visibility = View.VISIBLE
-        tokenBalanceMaxView.setOnClickListener {
+        tokenBalanceMaxView.setHapticClickListener {
             val handler = doOnMaxClick
             if (handler != null) {
                 handler.invoke()

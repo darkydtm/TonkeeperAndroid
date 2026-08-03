@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -23,7 +25,7 @@ class BatteryBannerHolder(parent: ViewGroup): Holder<Item.BatteryBanner>(parent,
         val tokenName = item.token.symbol.plus(" $networkName")
         titleView.text = context.getString(Localization.battery_required_title, tokenName)
 
-        buttonView.setOnClickListener {
+        buttonView.setHapticClickListener {
             Navigation.from(context)?.add(BatteryScreen.newInstance(wallet = item.wallet, from = "battery_banner"))
         }
     }

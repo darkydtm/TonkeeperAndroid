@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.sign
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -60,7 +62,7 @@ class SignDataScreen(wallet: WalletEntity): BaseWalletScreen<ScreenContext.Walle
         cellSchemaLayoutView = view.findViewById(R.id.cell_schema_layout)
         cellLayoutView = view.findViewById(R.id.cell_layout)
 
-        view.findViewById<View>(R.id.close).setOnClickListener { finish() }
+        view.findViewById<View>(R.id.close).setHapticClickListener { finish() }
         view.findViewById<AppCompatTextView>(R.id.title).text = args.appUrl.host
 
         slideView = view.findViewById(R.id.slide)
@@ -96,7 +98,7 @@ class SignDataScreen(wallet: WalletEntity): BaseWalletScreen<ScreenContext.Walle
             text = payload.text
             movementMethod = ScrollingMovementMethod()
         }
-        textLayoutView.findViewById<View>(R.id.text_copy).setOnClickListener {
+        textLayoutView.findViewById<View>(R.id.text_copy).setHapticClickListener {
             context?.copyToClipboard(payload.text)
         }
         slideView.doOnDone = { signString(payload.text, "text") }

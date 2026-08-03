@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.TypedValue
@@ -55,7 +57,7 @@ class BackupPhraseScreen : BaseFragment(R.layout.fragment_backup_phrase) {
         }
 
         val button = view.findViewById<Button>(R.id.button)
-        button.setOnClickListener { initViewModel.navigateToBackupCheck() }
+        button.setHapticClickListener { initViewModel.navigateToBackupCheck() }
 
         val offsetLarge = requireContext().getDimensionPixelSize(uikit.R.dimen.offsetLarge)
 

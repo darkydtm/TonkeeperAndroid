@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -41,7 +43,7 @@ class IconHolder(parent: ViewGroup): Holder<Item.Icon>(parent, R.layout.view_the
     override fun onBind(item: Item.Icon) {
         setDrawable(item.icon)
         titleView.text = item.icon.type
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             LauncherIcon.setEnable(itemView.context, item.icon)
             Toast.makeText(itemView.context, getString(Localization.app_icon_changed), Toast.LENGTH_SHORT).show()
             activity?.finish()

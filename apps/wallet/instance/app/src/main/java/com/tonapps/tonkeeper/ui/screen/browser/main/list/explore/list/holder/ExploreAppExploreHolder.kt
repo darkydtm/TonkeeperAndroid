@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.main.list.explore.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.helper.BrowserHelper.openDApp
@@ -22,7 +24,7 @@ class ExploreAppExploreHolder(parent: ViewGroup): ExploreHolder<ExploreItem.App>
     }
 
     override fun onBind(item: ExploreItem.App) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             item.app.openDApp(context, item.wallet, "browser", item.country)
         }
         iconView.setImageURIWithResize(item.icon, ResizeOptions.forSquareSize(172))

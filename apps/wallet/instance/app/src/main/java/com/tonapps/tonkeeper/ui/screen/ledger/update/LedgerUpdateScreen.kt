@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.ledger.update
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -17,8 +19,8 @@ class LedgerUpdateScreen : BaseFragment(R.layout.fragment_ledger_update_screen),
         super.onViewCreated(view, savedInstanceState)
 
 
-        view.findViewById<View>(R.id.close).setOnClickListener { finish() }
-        view.findViewById<View>(R.id.button_ok).setOnClickListener { finish() }
+        view.findViewById<View>(R.id.close).setHapticClickListener { finish() }
+        view.findViewById<View>(R.id.button_ok).setHapticClickListener { finish() }
 
         view.findViewById<TextView>(R.id.update_title).text = getString(Localization.ledger_update_title, args.requiredVersion)
     }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -37,7 +39,7 @@ class MaterialYouPresetView(context: Context) : View(context) {
 		outerPaint.color = context.textPrimaryColor
 		isSelected = selected
 		contentDescription = title
-		setOnClickListener { onClick(preset) }
+		setHapticClickListener { onClick(preset) }
 		invalidate()
 	}
 

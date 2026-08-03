@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.name.base
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -86,7 +88,7 @@ abstract class NameFragment(mode: NameMode): BaseWalletScreen<ScreenContext.None
         walletColor = view.findViewById(R.id.wallet_color)
 
         walletEmoji = view.findViewById(R.id.wallet_emoji)
-        walletEmoji.setOnClickListener { walletName.hideKeyboard() }
+        walletEmoji.setHapticClickListener { walletName.hideKeyboard() }
 
         colorView = view.findViewById(R.id.color)
         colorView.adapter = colorAdapter
@@ -96,13 +98,13 @@ abstract class NameFragment(mode: NameMode): BaseWalletScreen<ScreenContext.None
 
         overView = view.findViewById(R.id.over)
         overView.setBackgroundColor(requireContext().backgroundPageColor.withAlpha(.68f))
-        overView.setOnClickListener { walletName.hideKeyboard() }
+        overView.setHapticClickListener { walletName.hideKeyboard() }
 
         actionView = view.findViewById(R.id.action)
         actionView.doOnLayout { applyEmojiMargin() }
 
         nextButton = view.findViewById(R.id.next)
-        nextButton.setOnClickListener { sendData() }
+        nextButton.setHapticClickListener { sendData() }
         nextButton.setText(if (mode == NameModeCreate) Localization.continue_action else Localization.save)
 
         loaderView = view.findViewById(R.id.loader)

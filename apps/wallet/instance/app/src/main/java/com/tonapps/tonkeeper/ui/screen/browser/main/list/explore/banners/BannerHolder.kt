@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.main.list.explore.banners
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.doOnLayout
@@ -17,7 +19,7 @@ class BannerHolder(parent: ViewGroup): BaseListHolder<BannerAppItem>(parent, R.l
     private val descriptionView = findViewById<AppCompatTextView>(R.id.description)
 
     override fun onBind(item: BannerAppItem) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             item.app.openDApp(context, item.wallet, "banner", item.country)
         }
 

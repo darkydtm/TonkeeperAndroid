@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.main
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.SpannableString
@@ -189,11 +191,11 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
             addressActionsView.visibility = if (text.isBlank()) View.VISIBLE else View.GONE
         }
 
-        view.findViewById<View>(R.id.paste).setOnClickListener {
+        view.findViewById<View>(R.id.paste).setHapticClickListener {
             addressInput.text = requireContext().clipboardText()
         }
 
-        view.findViewById<View>(R.id.address_book).setOnClickListener { openAddressBook() }
+        view.findViewById<View>(R.id.address_book).setHapticClickListener { openAddressBook() }
 
         amountView = view.findViewById(R.id.amount)
         amountView.setWallet(wallet)
@@ -204,15 +206,15 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
         amountView.setOnDoneActionListener { commentInput.requestFocus() }
 
         convertedView = view.findViewById(R.id.converted)
-        convertedView.setOnClickListener { viewModel.swap() }
+        convertedView.setHapticClickListener { viewModel.swap() }
 
         swapView = view.findViewById(R.id.swap)
-        swapView.setOnClickListener { viewModel.swap() }
+        swapView.setHapticClickListener { viewModel.swap() }
 
         statusView = view.findViewById(R.id.status)
 
         maxView = view.findViewById(R.id.max)
-        maxView.setOnClickListener { setMax() }
+        maxView.setHapticClickListener { setMax() }
 
         commentInput = view.findViewById(R.id.comment)
 
@@ -243,7 +245,7 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
         }
 
         button = view.findViewById(R.id.button)
-        button.setOnClickListener {
+        button.setHapticClickListener {
             lifecycleScope.launch {
                 val token = viewModel.uiInputTokenFlow.firstOrNull() ?: return@launch
                 AnalyticsHelper.Default.events.sendNative.sendClick(
@@ -289,7 +291,7 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
             taskContainerView.translationY = -offset.toFloat()
         }
 
-        confirmButton.setOnClickListener {
+        confirmButton.setHapticClickListener {
             lifecycleScope.launch {
                 val token = viewModel.uiInputTokenFlow.firstOrNull() ?: return@launch
 
@@ -435,7 +437,7 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
             )
             addressErrorView.setTextColor(requireContext().textSecondaryColor)
             addressErrorView.text = spannableString
-            addressErrorView.setOnClickListener {
+            addressErrorView.setHapticClickListener {
                 BrowserHelper.open(requireContext(), swapUrl)
             }
         } else {
@@ -715,14 +717,14 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
                 reviewRecipientView.visibility = View.GONE
                 reviewRecipientView.orientation = LinearLayoutCompat.VERTICAL
                 reviewRecipientView.value = destination.displayAddress
-                reviewRecipientView.setOnClickListener {
+                reviewRecipientView.setHapticClickListener {
                     requireContext().copyToClipboard(destination.displayAddress)
                 }
 
                 reviewRecipientAddressView.visibility = View.VISIBLE
                 reviewRecipientAddressTitle().setText(Localization.recipient)
                 reviewRecipientAddressValue().text = destination.displayAddress
-                reviewRecipientAddressView.setOnClickListener {
+                reviewRecipientAddressView.setHapticClickListener {
                     requireContext().copyToClipboard(
                         destination.displayAddress
                     )
@@ -730,14 +732,14 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
             } else {
                 reviewRecipientView.orientation = LinearLayoutCompat.HORIZONTAL
                 reviewRecipientView.value = destination.displayName
-                reviewRecipientView.setOnClickListener {
+                reviewRecipientView.setHapticClickListener {
                     requireContext().copyToClipboard(destination.displayName!!)
                 }
 
                 reviewRecipientAddressView.visibility = View.VISIBLE
                 reviewRecipientAddressTitle().setText(Localization.recipient_address)
                 reviewRecipientAddressValue().text = destination.displayAddress
-                reviewRecipientAddressView.setOnClickListener {
+                reviewRecipientAddressView.setHapticClickListener {
                     requireContext().copyToClipboard(
                         destination.displayAddress
                     )
@@ -745,7 +747,7 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
             }
         } else if (destination is SendDestination.TronAccount) {
             reviewRecipientView.value = destination.address.shortTron
-            reviewRecipientView.setOnClickListener {
+            reviewRecipientView.setHapticClickListener {
                 requireContext().copyToClipboard(destination.address)
             }
 
@@ -831,7 +833,7 @@ class SendScreen(wallet: WalletEntity) : WalletContextScreen(R.layout.fragment_s
 
             if (event.showToggle) {
                 reviewRecipientFeeView.subtitle = getString(Localization.edit_full)
-                reviewRecipientFeeView.setOnClickListener {
+                reviewRecipientFeeView.setHapticClickListener {
                     showFeeMethods(event.fee, reviewRecipientFeeView)
                 }
                 reviewRecipientFeeView.subtitleView.expandTouchArea(8.dp)

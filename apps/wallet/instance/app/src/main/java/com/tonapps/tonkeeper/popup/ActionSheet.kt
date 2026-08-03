@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.popup
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -132,7 +134,7 @@ open class ActionSheet(
         for ((index, item) in items.withIndex()) {
             val position = ListCell.getPosition(items.size, index)
             val itemView = createItemView(item)
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 item.onClick?.invoke(item)
                 doOnItemClick?.invoke(item)
                 dismiss()

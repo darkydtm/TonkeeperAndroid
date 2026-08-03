@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.picker
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.os.Bundle
 import com.tonapps.log.L
@@ -77,7 +79,7 @@ class PickerScreen: BaseListWalletScreen<ScreenContext.None>(ScreenContext.None)
         val horizontalOffset = requireContext().getDimensionPixelSize(uikit.R.dimen.cornerMedium)
 
         actionButton = createActionButton(view.context)
-        actionButton.setOnClickListener { viewModel.toggleEditMode() }
+        actionButton.setHapticClickListener { viewModel.toggleEditMode() }
         if (mode is PickerMode.TonConnect) {
             actionButton.visibility = View.GONE
         }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.ledger.pair
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -46,15 +48,15 @@ class PairLedgerScreen : BaseFragment(R.layout.fragment_ledger_pair), BaseFragme
         continueButton = view.findViewById(R.id.continue_button)
 
         tabUsbView = view.findViewById(R.id.tab_usb)
-        tabUsbView.setOnClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.USB) }
+        tabUsbView.setHapticClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.USB) }
 
         tabBluetoothView = view.findViewById(R.id.tab_bluetooth)
-        tabBluetoothView.setOnClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.BLUETOOTH) }
+        tabBluetoothView.setHapticClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.BLUETOOTH) }
 
-        view.findViewById<View>(R.id.close).setOnClickListener { finish() }
-        view.findViewById<View>(R.id.cancel).setOnClickListener { finish() }
+        view.findViewById<View>(R.id.close).setHapticClickListener { finish() }
+        view.findViewById<View>(R.id.cancel).setHapticClickListener { finish() }
         continueButton.isEnabled = false
-        continueButton.setOnClickListener {
+        continueButton.setHapticClickListener {
             lifecycleScope.launch(Dispatchers.IO) { connectionViewModel.getConnectData() }
         }
 

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.collectibles.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.drawable.RippleDrawable
 import android.net.Uri
 import android.view.View
@@ -40,7 +42,7 @@ class NftHolder(parent: ViewGroup): Holder<Item.Nft>(parent, R.layout.view_colle
     }
 
     override fun onBind(item: Item.Nft) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             Navigation.from(context)?.add(NftScreen.newInstance(item.wallet, item.entity))
         }
         fireBadgeView.visibility = if (item.expiringDomainSoon) View.VISIBLE else View.GONE

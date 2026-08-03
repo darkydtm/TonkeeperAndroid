@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.view.ViewGroup
@@ -19,7 +21,7 @@ class IconHolder(
 
     override fun onBind(item: Item.Icon) {
         itemIconView.background = item.position.drawable(context)
-        itemIconView.setOnClickListener { onClick.invoke(item) }
+        itemIconView.setHapticClickListener { onClick.invoke(item) }
         if (item.secondaryIcon) {
             itemIconView.setIconTintColor(context.iconSecondaryColor)
         } else {

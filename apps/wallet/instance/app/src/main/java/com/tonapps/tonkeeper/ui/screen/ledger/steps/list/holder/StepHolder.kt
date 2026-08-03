@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.ledger.steps.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -25,7 +27,7 @@ class StepHolder(
     private val doneView = findViewById<AppCompatImageView>(R.id.done_icon)
 
     init {
-        installTonAppView.setOnClickListener { onInstallTonAppClick() }
+        installTonAppView.setHapticClickListener { onInstallTonAppClick() }
         installTonAppView.expandTouchArea(16.dp)
     }
 

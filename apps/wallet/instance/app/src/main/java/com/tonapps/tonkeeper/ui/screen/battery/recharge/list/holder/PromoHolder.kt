@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.recharge.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -50,7 +52,7 @@ class PromoHolder(
             applyPromoCode(item)
         }
 
-        pasteView.setOnClickListener {
+        pasteView.setHapticClickListener {
             inputView.text = context.clipboardText()
             inputView.hideKeyboard()
             onSubmitPromo(inputView.text)

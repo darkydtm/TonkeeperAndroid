@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.helper.BrowserHelper
@@ -25,10 +27,10 @@ class EthenaDetailsHolder(
 
         bonusApyTitleView.text = item.bonusTitle
         bonusApySubtitleView.text = item.bonusDescription
-        faqView.setOnClickListener {
+        faqView.setHapticClickListener {
             BrowserHelper.open(context, item.faqUrl)
         }
-        checkEligibilityView.setOnClickListener {
+        checkEligibilityView.setHapticClickListener {
             item.bonusUrl?.let {
                 BrowserHelper.open(context, it)
             }

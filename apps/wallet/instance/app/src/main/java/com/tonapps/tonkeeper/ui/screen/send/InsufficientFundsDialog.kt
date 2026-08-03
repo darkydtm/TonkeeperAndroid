@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send
 
+import uikit.extensions.setHapticClickListener
+
 import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.Button
@@ -43,7 +45,7 @@ class InsufficientFundsDialog(private val fragment: BaseFragment) :
     private val tonButton = findViewById<Button>(R.id.ton)!!
 
     init {
-        findViewById<View>(R.id.close)!!.setOnClickListener { dismiss() }
+        findViewById<View>(R.id.close)!!.setHapticClickListener { dismiss() }
     }
 
     fun show(
@@ -62,7 +64,7 @@ class InsufficientFundsDialog(private val fragment: BaseFragment) :
         batteryView.visibility = if (isBattery) View.VISIBLE else View.GONE
 
         tonButton.text = context.getString(Localization.buy_ton, e.currency.code)
-        tonButton.setOnClickListener {
+        tonButton.setHapticClickListener {
             if (e.currency == WalletCurrency.TON) {
                 navigation?.add(DepositFragment.create(DepositRoutes.Buy(RampAsset.Currency(WalletCurrency.TON))))
             } else {
@@ -72,7 +74,7 @@ class InsufficientFundsDialog(private val fragment: BaseFragment) :
             dismiss()
         }
 
-        batteryButton.setOnClickListener {
+        batteryButton.setHapticClickListener {
             navigation?.add(BatteryScreen.newInstance(wallet, from = "insufficient_funds"))
             dismiss()
         }
@@ -105,7 +107,7 @@ class InsufficientFundsDialog(private val fragment: BaseFragment) :
         } else {
             context.getString(Localization.buy_ton, required.symbol)
         }
-        tonButton.setOnClickListener {
+        tonButton.setHapticClickListener {
             if (required.isTon) {
                 navigation?.add(DepositFragment.create(DepositRoutes.Buy(RampAsset.Currency(WalletCurrency.TON))))
             } else if (required.isTrx) {
@@ -117,7 +119,7 @@ class InsufficientFundsDialog(private val fragment: BaseFragment) :
             dismiss()
         }
 
-        batteryButton.setOnClickListener {
+        batteryButton.setHapticClickListener {
             navigation?.add(BatteryScreen.newInstance(wallet, from = "insufficient_funds"))
             dismiss()
         }

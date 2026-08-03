@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.text.Editable
 import android.view.Gravity
@@ -76,14 +78,14 @@ class WordsScreen: BaseFragment(R.layout.fragment_init_words) {
         titleView = view.findViewById(R.id.header_title)
 
         words24View = view.findViewById(R.id.words_24)
-        words24View.setOnClickListener {
+        words24View.setHapticClickListener {
             if (initViewModel.wordsCount != WORDS24) {
                 setWordsCount(WORDS24)
             }
         }
 
         words12View = view.findViewById(R.id.words_12)
-        words12View.setOnClickListener {
+        words12View.setHapticClickListener {
             if (initViewModel.wordsCount != WORDS12) {
                 setWordsCount(WORDS12)
             }
@@ -96,7 +98,7 @@ class WordsScreen: BaseFragment(R.layout.fragment_init_words) {
         wordInputs = contentView.findViewById<ColumnLayout>(R.id.inputs).getViews().filterIsInstance<WordEditText>()
 
         button = view.findViewById(R.id.button)
-        button.setOnClickListener { next() }
+        button.setHapticClickListener { next() }
 
         loaderView = view.findViewById(R.id.loader)
         loaderView.setTrackColor(requireContext().iconPrimaryColor.withAlpha(.32f))
@@ -301,7 +303,7 @@ class WordsScreen: BaseFragment(R.layout.fragment_init_words) {
                     setTextColor(requireContext().textPrimaryColor)
                     text = word
                     gravity = Gravity.CENTER
-                    setOnClickListener { setWord(index, word) }
+                    setHapticClickListener { setWord(index, word) }
                 }
                 suggestionsView.addView(textView, LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT, 1f))
             }

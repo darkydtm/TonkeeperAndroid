@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.dapp
 
+import uikit.extensions.setHapticClickListener
+
 import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
@@ -256,7 +258,7 @@ class DAppScreen(wallet: WalletEntity) : InjectedTonConnectScreen(R.layout.fragm
         headerView.background = headerDrawable
 
         backView = view.findViewById(R.id.back)
-        backView.setOnClickListener { back() }
+        backView.setHapticClickListener { back() }
 
         titleView = view.findViewById(R.id.title)
         titleView.text = args.title
@@ -267,7 +269,7 @@ class DAppScreen(wallet: WalletEntity) : InjectedTonConnectScreen(R.layout.fragm
         menuView = view.findViewById(R.id.menu)
 
         closeView = view.findViewById(R.id.close)
-        closeView.setOnClickListener { finish() }
+        closeView.setHapticClickListener { finish() }
 
         webView = view.findViewById(R.id.web_view)
         if (viewModel.isDarkTheme && WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
@@ -338,11 +340,11 @@ class DAppScreen(wallet: WalletEntity) : InjectedTonConnectScreen(R.layout.fragm
     }
 
     private fun setDefaultState() {
-        menuView.setOnClickListener { openDefaultMenu(it) }
+        menuView.setHapticClickListener { openDefaultMenu(it) }
     }
 
     private fun setConnectionState(connection: AppConnectEntity) {
-        menuView.setOnClickListener { openConnectionMenu(it, connection) }
+        menuView.setHapticClickListener { openConnectionMenu(it, connection) }
     }
 
     private fun openDefaultMenu(view: View) {

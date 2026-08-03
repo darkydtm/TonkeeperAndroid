@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.blockchain.model.legacy.WalletEntity
 import com.tonapps.blockchain.model.legacy.WalletType
@@ -29,17 +31,17 @@ class NewActionsHolder(parent: ViewGroup): Holder<Item.Actions>(parent, R.layout
         val isSendEnabled = item.walletType != WalletType.Watch
         val isStakeEnabled = item.walletType != WalletType.Watch && item.walletType != WalletType.Testnet && !item.isStakingDisabled
 
-        receiveView.setOnClickListener {
+        receiveView.setHapticClickListener {
             AnalyticsHelper.Default.events.depositFlow.depositOpen(from = DepositFlowFrom.WalletScreen)
             navigation?.add(DepositFragment())
         }
 
-        swapView.setOnClickListener {
+        swapView.setHapticClickListener {
             if (isWatchOnly) {
                 openWatchInfo(item.wallet)
-                return@setOnClickListener
+                return@setHapticClickListener
             } else if (!isSwapEnabled) {
-                return@setOnClickListener
+                return@setHapticClickListener
             }
 
             navigation?.add(SwapScreen.newInstance(
@@ -49,23 +51,23 @@ class NewActionsHolder(parent: ViewGroup): Holder<Item.Actions>(parent, R.layout
             ))
         }
 
-        sendView.setOnClickListener {
+        sendView.setHapticClickListener {
             AnalyticsHelper.Default.events.withdrawFlow.withdrawOpen(from = WithdrawFlowFrom.WalletScreen)
             if (isWatchOnly) {
                 openWatchInfo(item.wallet)
-                return@setOnClickListener
+                return@setHapticClickListener
             } else if (!isSendEnabled) {
-                return@setOnClickListener
+                return@setHapticClickListener
             }
 
             navigation?.add(WithdrawFragment.create())
         }
-        stakeView.setOnClickListener {
+        stakeView.setHapticClickListener {
             if (isWatchOnly) {
                 openWatchInfo(item.wallet)
-                return@setOnClickListener
+                return@setHapticClickListener
             } else if (!isStakeEnabled) {
-                return@setOnClickListener
+                return@setHapticClickListener
             }
 
             navigation?.add(StakingScreen.newInstance(wallet = item.wallet, from = "wallet"))

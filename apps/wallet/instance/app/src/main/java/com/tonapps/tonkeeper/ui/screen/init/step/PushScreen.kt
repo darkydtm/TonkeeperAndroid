@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
@@ -33,10 +35,10 @@ class PushScreen: BaseFragment(R.layout.fragment_notifications_enable) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val laterView = view.findViewById<View>(R.id.later)
-        laterView.setOnClickListener { disablePush() }
+        laterView.setHapticClickListener { disablePush() }
 
         val button = view.findViewById<Button>(R.id.button)
-        button.setOnClickListener { requestPermission() }
+        button.setHapticClickListener { requestPermission() }
 
         val offsetMedium = requireContext().getDimensionPixelSize(uikit.R.dimen.offsetMedium)
         val offsetLarge = requireContext().getDimensionPixelSize(uikit.R.dimen.offsetLarge)

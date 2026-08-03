@@ -46,6 +46,7 @@ import uikit.HapticHelper
 import uikit.base.BaseDrawable
 import uikit.extensions.dp
 import uikit.extensions.expandTouchArea
+import uikit.extensions.setHapticClickListener
 import uikit.extensions.setPaddingHorizontal
 import uikit.extensions.withAlpha
 import uikit.navigation.Navigation
@@ -79,10 +80,10 @@ class BalanceHolder(
     }
 
     override fun onBind(item: Item.Balance) {
-        batteryView.setOnClickListener {
+		batteryView.setHapticClickListener {
             Navigation.from(context)?.add(BatteryScreen.newInstance(item.wallet, from = "wallet"))
         }
-        backupIconContainerView.setOnClickListener {
+		backupIconContainerView.setHapticClickListener {
             Navigation.from(context)?.add(BackupScreen.newInstance(item.wallet))
         }
 
@@ -168,7 +169,7 @@ class BalanceHolder(
                 walletLoaderView.visibility = View.GONE
                 setWalletAddressWithType(wallet.address.shortAddress, wallet.type, wallet.version, showYourAddress)
                 walletAddressView.setTextColor(context.textSecondaryColor)
-                walletAddressView.setOnClickListener {
+				walletAddressView.setHapticClickListener {
                     val walletType = wallet.type
                     if (walletType == WalletType.Testnet || walletType == WalletType.Watch) {
                         context.copyWithToast(wallet.address, getTypeColor(walletType))

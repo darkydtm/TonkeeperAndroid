@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.contacts.main
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -57,7 +59,7 @@ class SendContactsScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fra
         listView.insideBottomSheet = true
 
         button = view.findViewById(R.id.button)
-        button.setOnClickListener {
+        button.setHapticClickListener {
             navigation?.add(AddContactScreen.newInstance(wallet))
         }
 

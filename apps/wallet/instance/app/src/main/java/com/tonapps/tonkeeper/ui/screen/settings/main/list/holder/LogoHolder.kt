@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.extensions.appVersionCode
@@ -18,7 +20,7 @@ class LogoHolder(
     private val versionView = findViewById<AppCompatTextView>(R.id.version)
 
     init {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             Navigation.from(context)?.add(DevScreen.newInstance())
         }
     }

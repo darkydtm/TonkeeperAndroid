@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
@@ -34,7 +36,7 @@ class AccountHolder(
     }
 
     override fun onBind(item: Item.Account) {
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
         itemView.background = ListCell.Position.SINGLE.drawable(context)
 
         colorView.backgroundTintList = ColorStateList.valueOf(item.color)

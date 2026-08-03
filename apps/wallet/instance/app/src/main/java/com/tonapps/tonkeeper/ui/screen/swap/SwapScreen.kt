@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.swap
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -89,7 +91,7 @@ class SwapScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fragment_sw
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         closeView = view.findViewById(R.id.close)
-        closeView.setOnClickListener { finish() }
+        closeView.setHapticClickListener { finish() }
 
         webView = view.findViewById(R.id.web)
         webView.addCallback(webViewCallback)

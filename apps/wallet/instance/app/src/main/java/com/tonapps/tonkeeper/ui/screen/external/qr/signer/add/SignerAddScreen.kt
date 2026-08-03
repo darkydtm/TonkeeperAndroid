@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.external.qr.signer.add
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -41,23 +43,23 @@ class SignerAddScreen: QRCameraScreen(R.layout.fragment_signer_add), BaseFragmen
         val constantWhiteColor = requireContext().constantWhiteColor.withAlpha(.08f).stateList
 
         val closeView = view.findViewById<View>(R.id.close)
-        closeView.setOnClickListener { finish() }
+        closeView.setHapticClickListener { finish() }
         closeView.backgroundTintList = constantWhiteColor
 
         val aboutView = view.findViewById<View>(R.id.about)
         aboutView.backgroundTintList = constantWhiteColor
-        aboutView.setOnClickListener {
+        aboutView.setHapticClickListener {
             BrowserHelper.open(requireActivity(), "https://tonkeeper.com/signer")
         }
 
         cameraView = view.findViewById(R.id.camera)
 
         val flashView = view.findViewById<CameraFlashIconView>(R.id.flash)
-        flashView.setOnClickListener { toggleFlash() }
+        flashView.setHapticClickListener { toggleFlash() }
 
         val signerOpenButton = view.findViewById<View>(R.id.signer_open)
         signerOpenButton.pinToBottomInsets()
-        signerOpenButton.setOnClickListener {
+        signerOpenButton.setHapticClickListener {
             SignerApp.openAppOrInstall(requireContext())
             finish()
         }

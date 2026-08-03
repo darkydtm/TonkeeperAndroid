@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.notifications.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.notifications.list.Item
 import com.tonapps.tonkeeperx.R
@@ -17,7 +19,7 @@ class WalletPushHolder(
 
     init {
         itemView.background = ListCell.Position.SINGLE.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             switchView.toggle(true)
         }
     }

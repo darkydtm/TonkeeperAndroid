@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +21,7 @@ class PushHolder(parent: ViewGroup): Holder<Item.Push>(parent, R.layout.view_wal
     private val textView = findViewById<AppCompatTextView>(R.id.text)
 
     init {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             Navigation.from(context)?.openURL("tonkeeper://activity?from=push")
         }
     }

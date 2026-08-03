@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.tronfees.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -20,7 +22,7 @@ class TokenHolder(parent: ViewGroup) : Holder<Item.Token>(parent, R.layout.view_
 
     override fun onBind(item: Item.Token) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             context.navigation?.add(
                 QrAssetFragment.newInstance(item.token, true)
             )

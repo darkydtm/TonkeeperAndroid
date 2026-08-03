@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -29,7 +31,7 @@ class ActionsHolder(parent: ViewGroup) : Holder<Item.Actions>(parent, R.layout.v
     override fun onBind(item: Item.Actions) {
         buttonsView.maxColumnCount = item.maxColumnCount
         sendView.isEnabled = item.send
-        sendView.setOnClickListener {
+        sendView.setHapticClickListener {
             if (item.tronTransfersDisabled) {
                 navigation?.add(
                     TronFeesScreen.newInstance(
@@ -48,12 +50,12 @@ class ActionsHolder(parent: ViewGroup) : Holder<Item.Actions>(parent, R.layout.v
                 )
             }
         }
-        receiveView.setOnClickListener {
+        receiveView.setHapticClickListener {
             navigation?.add(QrAssetFragment.newInstance(item.token))
         }
 
         swapView.isVisible = item.swap
-        swapView.setOnClickListener {
+        swapView.setHapticClickListener {
             if (item.tronSwapUrl != null) {
                 BrowserHelper.open(context, item.tronSwapUrl)
             } else {

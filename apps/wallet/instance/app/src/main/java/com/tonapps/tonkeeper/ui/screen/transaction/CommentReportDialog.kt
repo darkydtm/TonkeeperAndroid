@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.transaction
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.view.View
 import com.tonapps.tonkeeperx.R
@@ -19,12 +21,12 @@ class CommentReportDialog(context: Context) : ModalDialog(context, R.layout.dial
     }
 
     init {
-        findViewById<View>(R.id.close)?.setOnClickListener { dismiss() }
+        findViewById<View>(R.id.close)?.setHapticClickListener { dismiss() }
     }
 
     fun show(callback: () -> Unit) {
         super.show()
-        findViewById<View>(R.id.button)?.setOnClickListener {
+        findViewById<View>(R.id.button)?.setHapticClickListener {
             callback()
             dismiss()
         }

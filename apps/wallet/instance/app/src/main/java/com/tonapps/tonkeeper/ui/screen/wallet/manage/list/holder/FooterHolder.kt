@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.manage.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.ui.screen.settings.security.SecurityScreen
@@ -29,7 +31,7 @@ class FooterHolder(parent: ViewGroup): Holder<Item.SafeMode>(parent, R.layout.vi
     }
 
     override fun onBind(item: Item.SafeMode) {
-        view.setOnClickListener { openSecurityScreen(item.wallet) }
+        view.setHapticClickListener { openSecurityScreen(item.wallet) }
     }
 
 }

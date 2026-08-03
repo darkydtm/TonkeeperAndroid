@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.refill.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -21,7 +23,7 @@ class GiftHolder(
 
     override fun onBind(item: Item.Gift) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener { navigation?.add(BatteryRechargeScreen.newInstance(item.wallet, isGift = true)) }
+        itemView.setHapticClickListener { navigation?.add(BatteryRechargeScreen.newInstance(item.wallet, isGift = true)) }
         giftImageView.visibility = View.VISIBLE
         titleView.text = context.getString(Localization.battery_refill_gift)
         subtitleView.text = context.getString(Localization.battery_refill_gift_subtitle)

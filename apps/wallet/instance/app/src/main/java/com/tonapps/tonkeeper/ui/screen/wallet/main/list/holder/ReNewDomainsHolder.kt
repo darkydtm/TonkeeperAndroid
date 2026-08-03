@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +33,7 @@ class ReNewDomainsHolder(
 
     override fun onBind(item: Item.RenewDomains) {
         textView.text = context.getString(Localization.wallet_renew_dns, item.items.size, untilDateString)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             navigation?.add(DNSRenewScreen.newInstance(item.wallet, item.items))
         }
     }

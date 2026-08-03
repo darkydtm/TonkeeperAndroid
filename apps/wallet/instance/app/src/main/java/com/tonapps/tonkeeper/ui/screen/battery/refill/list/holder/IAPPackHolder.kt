@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.refill.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -33,11 +35,11 @@ class IAPPackHolder(
         itemView.background = item.position.drawable(context)
 
         amountView.text = item.formattedPrice
-        amountView.setOnClickListener { onPackSelect(item.productId) }
+        amountView.setHapticClickListener { onPackSelect(item.productId) }
         amountView.isEnabled = item.isEnabled
-        amountContainerView.setOnClickListener { onPackSelect(item.productId) }
+        amountContainerView.setHapticClickListener { onPackSelect(item.productId) }
         amountContainerView.isEnabled = item.isEnabled
-        batteryContainerView.setOnClickListener { onPackSelect(item.productId) }
+        batteryContainerView.setHapticClickListener { onPackSelect(item.productId) }
         batteryContainerView.isEnabled = item.isEnabled
 
         titleView.text = getPackName(item.packType)
@@ -46,7 +48,7 @@ class IAPPackHolder(
             Plurals.battery_charges, item.charges, item.charges
         )
         subtitleView.setRightDrawable(itemView.getDrawable(UIKitIcon.ic_information_circle_16))
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             detailsView.visibility = if (detailsView.visibility == View.VISIBLE) {
                 View.GONE
             } else {

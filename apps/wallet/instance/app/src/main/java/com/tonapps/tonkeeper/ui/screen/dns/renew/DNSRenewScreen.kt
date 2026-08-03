@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.dns.renew
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -66,7 +68,7 @@ class DNSRenewScreen(wallet: WalletEntity): BaseListWalletScreen<ScreenContext.W
                 locale = requireContext().locale
             ))
             actionButton.pinToBottomInsets()
-            actionButton.setOnClickListener { renewAll() }
+            actionButton.setHapticClickListener { renewAll() }
         } else {
             actionButton.visibility = View.GONE
             setBottomMargin(0)

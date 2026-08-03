@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.country.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -19,7 +21,7 @@ class CountryHolder(
     private val checkView = findViewById<AppCompatImageView>(R.id.check)
 
     override fun onBind(item: Item.Country) {
-        itemView.setOnClickListener { onClick(item.code) }
+        itemView.setHapticClickListener { onClick(item.code) }
         itemView.background = item.position.drawable(itemView.context)
         flagView.setCountry(item.code)
         titleView.text = item.name

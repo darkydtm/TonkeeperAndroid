@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.recharge.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -29,14 +31,14 @@ class RechargePackHolder(
 
     override fun onBind(item: Item.RechargePack) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener { onPackSelect(item.packType) }
+        itemView.setHapticClickListener { onPackSelect(item.packType) }
         itemView.isEnabled = item.isEnabled
 
         titleView.text = context.resources.getQuantityString(
             Plurals.battery_charges, item.charges, item.charges
         )
         titleView.setRightDrawable(itemView.getDrawable(UIKitIcon.ic_information_circle_16))
-        titleView.setOnClickListener {
+        titleView.setHapticClickListener {
             detailsView.visibility = if (detailsView.visibility == View.VISIBLE) {
                 View.GONE
             } else {
@@ -52,7 +54,7 @@ class RechargePackHolder(
 
         radioView.checked = item.selected
         radioView.isEnabled = item.isEnabled
-        radioView.setOnClickListener { onPackSelect(item.packType) }
+        radioView.setHapticClickListener { onPackSelect(item.packType) }
 
 
     }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.tronfees.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -22,7 +24,7 @@ class BatteryHolder(parent: ViewGroup): Holder<Item.Battery>(parent, R.layout.vi
 
     override fun onBind(item: Item.Battery) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             context.navigation?.add(BatteryScreen.newInstance(wallet = item.wallet, from = "tron_fees"))
         }
         asyncImageView.visibility = View.GONE

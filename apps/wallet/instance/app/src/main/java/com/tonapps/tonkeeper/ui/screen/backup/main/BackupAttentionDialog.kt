@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.backup.main
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -15,14 +17,14 @@ class BackupAttentionDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        findViewById<View>(R.id.cancel_button)?.setOnClickListener { dismiss() }
+        findViewById<View>(R.id.cancel_button)?.setHapticClickListener { dismiss() }
         findViewById<HeaderView>(R.id.header)?.doOnActionClick = { dismiss() }
         confirmButton = findViewById(R.id.continue_button)!!
     }
 
     fun show(onClock: () -> Unit) {
         super.show()
-        confirmButton.setOnClickListener {
+        confirmButton.setHapticClickListener {
             onClock()
             dismiss()
         }

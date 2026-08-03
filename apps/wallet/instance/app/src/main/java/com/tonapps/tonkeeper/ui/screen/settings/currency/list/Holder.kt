@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.currency.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tonapps.uikit.icon.UIKitIcon
@@ -21,7 +23,7 @@ class Holder(
     }
 
     override fun onBind(item: Item) {
-        itemIconView.setOnClickListener { onClick(item.currency) }
+        itemIconView.setHapticClickListener { onClick(item.currency) }
         itemIconView.position = item.position
         itemIconView.text = item.currency
         itemIconView.description = item.name

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -43,7 +45,7 @@ class TronBannerHolder(parent: ViewGroup): Holder<Item.TronBanner>(parent, R.lay
         } else {
             context.getString(Localization.top_up)
         }
-        buttonView.setOnClickListener {
+        buttonView.setHapticClickListener {
             if (item.onlyTrx) {
                 context.navigation?.add(QrAssetFragment.newInstance(TokenEntity.TRX))
             } else {

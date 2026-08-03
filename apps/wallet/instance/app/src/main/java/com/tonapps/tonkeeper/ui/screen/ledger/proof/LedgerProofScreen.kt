@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.ledger.proof
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -44,16 +46,16 @@ class LedgerProofScreen : BaseFragment(R.layout.fragment_ledger_sign), BaseFragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         tabUsbView = view.findViewById(R.id.tab_usb)
-        tabUsbView.setOnClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.USB) }
+        tabUsbView.setHapticClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.USB) }
 
         tabBluetoothView = view.findViewById(R.id.tab_bluetooth)
-        tabBluetoothView.setOnClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.BLUETOOTH) }
+        tabBluetoothView.setHapticClickListener { connectionViewModel.setConnectionType(LedgerConnectionType.BLUETOOTH) }
 
         view.findViewById<View>(R.id.container)
             .applyNavBottomPadding(requireContext().getDimensionPixelSize(uikit.R.dimen.offsetMedium))
 
-        view.findViewById<View>(R.id.close).setOnClickListener { finish() }
-        view.findViewById<View>(R.id.cancel).setOnClickListener { finish() }
+        view.findViewById<View>(R.id.close).setHapticClickListener { finish() }
+        view.findViewById<View>(R.id.cancel).setHapticClickListener { finish() }
 
         if (savedInstanceState == null) {
             childFragmentManager.beginTransaction().replace(R.id.steps, ledgerConnectionFragment)

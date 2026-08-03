@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tonapps.tonkeeper.extensions.capitalized
@@ -22,7 +24,7 @@ class ThemeHolder(
     }
 
     override fun onBind(item: Item.Theme) {
-        itemIconView.setOnClickListener { onClickTheme(item) }
+        itemIconView.setHapticClickListener { onClickTheme(item) }
         itemIconView.position = item.position
         itemIconView.text = item.title.capitalized
         itemIconView.iconRes = if (item.selected) {

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.picker.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -26,7 +28,7 @@ class TokenHolder(
     private val checkView = findViewById<View>(R.id.check)
 
     override fun onBind(item: Item.Token) {
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
         itemView.background = item.position.drawable(context)
         iconView.setImageURI(item.iconUri, this)
 

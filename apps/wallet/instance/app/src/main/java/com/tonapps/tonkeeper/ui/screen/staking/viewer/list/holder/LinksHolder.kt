@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -35,7 +37,7 @@ class LinksHolder(
                 } else {
                 "https://$link"
             }
-            linkView.setOnClickListener { BrowserHelper.open(context, fixedLink) }
+            linkView.setHapticClickListener { BrowserHelper.open(context, fixedLink) }
             linksView.addView(linkView)
         }
     }

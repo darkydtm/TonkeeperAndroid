@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.main.list.explore.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -22,7 +24,7 @@ class ExploreTitleExploreHolder(
             itemView.setOnClickListener(null)
         } else {
             allView.visibility = View.VISIBLE
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 onMoreClick(item.id)
             }
         }

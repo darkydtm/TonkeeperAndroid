@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.main.list.connected
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.ui.screen.browser.dapp.DAppScreen
@@ -18,7 +20,7 @@ class ConnectedAppHolder(
     private val nameView = findViewById<AppCompatTextView>(R.id.name)
 
     override fun onBind(item: ConnectedItem) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             Navigation.from(context)?.add(DAppScreen.newInstance(
                 wallet = item.wallet,
                 title = item.name,

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -31,7 +33,7 @@ class DescriptionHolder(parent: ViewGroup) :
         if (item.uri == null) {
             textView.setOnClickListener(null)
         } else {
-            textView.setOnClickListener {
+            textView.setHapticClickListener {
                 BrowserHelper.open(context, item.uri)
             }
         }

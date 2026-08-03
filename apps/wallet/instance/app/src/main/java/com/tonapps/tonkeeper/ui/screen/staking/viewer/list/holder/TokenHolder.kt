@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -30,7 +32,7 @@ class TokenHolder(parent: ViewGroup): Holder<Item.Token>(parent, R.layout.view_c
     }
 
     override fun onBind(item: Item.Token) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             if (item.balance.isPositive) {
                 Navigation.from(context)?.add(
                     TokenScreen.newInstance(

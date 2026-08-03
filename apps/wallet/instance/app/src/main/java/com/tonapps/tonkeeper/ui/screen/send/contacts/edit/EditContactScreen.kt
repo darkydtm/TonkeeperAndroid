@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.contacts.edit
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -46,13 +48,13 @@ class EditContactScreen(wallet: WalletEntity): WalletContextScreen(R.layout.frag
         addressView.isEnabled = false
 
         val saveButton = view.findViewById<Button>(R.id.save)
-        saveButton.setOnClickListener { save() }
+        saveButton.setHapticClickListener { save() }
 
         nameView.doOnTextChange = {
             saveButton.isEnabled = it.isNotEmpty()
         }
 
-        view.findViewById<Button>(R.id.delete).setOnClickListener { delete() }
+        view.findViewById<Button>(R.id.delete).setHapticClickListener { delete() }
 
         view.pinToBottomInsets()
     }

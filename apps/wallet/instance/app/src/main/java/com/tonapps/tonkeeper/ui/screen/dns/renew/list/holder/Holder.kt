@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.dns.renew.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.extensions.max12
@@ -25,7 +27,7 @@ class Holder(parent: ViewGroup): BaseListHolder<Item>(parent, R.layout.view_doma
 
     override fun onBind(item: Item) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             item.nft?.let { openNft(item.wallet, it) }
         }
         nameView.text = if (item.inSale) {

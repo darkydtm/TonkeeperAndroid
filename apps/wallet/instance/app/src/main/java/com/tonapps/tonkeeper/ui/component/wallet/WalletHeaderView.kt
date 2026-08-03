@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component.wallet
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -91,13 +93,13 @@ class WalletHeaderView @JvmOverloads constructor(
     var onScanClick: (() -> Unit)? = null
         set(value) {
             field = value
-            scanView.setOnClickListener { value?.invoke() }
+            scanView.setHapticClickListener { value?.invoke() }
         }
 
     var onHistoryClick: (() -> Unit)? = null
         set(value) {
             field = value
-            historyView.setOnClickListener {
+            historyView.setHapticClickListener {
                 dismissHistoryTooltip()
                 value?.invoke()
             }
@@ -108,7 +110,7 @@ class WalletHeaderView @JvmOverloads constructor(
     var onWalletClick: (() -> Unit)? = null
         set(value) {
             field = value
-            walletView.setOnClickListener { value?.invoke() }
+            walletView.setHapticClickListener { value?.invoke() }
         }
 
     init {

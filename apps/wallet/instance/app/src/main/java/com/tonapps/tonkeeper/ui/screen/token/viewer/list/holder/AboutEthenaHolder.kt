@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -17,7 +19,7 @@ class AboutEthenaHolder(parent: ViewGroup) :
     private val descriptionView = findViewById<AppCompatTextView>(R.id.description)
 
     override fun onBind(item: Item.AboutEthena) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             BrowserHelper.open(context, item.url)
         }
 

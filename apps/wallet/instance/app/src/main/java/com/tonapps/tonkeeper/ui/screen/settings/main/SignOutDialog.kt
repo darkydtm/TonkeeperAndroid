@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.main
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.view.View
 import android.widget.Button
@@ -31,14 +33,14 @@ class SignOutDialog(
         checkbox.doOnCheckedChanged = { logoutButton.isEnabled = it }
 
         findViewById<HeaderView>(R.id.header)?.doOnActionClick = { dismiss() }
-        findViewById<View>(R.id.confirmation)?.setOnClickListener { checkbox.toggle() }
-        findViewById<View>(R.id.backup)?.setOnClickListener { openBackup() }
+        findViewById<View>(R.id.confirmation)?.setHapticClickListener { checkbox.toggle() }
+        findViewById<View>(R.id.backup)?.setHapticClickListener { openBackup() }
     }
 
     fun show(onClick: () -> Unit) {
         super.show()
         confirmationTextView.text = context.getStringCompat(Localization.logout_confirmation, wallet.label.getTitle(context, confirmationTextView))
-        findViewById<View>(R.id.logout)?.setOnClickListener {
+        findViewById<View>(R.id.logout)?.setHapticClickListener {
             onClick()
             dismiss()
         }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -33,7 +35,7 @@ class SetupLinkHolder(parent: ViewGroup): Holder<Item.SetupLink>(parent, R.layou
         } else {
             subtitleView.visibility = View.GONE
         }
-        itemView.setOnClickListener { click(item) }
+        itemView.setHapticClickListener { click(item) }
         setIconColor(if (item.blue) context.accentBlueColor else context.accentOrangeColor)
         if (item.settingsType == Item.SetupLink.TYPE_STORIES) {
             setIconColor(null)
@@ -41,7 +43,7 @@ class SetupLinkHolder(parent: ViewGroup): Holder<Item.SetupLink>(parent, R.layou
         }
         if (item.settingsType == Item.SetupLink.TYPE_TELEGRAM_CHANNEL) {
             buttonView.visibility = View.VISIBLE
-            buttonView.setOnClickListener { click(item) }
+            buttonView.setHapticClickListener { click(item) }
             chevronView.visibility = View.GONE
         } else {
             buttonView.visibility = View.GONE

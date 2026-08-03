@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.base.picker.currency.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +35,7 @@ class Holder(
         } else {
             item.name
         }
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
     }
 
     private fun applyDrawableRes(icon: Int?) {

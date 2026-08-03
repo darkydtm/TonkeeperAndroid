@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -35,7 +37,7 @@ class BalanceHolder(parent: ViewGroup): Holder<Item.Balance>(parent, R.layout.vi
                 item.availableTransfers,
                 item.availableTransfers
             )
-            availableTransfersContainerView.setOnClickListener {
+            availableTransfersContainerView.setHapticClickListener {
                 context.navigation?.add(TronFeesScreen.newInstance(item.wallet))
             }
         } else {

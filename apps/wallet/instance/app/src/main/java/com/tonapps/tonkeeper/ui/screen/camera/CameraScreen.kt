@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.camera
 
+import uikit.extensions.setHapticClickListener
+
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -82,16 +84,16 @@ class CameraScreen : QRCameraScreen(R.layout.fragment_camera), BaseFragment.Bott
         val constantWhiteColor = requireContext().constantWhiteColor.withAlpha(.08f).stateList
 
         val closeView = view.findViewById<View>(R.id.close)
-        closeView.setOnClickListener { finish() }
+        closeView.setHapticClickListener { finish() }
         closeView.backgroundTintList = constantWhiteColor
 
         cameraView = view.findViewById(R.id.camera)
 
         val flashView = view.findViewById<CameraFlashIconView>(R.id.flash)
-        flashView.setOnClickListener { toggleFlash() }
+        flashView.setHapticClickListener { toggleFlash() }
 
         galleryButton = view.findViewById(R.id.gallery)
-        galleryButton.setOnClickListener { pickImage() }
+        galleryButton.setHapticClickListener { pickImage() }
         galleryButton.pinToBottomInsets()
 
         collectFlow(flashConfigFlow) { flashConfig ->

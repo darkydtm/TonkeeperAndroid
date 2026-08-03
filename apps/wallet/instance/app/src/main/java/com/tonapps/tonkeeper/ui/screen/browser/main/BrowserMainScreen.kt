@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.main
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -86,10 +88,10 @@ class BrowserMainScreen(wallet: WalletEntity): WalletContextScreen(R.layout.frag
         headerView.background = headerDrawable
 
         exploreTabView = view.findViewById(R.id.explore_tab)
-        exploreTabView.setOnClickListener { clickTab(it as AppCompatTextView) }
+        exploreTabView.setHapticClickListener { clickTab(it as AppCompatTextView) }
 
         connectedTabView = view.findViewById(R.id.connected_tab)
-        connectedTabView.setOnClickListener { clickTab(it as AppCompatTextView) }
+        connectedTabView.setHapticClickListener { clickTab(it as AppCompatTextView) }
 
         slideView = view.findViewById(R.id.slide)
 

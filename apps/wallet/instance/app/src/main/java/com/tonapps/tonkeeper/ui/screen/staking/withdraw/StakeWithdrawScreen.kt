@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.withdraw
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -64,10 +66,10 @@ class StakeWithdrawScreen(wallet: WalletEntity): WalletContextScreen(R.layout.fr
         taskView = view.findViewById(R.id.task)
 
         val cancelButton = view.findViewById<Button>(R.id.cancel)
-        cancelButton.setOnClickListener { finish() }
+        cancelButton.setHapticClickListener { finish() }
 
         confirmButton = view.findViewById(R.id.confirm)
-        confirmButton.setOnClickListener { send() }
+        confirmButton.setHapticClickListener { send() }
 
         buttonsView = view.findViewById(R.id.buttons)
 

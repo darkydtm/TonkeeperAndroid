@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.tonconnect
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -115,7 +117,7 @@ class TonConnectScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_t
         pushView = view.findViewById(R.id.push)
         pushCheckBoxView = view.findViewById(R.id.checkbox)
         pushCheckBoxView.checked = true
-        pushView.setOnClickListener {
+        pushView.setHapticClickListener {
             pushCheckBoxView.toggle()
         }
         pushView.visibility = if (viewModel.pushAvailable) {
@@ -316,7 +318,7 @@ class TonConnectScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_t
             walletPickerView.visibility = View.GONE
         }
 
-        button.setOnClickListener { connect(state.wallet) }
+        button.setHapticClickListener { connect(state.wallet) }
     }
 
     private fun applyAppTitle(host: String) {
@@ -346,7 +348,7 @@ class TonConnectScreen: BaseWalletScreen<ScreenContext.None>(R.layout.fragment_t
         walletNameView.text = wallet.label.name
         walletTypesView.text = requireContext().getWalletBadges(wallet.type, wallet.version)
         walletAddressView.text = wallet.address.short4
-        walletPickerView.setOnClickListener { openWalletPicker(wallet) }
+        walletPickerView.setHapticClickListener { openWalletPicker(wallet) }
     }
 
     private fun openWalletPicker(wallet: WalletEntity) {

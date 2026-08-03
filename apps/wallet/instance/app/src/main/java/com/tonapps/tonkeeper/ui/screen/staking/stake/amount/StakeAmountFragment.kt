@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.stake.amount
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -61,7 +63,7 @@ class StakeAmountFragment :
         currencyView = view.findViewById(R.id.stake_currency)
 
         poolItemView = view.findViewById(R.id.pool_item)
-        poolItemView.setOnClickListener {
+        poolItemView.setHapticClickListener {
             setFragment(
                 StakeOptionsFragment.newInstance(
                     primaryFragment.screenContext.wallet
@@ -83,11 +85,11 @@ class StakeAmountFragment :
 
         button = view.findViewById(R.id.next_button)
 
-        button.setOnClickListener {
+        button.setHapticClickListener {
             openConfirm()
         }
 
-        view.findViewById<View>(R.id.max).setOnClickListener { applyMax() }
+        view.findViewById<View>(R.id.max).setHapticClickListener { applyMax() }
 
         collectFlow(primaryViewModel.selectedPoolFlow, ::applyPoolInfo)
         collectFlow(primaryViewModel.availableUiStateFlow, ::applyAvailableState)

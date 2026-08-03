@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.recharge
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -112,7 +114,7 @@ class BatteryRechargeScreen(wallet: WalletEntity) :
         tokenIconView.setCircular()
         tokenTitleView = rightContentView.findViewById(R.id.token_title)
         rightContentView.findViewById<LinearLayoutCompat>(R.id.token)
-            .setOnClickListener { openTokenSelector() }
+            .setHapticClickListener { openTokenSelector() }
 
         headerView.hideCloseIcon()
         headerView.setRightContent(rightContentView)

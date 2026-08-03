@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -29,7 +31,7 @@ class Holder(
 
     override fun onBind(item: AccountItem) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener { selectedView.toggle() }
+        itemView.setHapticClickListener { selectedView.toggle() }
 
         itemView.isEnabled = !item.ledgerAdded
         addressView.text = item.address.shortAddress

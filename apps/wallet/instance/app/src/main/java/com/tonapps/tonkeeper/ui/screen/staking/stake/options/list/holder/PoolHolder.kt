@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.stake.options.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -34,7 +36,7 @@ class PoolHolder(
 
     override fun onBind(item: Item.Pool) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             onClick(item.entity)
         }
 

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component.label
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Color
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +25,7 @@ class EmojiAdapter(
         private val emojiView = itemView.findViewById<EmojiView>(R.id.emoji)
 
         fun bind(emoji: EmojiEntity) {
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 listener(emoji)
             }
             emojiView.setEmoji(emoji.value, itemView.context.iconPrimaryColor)

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.language.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tonapps.tonkeeper.extensions.capitalized
@@ -24,7 +26,7 @@ class Holder(
     }
 
     override fun onBind(item: Item) {
-        itemIconView.setOnClickListener { onClick(item) }
+        itemIconView.setHapticClickListener { onClick(item) }
         itemIconView.position = item.position
         if (item.code == Language.DEFAULT) {
             itemIconView.text = getString(Localization.system)

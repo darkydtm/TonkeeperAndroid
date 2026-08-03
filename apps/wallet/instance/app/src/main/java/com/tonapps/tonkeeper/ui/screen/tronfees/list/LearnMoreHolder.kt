@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.tronfees.list
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeperx.R
@@ -12,7 +14,7 @@ class LearnMoreHolder(parent: ViewGroup): Holder<Item.LearnMore>(parent, R.layou
 
     override fun onBind(item: Item.LearnMore) {
         textView.text = context.getSpannable(Localization.tron_fees_learn_more)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             context.navigation?.openURL(item.url)
         }
     }

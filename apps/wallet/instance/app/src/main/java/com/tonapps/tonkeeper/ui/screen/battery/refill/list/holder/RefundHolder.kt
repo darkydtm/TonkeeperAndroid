@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.refill.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -23,7 +25,7 @@ class RefundHolder(
 
     override fun onBind(item: Item.Refund) {
         itemView.background = ListCell.Position.SINGLE.drawable(context)
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             context.activity?.onBackPressed()
             navigation?.add(DAppScreen.newInstance(
                 wallet = item.wallet,

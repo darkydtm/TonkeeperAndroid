@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.transaction
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.SpannableString
@@ -127,7 +129,7 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<View>(R.id.close).setOnClickListener {
+        view.findViewById<View>(R.id.close).setHapticClickListener {
             finish()
         }
 
@@ -149,7 +151,7 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
         currencyView = view.findViewById(R.id.currency)
         dateView = view.findViewById(R.id.date)
         unverifiedView = view.findViewById(R.id.unverified)
-        unverifiedView.setOnClickListener {
+        unverifiedView.setHapticClickListener {
             navigation?.add(TokenUnverifiedScreen.newInstance())
         }
 
@@ -208,11 +210,11 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
         } else {
             View.GONE
         }
-        moreView.setOnClickListener { openMore(it, actionArgs) }
+        moreView.setHapticClickListener { openMore(it, actionArgs) }
 
-        reportSpamButton.setOnClickListener { reportSpamWithDialog(true, actionArgs) }
-        explorerButton.setOnClickListener { openExplorer(actionArgs) }
-        notSpamButton.setOnClickListener { reportSpamWithDialog(false, actionArgs) }
+        reportSpamButton.setHapticClickListener { reportSpamWithDialog(true, actionArgs) }
+        explorerButton.setHapticClickListener { openExplorer(actionArgs) }
+        notSpamButton.setHapticClickListener { reportSpamWithDialog(false, actionArgs) }
 
         failedView.visibility = if (actionArgs.failed) {
             View.VISIBLE
@@ -454,10 +456,10 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
         if (!comment.isEncrypted) {
             val text = comment.body
             commentView.setData(text, "")
-            commentView.setOnClickListener { context?.copyWithToast(text) }
+            commentView.setHapticClickListener { context?.copyWithToast(text) }
         } else {
             commentView.setData(getString(Localization.encrypted_comment), "", lockDrawable)
-            commentView.setOnClickListener { decryptComment(action, comment) }
+            commentView.setHapticClickListener { decryptComment(action, comment) }
         }
     }
 
@@ -501,7 +503,7 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
                 address.shortAddress
             }*/
             accountAddressValue().text = address
-            accountAddressView.setOnClickListener {
+            accountAddressView.setHapticClickListener {
                 context?.copyWithToast(address)
             }
         } else {
@@ -513,7 +515,7 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
         accountNameView.visibility = View.VISIBLE
         accountNameView.title = getAccountTitle(out)
         accountNameView.setData(name.max24, "")
-        accountNameView.setOnClickListener {
+        accountNameView.setHapticClickListener {
             context?.copyWithToast(name)
         }
 
@@ -526,7 +528,7 @@ class TransactionScreen : BaseFragment(R.layout.dialog_transaction), BaseFragmen
             }
         )
         accountAddressValue().text = address
-        accountAddressView.setOnClickListener {
+        accountAddressView.setHapticClickListener {
             context?.copyWithToast(address)
         }
     }

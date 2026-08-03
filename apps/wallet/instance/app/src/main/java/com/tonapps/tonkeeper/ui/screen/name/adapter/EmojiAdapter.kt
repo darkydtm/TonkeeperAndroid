@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.name.adapter
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +33,7 @@ class EmojiAdapter(
         private val emojiView = itemView.findViewById<EmojiView>(R.id.emoji)
 
         fun bind(emoji: CharSequence) {
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 listener(emoji)
             }
             emojiView.setEmoji(emoji, context.iconPrimaryColor)

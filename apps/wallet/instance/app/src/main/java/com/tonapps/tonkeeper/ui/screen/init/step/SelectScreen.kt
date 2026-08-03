@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -45,7 +47,7 @@ class SelectScreen : BaseFragment(R.layout.fragment_init_select) {
         listView.applyNavBottomPadding(requireContext().getDimensionPixelSize(uikit.R.dimen.offsetLarge))
 
         button = view.findViewById(R.id.button)
-        button.setOnClickListener {
+        button.setHapticClickListener {
             initViewModel.nextStep(requireContext(), InitRoute.SelectAccount)
         }
 

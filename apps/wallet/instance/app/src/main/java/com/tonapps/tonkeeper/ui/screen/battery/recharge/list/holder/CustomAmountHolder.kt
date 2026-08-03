@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.recharge.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.ui.screen.battery.recharge.list.Item
@@ -19,10 +21,10 @@ class CustomAmountHolder(
 
     override fun onBind(item: Item.CustomAmount) {
         itemView.background = item.position.drawable(context)
-        itemView.setOnClickListener { onCustomAmountSelect() }
+        itemView.setHapticClickListener { onCustomAmountSelect() }
         titleView.text = getString(Localization.battery_other_title)
         subtitleView.text = getString(Localization.battery_other_subtitle)
         radioView.checked = item.selected
-        radioView.setOnClickListener { onCustomAmountSelect() }
+        radioView.setHapticClickListener { onCustomAmountSelect() }
     }
 }

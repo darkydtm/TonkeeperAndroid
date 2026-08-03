@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.backup.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.tonapps.tonkeeper.ui.screen.backup.main.list.Item
@@ -15,7 +17,7 @@ class BackupHolder(
     private val dateView = findViewById<AppCompatTextView>(R.id.date)
 
     override fun onBind(item: Item.Backup) {
-        itemView.setOnClickListener { onClick(item) }
+        itemView.setHapticClickListener { onClick(item) }
         itemView.background = item.position.drawable(context)
         dateView.text = context.getString(Localization.manual_backup_date, item.date)
     }

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component.label
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
@@ -98,7 +100,7 @@ class LabelEditorView @JvmOverloads constructor(
         nameInput.setOnDoneActionListener { done() }
 
         colorView = findViewById(R.id.label_color)
-        colorView.setOnClickListener { nameInput.hideKeyboard() }
+        colorView.setHapticClickListener { nameInput.hideKeyboard() }
 
         emojiView = findViewById(R.id.label_emoji)
 
@@ -107,13 +109,13 @@ class LabelEditorView @JvmOverloads constructor(
 
         overlayView = findViewById(R.id.label_overlay)
         overlayView.setBackgroundColor(context.backgroundPageColor.withAlpha(.68f))
-        overlayView.setOnClickListener { nameInput.hideKeyboard() }
+        overlayView.setHapticClickListener { nameInput.hideKeyboard() }
 
         actionView = findViewById(R.id.label_action)
         actionView.background.alpha = 0
 
         button = findViewById(R.id.label_button)
-        button.setOnClickListener { done() }
+        button.setHapticClickListener { done() }
 
         applyColorPicker()
         applyEmojiPicker()

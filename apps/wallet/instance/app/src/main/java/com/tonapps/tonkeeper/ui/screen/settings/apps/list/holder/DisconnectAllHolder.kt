@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.apps.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.settings.apps.list.Item
@@ -11,7 +13,7 @@ class DisconnectAllHolder(
 ): Holder<Item.DisconnectAll>(parent, R.layout.view_settings_app_disconnect) {
 
     init {
-        findViewById<View>(R.id.button).setOnClickListener { disconnectAll() }
+        findViewById<View>(R.id.button).setHapticClickListener { disconnectAll() }
     }
 
     override fun onBind(item: Item.DisconnectAll) {

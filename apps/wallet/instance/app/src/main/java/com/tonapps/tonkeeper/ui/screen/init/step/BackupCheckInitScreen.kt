@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -81,7 +83,7 @@ class BackupCheckInitScreen : BaseFragment(R.layout.fragment_backup_check) {
 
         button = view.findViewById(R.id.done)
         button.isEnabled = false
-        button.setOnClickListener { confirmBackup() }
+        button.setHapticClickListener { confirmBackup() }
         button.text = getString(Localization.continue_action)
 
         scrollView.doKeyboardAnimation { offset, progress, _ ->

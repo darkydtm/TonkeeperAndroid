@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component
 
+import uikit.extensions.setHapticClickListener
+
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
@@ -34,7 +36,7 @@ class SnackBarView @JvmOverloads constructor(
     }
 
     fun setButtonOnClickListener(onClickListener: OnClickListener) {
-        button.setOnClickListener {
+        button.setHapticClickListener {
             startHideAnimation()
             onClickListener.onClick(it)
         }

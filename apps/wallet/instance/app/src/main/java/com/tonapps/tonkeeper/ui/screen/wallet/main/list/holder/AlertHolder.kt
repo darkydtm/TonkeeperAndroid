@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.wallet.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -31,7 +33,7 @@ class AlertHolder(parent: ViewGroup): Holder<Item.Alert>(parent, R.layout.view_w
         actionView.visibility = View.VISIBLE
         actionTextView.text = item.buttonTitle
         if (item.buttonUrl != null) {
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 Navigation.from(context)?.openURL(item.buttonUrl)
             }
         }

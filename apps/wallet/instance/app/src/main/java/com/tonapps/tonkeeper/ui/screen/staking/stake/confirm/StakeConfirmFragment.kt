@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.stake.confirm
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -62,7 +64,7 @@ class StakeConfirmFragment: BaseHolderWalletScreen.ChildFragment<StakingScreen, 
         button = view.findViewById(R.id.button)
         taskView = view.findViewById(R.id.task)
 
-        button.setOnClickListener { stake() }
+        button.setHapticClickListener { stake() }
 
         walletView.value = primaryFragment.screenContext.wallet.label.getTitle(requireContext(), walletView.valueView, 12)
 

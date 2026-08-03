@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.battery.settings.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
@@ -35,7 +37,7 @@ class SupportedTransactionHolder(
         itemView.background = item.position.drawable(context)
         if (item.showToggle) {
             val isToggleEnabled = item.supportedTransaction != BatteryTransaction.TRC20
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 if (isToggleEnabled) {
                     switchView.toggle(true)
                 }

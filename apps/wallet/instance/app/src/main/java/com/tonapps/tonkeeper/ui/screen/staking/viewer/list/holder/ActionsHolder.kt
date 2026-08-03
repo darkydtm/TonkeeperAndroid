@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.staking.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
@@ -23,7 +25,7 @@ class ActionsHolder(
         plusView.isEnabled = !item.stakeDisabled
         minusView.isEnabled = !item.unstakeDisabled
 
-        plusView.setOnClickListener {
+        plusView.setHapticClickListener {
             if (item.poolAddress != null) {
                 navigation?.add(StakingScreen.newInstance(item.wallet, from = "staking_viewer", poolAddress = item.poolAddress))
             } else if (item.ethenaMethod != null) {
@@ -40,7 +42,7 @@ class ActionsHolder(
             }
         }
 
-        minusView.setOnClickListener {
+        minusView.setHapticClickListener {
             if (item.poolAddress != null) {
                 navigation?.add(UnStakeScreen.newInstance(item.wallet, item.poolAddress))
             } else if (item.ethenaMethod != null) {

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme.picker
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import com.tonapps.core.ComposableFragment
@@ -19,7 +21,7 @@ class MaterialYouGeneratorPickerScreen : ComposableFragment(), BaseFragment.Bott
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		view.setOnClickListener { finish() }
+		view.setHapticClickListener { finish() }
 		setContent {
 			MaterialYouGeneratorPicker(
 				selectedGenerator = selectedGenerator,

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.browser.base
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import com.tonapps.log.L
 import android.view.View
@@ -42,7 +44,7 @@ class BrowserBaseScreen(wallet: WalletEntity): WalletContextScreen(R.layout.frag
         searchContainerView.background = footerDrawable
 
         searchView = view.findViewById(R.id.search)
-        searchView.setOnClickListener {
+        searchView.setHapticClickListener {
             navigation?.add(BrowserSearchScreen.newInstance(screenContext.wallet))
         }
 

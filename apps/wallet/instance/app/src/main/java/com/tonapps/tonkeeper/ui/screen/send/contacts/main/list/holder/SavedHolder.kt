@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.contacts.main.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Color
 import android.view.Gravity
 import android.view.ViewGroup
@@ -25,13 +27,13 @@ class SavedHolder(
     }
 
     override fun onBind(item: Item.SavedContact) {
-        itemView.setOnClickListener {
+        itemView.setHapticClickListener {
             onClick(item)
         }
         itemView.background = item.position.drawable(context)
 
         nameView.text = item.name
-        iconView.setOnClickListener { showMenu(item) }
+        iconView.setHapticClickListener { showMenu(item) }
     }
 
     private fun showMenu(item: Item.SavedContact) {

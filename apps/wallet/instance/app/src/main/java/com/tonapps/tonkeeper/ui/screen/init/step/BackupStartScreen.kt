@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.init.step
 
+import uikit.extensions.setHapticClickListener
+
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -22,10 +24,10 @@ class BackupStartScreen: BaseFragment(R.layout.fragment_backup_start) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val laterView = view.findViewById<View>(R.id.later)
-        laterView.setOnClickListener { skip() }
+        laterView.setHapticClickListener { skip() }
 
         val button = view.findViewById<Button>(R.id.button)
-        button.setOnClickListener { startBackup() }
+        button.setHapticClickListener { startBackup() }
 
         val offsetMedium = requireContext().getDimensionPixelSize(uikit.R.dimen.offsetMedium)
         val offsetLarge = requireContext().getDimensionPixelSize(uikit.R.dimen.offsetLarge)

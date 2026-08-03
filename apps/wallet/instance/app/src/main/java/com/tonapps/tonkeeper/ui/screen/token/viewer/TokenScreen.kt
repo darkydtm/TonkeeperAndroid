@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -134,7 +136,7 @@ class TokenScreen(wallet: WalletEntity) :
         headerView.subtitleView.setTextColor(color)
         headerView.subtitleView.compoundDrawablePadding = 8.dp
         headerView.subtitleView.setRightDrawable(icon)
-        headerView.setOnClickListener { navigation?.add(TokenUnverifiedScreen.newInstance()) }
+        headerView.setHapticClickListener { navigation?.add(TokenUnverifiedScreen.newInstance()) }
     }
 
     private fun actionMenu(view: View, token: AccountTokenEntity) {

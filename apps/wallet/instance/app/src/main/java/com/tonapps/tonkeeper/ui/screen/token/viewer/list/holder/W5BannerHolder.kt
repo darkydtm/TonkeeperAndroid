@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.token.viewer.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.View
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.koin.settingsRepository
@@ -19,11 +21,11 @@ class W5BannerHolder(parent: ViewGroup): Holder<Item.W5Banner>(parent, R.layout.
     private val hideButton = findViewById<View>(R.id.hide)
 
     override fun onBind(item: Item.W5Banner) {
-        hideButton.setOnClickListener {
+        hideButton.setHapticClickListener {
             settingsRepository?.disableUSDTW5(item.wallet.id)
             itemView.visibility = View.GONE
         }
-        storiesButton.setOnClickListener {
+        storiesButton.setHapticClickListener {
             Navigation.from(context)?.add(W5StoriesScreen.newInstance(item.addButton))
         }
     }

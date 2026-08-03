@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.send.transaction
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
@@ -318,7 +320,7 @@ class SendTransactionScreen(wallet: WalletEntity) :
         totalView.visibility = View.VISIBLE
         totalView.setTextColor(color)
         totalView.setRightDrawable(drawable)
-        totalView.setOnClickListener { showTotalDialog(state) }
+        totalView.setHapticClickListener { showTotalDialog(state) }
     }
 
     private fun showTotalDialog(state: SendTransactionState.Details) {

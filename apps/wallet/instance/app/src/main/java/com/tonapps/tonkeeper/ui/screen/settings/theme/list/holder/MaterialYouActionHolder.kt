@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.settings.theme.list.holder
 
+import uikit.extensions.setHapticClickListener
+
 import android.view.ViewGroup
 import com.tonapps.tonkeeper.ui.screen.settings.theme.list.Item
 import uikit.widget.item.ItemIconView
@@ -14,6 +16,6 @@ class MaterialYouActionHolder(
 		actionView.position = item.position
 		actionView.text = item.title
 		actionView.description = item.description
-		actionView.setOnClickListener { onClick(item.action) }
+		actionView.setHapticClickListener { onClick(item.action) }
 	}
 }

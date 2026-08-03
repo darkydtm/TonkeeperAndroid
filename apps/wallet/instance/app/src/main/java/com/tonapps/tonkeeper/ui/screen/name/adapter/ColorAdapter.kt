@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.screen.name.adapter
 
+import uikit.extensions.setHapticClickListener
+
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,7 +30,7 @@ class ColorAdapter(
         private val colorView = itemView.findViewById<ColorView>(R.id.color)
 
         fun bind(color: Int) {
-            itemView.setOnClickListener {
+            itemView.setHapticClickListener {
                 colorView.active = true
                 activeColor = color
                 listener(color)

@@ -1,5 +1,7 @@
 package com.tonapps.tonkeeper.ui.component.coin
 
+import uikit.extensions.setHapticClickListener
+
 import android.content.Context
 import android.graphics.Paint
 import android.text.TextPaint
@@ -81,12 +83,12 @@ class CoinInputView @JvmOverloads constructor(
         editText.setRightDrawable(suffixDrawable)
 
         clearView = findViewById(R.id.coin_input_clear)
-        clearView.setOnClickListener { clear() }
+        clearView.setHapticClickListener { clear() }
 
         tokenPickerView = findViewById(R.id.coin_input_token)
         tokenPickerView.doOnValueChanged = ::onValueChanged
         onValueChanged(CurrencyPickerView.Value(tokenPickerView.token))
-        findViewById<View>(R.id.coin_input_container).setOnClickListener { focusWithKeyboard() }
+        findViewById<View>(R.id.coin_input_container).setHapticClickListener { focusWithKeyboard() }
     }
 
     fun setWallet(wallet: WalletEntity) {
