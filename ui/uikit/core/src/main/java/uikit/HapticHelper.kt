@@ -9,6 +9,11 @@ import android.provider.Settings
 
 object HapticHelper {
 
+	var strength: Float = HapticStrength.DEFAULT
+		set(value) {
+			field = HapticStrength.normalize(value)
+		}
+
 	fun selection(context: Context) {
 		perform(context, HapticType.SELECTION)
 	}
@@ -33,22 +38,27 @@ object HapticHelper {
 		perform(context, HapticType.CONFIRM)
 	}
 
-	fun perform(context: Context, type: HapticType) {
-		if (!isEnabled(context)) {
-			return
+	fun perform(context: Context, type: HapticType): Boolean {
+		if (strength == HapticStrength.MIN || !isEnabled(context)) {
+			return false
 		}
 
-		val vibrator = getVibrator(context) ?: return
+		val vibrator = getVibrator(context) ?: return false
 		if (!vibrator.hasVibrator()) {
-			return
+			return false
 		}
 
-		val effect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-			VibrationEffect.createPredefined(type.predefinedEffect())
+		val effect = if (vibrator.hasAmplitudeControl()) {
+			VibrationEffect.createWaveform(
+				type.pattern(),
+				type.amplitudes(strength),
+				-1,
+			)
 		} else {
 			VibrationEffect.createWaveform(type.pattern(), -1)
 		}
 		vibrator.vibrate(effect)
+		return true
 	}
 
 	private fun isEnabled(context: Context): Boolean {
@@ -72,15 +82,6 @@ object HapticHelper {
 		}
 	}
 
-	private fun HapticType.predefinedEffect(): Int = when (this) {
-		HapticType.LIGHT -> VibrationEffect.EFFECT_CLICK
-		HapticType.SELECTION -> VibrationEffect.EFFECT_TICK
-		HapticType.CONFIRM -> VibrationEffect.EFFECT_HEAVY_CLICK
-		HapticType.SUCCESS -> VibrationEffect.EFFECT_DOUBLE_CLICK
-		HapticType.WARNING -> VibrationEffect.EFFECT_DOUBLE_CLICK
-		HapticType.ERROR -> VibrationEffect.EFFECT_DOUBLE_CLICK
-	}
-
 	private fun HapticType.pattern(): LongArray = when (this) {
 		HapticType.LIGHT -> longArrayOf(0, 10)
 		HapticType.SELECTION -> longArrayOf(0, 15)
@@ -88,5 +89,20 @@ object HapticHelper {
 		HapticType.SUCCESS -> longArrayOf(0, 30, 50, 10)
 		HapticType.WARNING -> longArrayOf(0, 10, 50, 30)
 		HapticType.ERROR -> longArrayOf(0, 10, 30, 20, 30, 30)
+	}
+
+	private fun HapticType.amplitudes(strength: Float): IntArray {
+		return baseAmplitudes().map { amplitude ->
+			HapticStrength.scaleAmplitude(amplitude, strength)
+		}.toIntArray()
+	}
+
+	private fun HapticType.baseAmplitudes(): IntArray = when (this) {
+		HapticType.LIGHT -> intArrayOf(0, 85)
+		HapticType.SELECTION -> intArrayOf(0, 65)
+		HapticType.CONFIRM -> intArrayOf(0, 120)
+		HapticType.SUCCESS -> intArrayOf(0, 100, 0, 85)
+		HapticType.WARNING -> intArrayOf(0, 80, 0, 120)
+		HapticType.ERROR -> intArrayOf(0, 90, 0, 110, 0, 140)
 	}
 }
