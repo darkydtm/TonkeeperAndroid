@@ -151,7 +151,7 @@ class HapticStrengthSliderView @JvmOverloads constructor(
 
 	override fun performAccessibilityAction(action: Int, arguments: Bundle?): Boolean {
 		val nextValue = when (action) {
-			AccessibilityNodeInfo.ACTION_SET_PROGRESS -> arguments?.getFloat(
+			AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.id -> arguments?.getFloat(
 				AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE,
 			)
 			AccessibilityNodeInfo.ACTION_SCROLL_FORWARD -> value + HapticStrength.STEP
